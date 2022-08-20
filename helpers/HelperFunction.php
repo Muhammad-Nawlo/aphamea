@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\helpers;
+namespace app\helpers;
 
 use yii\helpers\FileHelper;
 use yii\helpers\Url;

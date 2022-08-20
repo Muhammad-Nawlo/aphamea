@@ -82,14 +82,17 @@ class SiteController extends Controller
     public function actionLogin()
     {
         $data = (array)json_decode(Yii::$app->request->getRawBody(), true);
+        if(!isset($data['email']) || !isset($data['password'])){
+            return ['status'=>'error','details'=>'There are missing params'];
+        }
         $isValidRequest = HelperFunction::checkEmptyData([$data['email'], $data['password']]);
         if ($isValidRequest) return $isValidRequest;
 
         $user = User::find()->where(['email' => $data['email']])->with('contacts')->one();
-        if ($user === null) return ['status' => 'ok', 'details' => 'Email is not exist or wrong'];
+        if ($user === null) return ['status' => 'error', 'details' => 'Email is not exist or wrong'];
 
         if (!Yii::$app->security->validatePassword($data['password'], $user->password))
-            return ['status' => 'ok', 'details' => 'Password is not exist'];
+            return ['status' => 'error', 'details' => 'Password is not exist'];
 
         $accessToken = Yii::$app->jwt->getBuilder()
             ->setIssuer('http://localhost')
