@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "user".
@@ -15,12 +16,14 @@ use Yii;
  * @property string|null $accessToken
  * @property string|null $email
  * @property string|null $password
+ * @property string|null $first_name
+ * @property string|null $last_name
  *
  * @property CompanyTeam[] $companyTeams
  * @property Contact[] $contacts
  * @property Region $region
  */
-class User extends \yii\db\ActiveRecord
+class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     //Doctor
     //Pharmacist
@@ -44,7 +47,8 @@ class User extends \yii\db\ActiveRecord
     {
         return [
             [['regionId', 'role', 'companyId'], 'integer'],
-            [['img', 'accessToken', 'email', 'password'], 'string', 'max' => 255],
+            [['img', 'accessToken', 'email', 'password', 'first_name'
+                , 'last_name'], 'string', 'max' => 255],
             [['regionId'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['regionId' => 'id']],
         ];
     }
@@ -63,6 +67,8 @@ class User extends \yii\db\ActiveRecord
             'accessToken' => 'Access Token',
             'email' => 'Email',
             'password' => 'Password',
+            "first_name",
+            "last_name",
         ];
     }
 
@@ -120,7 +126,7 @@ class User extends \yii\db\ActiveRecord
      */
     public static function findByUsername($username)
     {
-        return User::findOne(['accessToken' => $username]);
+        return User::findOne(['username' => $username]);
 
     }
 
@@ -137,7 +143,7 @@ class User extends \yii\db\ActiveRecord
      */
     public function getAuthKey()
     {
-        return $this->authKey;
+//        return $this->authKey;
     }
 
     /**

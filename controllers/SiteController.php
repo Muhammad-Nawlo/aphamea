@@ -11,7 +11,6 @@ use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\Cors;
 use yii\helpers\ArrayHelper;
-use yii\helpers\FileHelper;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\Response;
@@ -118,53 +117,63 @@ class SiteController extends Controller
 
     public function actionSignup()
     {
-        $data = (array)json_decode(Yii::$app->request->getRawBody());
-        $email = ArrayHelper::getValue($data, 'email', '');
-        $password = ArrayHelper::getValue($data, 'password', '');
-        $isDataValid = HelperFunction::checkEmptyData([$email, $password]);
-        if ($isDataValid) {
-            return $isDataValid;
-        }
-        $newUser = new User();
-        $newUser->email = trim($email);
-        $newUser->password = trim($password);
-        if ($newUser->validate()) {
-            $newUser->save();
-            return ['status' => 'ok'];
-        } else {
-            return ['status' => 'error', 'details' => $newUser->getErrors()];
+        try {
+            $data = (array)json_decode(Yii::$app->request->getRawBody());
+            $email = ArrayHelper::getValue($data, 'email', '');
+            $password = ArrayHelper::getValue($data, 'password', '');
+            $isDataValid = HelperFunction::checkEmptyData([$email, $password]);
+            if ($isDataValid) {
+                return $isDataValid;
+            }
+            $newUser = new User();
+            $newUser->email = trim($email);
+            $newUser->password = Yii::$app->security->generatePasswordHash(trim($password));
+            if ($newUser->validate()) {
+                $newUser->save();
+                return ['status' => 'ok'];
+            } else {
+                return ['status' => 'error', 'details' => $newUser->getErrors()];
+            }
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
     public function actionSaveUserInfo()
     {
-        $data = (array)Yii::$app->request->post();
-        if (empty($data['id'])) return ["status" => "error", "details" => "There are missing params (id)"];
-        $user = User::findOne($data['id']);
-        if ($user === null) return ["status" => "error", "details" => "There is no user that has this id"];
+        try {
+            $data = (array)Yii::$app->request->post();
+            $user = User::findOne(Yii::$app->user->identity->id);
+            if ($user === null) return ["status" => "error", "details" => "There is no user that has this id"];
 
-        $user->load($data, '');
+            $user->load($data, '');
 
-        $userImage = UploadedFile::getInstanceByName('userImage');
-        if ($userImage !== null) {
-            if (!is_dir(Url::to('@app/web/users/images'))) {
-                FileHelper::createDirectory(Url::to('@app/web/users/images'));
+            $userImage = UploadedFile::getInstanceByName('userImage');
+            if ($userImage !== null) {
+                HelperFunction::createFolderIfNotExist(Url::to('@app/web/users/images'));
+                $name = Yii::$app->security->generateRandomString(5) . '.' . $userImage->extension;
+                $userImage->saveAs(Url::to('@app/web/users/images') . '/' . $name);
+                $user->img = $name;
             }
-            $name = Yii::$app->security->generateRandomString(5) . '.' . $userImage->extension;
-            $userImage->saveAs(Url::to('@app/web/users/images') . '/' . $name);
-            $user->img = $name;
+            if ($user->validate()) {
+                $user->save();
+                return ['status' => 'ok'];
+            } else {
+                return ['status' => 'error', 'details' => $user->getErrors()];
+            }
+        } catch (\Exception $e) {
+            return ['status' => 'error', $e->getMessage()];
         }
-        if ($user->validate()) {
-            $user->save();
-            return ['status' => 'ok'];
-        } else {
-            return ['status' => 'error', 'details' => $user->getErrors()];
-        }
+
     }
     public function actionGetAllUsers()
     {
         $users = User::find()->where([])->asArray()->all();
         if ($users) {
+            $users = array_map(function ($u){
+                $u['img'] = Url::to('@app/web/users/'.$u['img'],true);
+                return $u;
+            },$users);
             return ['status' => 'ok', 'users' => $users];
         } else {
             return ['status' => 'error', 'details' => 'There is no user'];
