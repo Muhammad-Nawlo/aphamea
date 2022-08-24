@@ -16,6 +16,7 @@ use Yii;
  */
 class Activity extends \yii\db\ActiveRecord
 {
+    const ACTIVITY_TYPE = [0, 1, 2, 3];
     /**
      * {@inheritdoc}
      */
@@ -50,5 +51,17 @@ class Activity extends \yii\db\ActiveRecord
             'content' => 'Content',
             'isRead' => 'Is Read',
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        if(!parent::beforeSave($insert)){
+            return false;
+        }
+        if($this->isNewRecord){
+            $this->isRead = 0;
+            $this->publishedDate = date('Y-m-d h:i:s');
+        }
+        return true;
     }
 }

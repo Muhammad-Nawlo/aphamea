@@ -21,4 +21,12 @@ class HelperFunction
         if (!is_dir(Url::to($path)))
             FileHelper::createDirectory(Url::to($path));
     }
+
+    static public function deletePhotos($imgs,$dir)
+    {
+        $imgs = explode(',', $imgs);
+        foreach ($imgs as $img) {
+            FileHelper::unlink(Url::to('@web/'.$dir.'/'.$img));
+        }
+    }
 }

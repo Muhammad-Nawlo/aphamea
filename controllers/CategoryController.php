@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Category;
 use app\models\Medicine;
+use app\models\MedicineCategory;
 use sizeg\jwt\JwtHttpBearerAuth;
 use Yii;
 use yii\db\Query;
@@ -94,9 +95,9 @@ class CategoryController extends \yii\web\Controller
             if (!empty($data['deletedCategories'])) {
                 foreach ($data['deletedCategories'] as $id) {
                     $category = Category::findOne(['id' => (int)$id]);
-                    if ($category !== null && Medicine::findOne(['categoryId' => (int)$id]) === null) {
+                    if ($category !== null && MedicineCategory::findOne(['categoryId' => (int)$id]) === null) {
+                        MedicineCategory::deleteAll(['categoryId' => (int)$id]);
                         $category->delete();
-                        Medicine::deleteAll(['categoryId' => (int)$id]);
                     } else {
                         if ($category) {
                             $errors['used'][] = ["Category that has this name $category->name is used"];
@@ -142,7 +143,7 @@ class CategoryController extends \yii\web\Controller
         return ['status' => 'ok', 'category' => $category];
     }
 
-    function actionGet_medicines($categoryId)
+    function actionGetMedicines($categoryId)
     {
         try {
             $medicines = (new Query())
@@ -154,8 +155,8 @@ class CategoryController extends \yii\web\Controller
                     "packing",
                     "expiredDate",
                     "price",
-                    "publicPrice",
-                    "name"
+                    "netPrice",
+                    "name as categoryName"
                 ])
                 ->from('medicine_category')
                 ->innerJoin('medicine', 'medicine.id=medicine_category.medicineId')

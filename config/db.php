@@ -6,6 +6,10 @@ return [
     'username' => 'root',
     'password' => '',
     'charset' => 'utf8',
+    'attributes'=>[
+        PDO::ATTR_EMULATE_PREPARES=>false
+    ],
+    
 
     // Schema cache options (for production environment)
     //'enableSchemaCache' => true,

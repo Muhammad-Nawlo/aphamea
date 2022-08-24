@@ -1,5 +1,4 @@
 <?php
-
 namespace app\controllers;
 
 use app\models\City;
@@ -91,24 +90,24 @@ class AreaController extends Controller
     //        return ['status' => 'ok'];
     //    }
 
-    public function actionReadCities()
-    {
-        try {
-            $spreadSheet = IOFactory::load(Url::to('@app/web/cities.xlsx'));
-            $spreadSheetArray = $spreadSheet->getActiveSheet()->toArray();
-            array_splice($spreadSheetArray, 0, 1);
-            foreach ($spreadSheetArray as $city) {
-                $newCity = new City();
-                $newCity->nameEn = $city[0];
-                $newCity->nameAr = $city[1];
-                $newCity->countryId = 1;
-                $newCity->save();
-            }
-            return ['status' => 'ok'];
-        } catch (Exception $e) {
-            return ['status' => 'error', $e->getMessage()];
-        }
-    }
+    // public function actionReadCities()
+    // {
+    //     try {
+    //         $spreadSheet = IOFactory::load(Url::to('@app/web/cities.xlsx'));
+    //         $spreadSheetArray = $spreadSheet->getActiveSheet()->toArray();
+    //         array_splice($spreadSheetArray, 0, 1);
+    //         foreach ($spreadSheetArray as $city) {
+    //             $newCity = new City();
+    //             $newCity->nameEn = $city[0];
+    //             $newCity->nameAr = $city[1];
+    //             $newCity->countryId = 1;
+    //             $newCity->save();
+    //         }
+    //         return ['status' => 'ok'];
+    //     } catch (\Exception $e) {
+    //         return ['status' => 'error', $e->getMessage()];
+    //     }
+    // }
 
     //    public function actionReadRegions()
     //    {
@@ -122,10 +121,11 @@ class AreaController extends Controller
     //        return ['status' => 'ok'];
     //    }
 
+
     public function actionGetCountries()
     {
         // Syria only
-        $countries = Country::find()->where(['id' => 216])->one();
+        $countries = Country::find()->where(['id' => 1])->one();
         return [
             'status' => 'ok',
             'countries' => $countries
@@ -135,7 +135,7 @@ class AreaController extends Controller
     public function actionGetCities()
     {
         // cities of syria
-        $cities = City::find()->where(['countryId' => 216])->all();
+        $cities = City::find()->where(['countryId' => 1])->all();
         return [
             'status' => 'ok',
             'cities' => $cities

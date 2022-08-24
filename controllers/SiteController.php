@@ -171,7 +171,7 @@ class SiteController extends Controller
         $users = User::find()->where([])->asArray()->all();
         if ($users) {
             $users = array_map(function ($u){
-                $u['img'] = Url::to('@app/web/users/'.$u['img'],true);
+                $u['img'] =Url::to('@web/users/images/' . $u['img'], true);
                 return $u;
             },$users);
             return ['status' => 'ok', 'users' => $users];

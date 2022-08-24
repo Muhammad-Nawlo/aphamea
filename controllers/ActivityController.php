@@ -189,7 +189,7 @@ class ActivityController extends \yii\web\Controller
     {
         try {
             $data = (array)(Yii::$app->request->post());
-            if (!isset($data['type']) || !isset($data['content']))
+            if (!isset($data['id']) ||!isset($data['type']) || !isset($data['content']))
                 return ["status" => "error", "details" => "There are missing params"];
 
             if (!in_array($data['type'], Activity::ACTIVITY_TYPE)) {
@@ -206,6 +206,7 @@ class ActivityController extends \yii\web\Controller
             $imagesName = [];
             if (!empty($activityImages)) {
                 HelperFunction::createFolderIfNotExist('@app/web/activities/images');
+                HelperFunction::deletePhotos($activity->imgs,'activities');
 
                 foreach ($activityImages as $img) {
                     if (!file_exists($img->name)) {
