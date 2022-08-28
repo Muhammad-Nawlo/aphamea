@@ -75,12 +75,12 @@ class CompanyController extends \yii\web\Controller
         return ['msg' => 'ok', 'status' => 'working'];
     }
 
-    public function actionGetCompanyInfo($id)
+    public function actionGet($id)
     {
         try {
             $company = Company::find()
                 ->where(['id' => (int)$id])
-                ->with("CompanyTeams", "Contacts", "Medicines")
+                ->with("companyTeams", "contacts")
                 ->asArray()
                 ->one();
             if ($company === null)
@@ -91,8 +91,6 @@ class CompanyController extends \yii\web\Controller
         } catch (\Exception $e) {
             return ['msg' => 'error', 'details' => $e->getMessage()];
         }
-
-
     }
 
     public function actionSaveCompanyInfo()
@@ -103,6 +101,7 @@ class CompanyController extends \yii\web\Controller
                 'contactErrors' => [],
             ];
             $data = (array)(Yii::$app->request->post());
+
             if (isset($data['id'])) {
                 $company = Company::findOne($data['id']);
             } else {
@@ -119,12 +118,12 @@ class CompanyController extends \yii\web\Controller
                 $image->saveAs(Url::to('@app/web/company/images') . '/' . $name);
                 $company->img = $name;
             }
+
             if ($logo) {
                 $name = Yii::$app->security->generateRandomString(5) . '.' . $logo->extension;
                 $logo->saveAs(Url::to('@app/web/company/images') . '/' . $name);
-                $company->img = $name;
+                $company->logo = $name;
             }
-
 
             if ($company->validate() && $company->save()) {
                 $companyTeams = isset($data['companyTeams']) === true ? $data['companyTeams'] : [];
@@ -136,8 +135,7 @@ class CompanyController extends \yii\web\Controller
                         } else {
                             $teamMember = CompanyTeam::findOne(['id' => $member['id']]);
                         }
-
-                        $teamMember->load($data, '');
+                        $teamMember->load($member, '');
                         if ($teamMember->validate()) {
                             $teamMember->save();
                         } else {
@@ -169,12 +167,12 @@ class CompanyController extends \yii\web\Controller
         } catch (\Exception $e) {
             return ['msg' => 'error', 'details' => $e->getMessage()];
         }
-
     }
 
-    public function actionDeleteCompanyContact($id)
+    public function actionDeleteCompanyContact()
     {
         try {
+            $id = Yii::$app->request->post('id');
             $companyContact = Contact::findOne(['id' => (int)$id]);
             if ($companyContact === null)
                 return ['status' => 'error', 'details' => 'There is no contact that has this id'];
@@ -189,9 +187,10 @@ class CompanyController extends \yii\web\Controller
         }
     }
 
-    public function actionDeleteCompanyTeam($id)
+    public function actionDeleteCompanyTeam()
     {
         try {
+            $id = Yii::$app->request->post('id');
             $companyTeam = CompanyTeam::findOne(['id' => (int)$id]);
             if ($companyTeam === null)
                 return ['status' => 'error', 'details' => 'There is no member team that has this id'];
@@ -205,5 +204,4 @@ class CompanyController extends \yii\web\Controller
             return ['msg' => 'error', 'details' => $e->getMessage()];
         }
     }
-
 }

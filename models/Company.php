@@ -61,7 +61,8 @@ class Company extends \yii\db\ActiveRecord
      */
     public function getCompanyTeams()
     {
-        return $this->hasMany(CompanyTeam::className(), ['companyId' => 'id']);
+        return $this->hasMany(User::class, ['id' => 'userId'])
+            ->viaTable('company_team', ['companyId' => 'id']);
     }
 
     /**
@@ -73,4 +74,15 @@ class Company extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Contact::className(), ['companyId' => 'id']);
     }
+
+
+
+    public function contacts()
+    {
+        return $this->hasManyThrough(Company::class, Contact::class);
+    }
+    // public function functionGetContactCompany()
+    // {
+    //     $rows = (new Qu)
+    // }
 }
