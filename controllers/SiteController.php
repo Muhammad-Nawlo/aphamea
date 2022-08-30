@@ -129,6 +129,10 @@ class SiteController extends Controller
             }
             $newUser = new User();
             $newUser->email = trim($email);
+            if(strlen($password)<8||strlen($password)>20){
+                return ['status' => 'error', 'details' => 'Your password should be between 8 and 20 charachter'];
+
+            }
             $newUser->password = Yii::$app->security->generatePasswordHash(trim($password));
             if ($newUser->validate()) {
                 $newUser->save();
@@ -262,6 +266,10 @@ class SiteController extends Controller
                         $newUser->first_name = htmlspecialchars(stripslashes(trim($user[0])));
                         $newUser->last_name = htmlspecialchars(stripslashes(trim($user[1])));
                         $newUser->email = filter_var($user[2], FILTER_VALIDATE_EMAIL);
+                        if(strlen(trim($user[3])<8 ||strlen(trim($user[3]))>20)){
+                            array_push($errorArr, ['error' => "<b>$user[0]</b>, Password should be between 8 and 20 charachter"]);
+
+                        }
                         $newUser->password = Yii::$app->security->generatePasswordHash($user[3]);
 
                         if (!in_array((int)$user[4], User::ROLE)) {

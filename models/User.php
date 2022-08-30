@@ -50,7 +50,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [[
                 'img', 'accessToken', 'email', 'password', 'first_name', 'last_name'
             ], 'string', 'max' => 255],
-            ['password', 'string', 'min' => 8, 'max' => 20],
             ['email','unique'],
             [['regionId'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['regionId' => 'id']],
         ];
