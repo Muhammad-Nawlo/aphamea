@@ -47,8 +47,10 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['regionId', 'role', 'companyId'], 'integer'],
-            [['img', 'accessToken', 'email', 'password', 'first_name'
-                , 'last_name'], 'string', 'max' => 255],
+            [[
+                'img', 'accessToken', 'email', 'password', 'first_name', 'last_name'
+            ], 'string', 'max' => 255],
+            ['password', 'string', 'min' => 8, 'max' => 20],
             [['regionId'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['regionId' => 'id']],
         ];
     }
@@ -127,7 +129,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public static function findByUsername($username)
     {
         return User::findOne(['username' => $username]);
-
     }
 
     /**
@@ -143,7 +144,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getAuthKey()
     {
-//        return $this->authKey;
+        //        return $this->authKey;
     }
 
     /**
@@ -164,5 +165,4 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return Yii::$app->security->validatePassword($password, $this->password);
     }
-
 }

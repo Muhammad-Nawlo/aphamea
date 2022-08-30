@@ -4,6 +4,8 @@ namespace app\controllers;
 
 use app\helpers\HelperFunction;
 use app\models\User;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use sizeg\jwt\JwtHttpBearerAuth;
 use Yii;
 use yii\filters\auth\CompositeAuth;
@@ -56,7 +58,7 @@ class SiteController extends Controller
         ];
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::class,
-            'except' => ['login', 'signup', 'index'],
+            'except' => ['login', 'signup', 'index', 'save-user-info'],
             'authMethods' => [
                 HttpBearerAuth::class,
                 QueryParamAuth::class,
@@ -74,15 +76,15 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return ['status' => 'ok', 'msg' => 'It\'s working'];
+        return ['status' => 'ok', 'status' => 'It\'s working'];
     }
 
     //modify this to login by default
     public function actionLogin()
     {
         $data = (array)json_decode(Yii::$app->request->getRawBody(), true);
-        if(!isset($data['email']) || !isset($data['password'])){
-            return ['status'=>'error','details'=>'There are missing params'];
+        if (!isset($data['email']) || !isset($data['password'])) {
+            return ['status' => 'error', 'details' => 'There are missing params'];
         }
         $isValidRequest = HelperFunction::checkEmptyData([$data['email'], $data['password']]);
         if ($isValidRequest) return $isValidRequest;
@@ -143,7 +145,7 @@ class SiteController extends Controller
     {
         try {
             $data = (array)Yii::$app->request->post();
-            $user = User::findOne(Yii::$app->user->identity->id);
+            $user = User::findOne((int)$data['id']);
             if ($user === null) return ["status" => "error", "details" => "There is no user that has this id"];
 
             $user->load($data, '');
@@ -164,19 +166,124 @@ class SiteController extends Controller
         } catch (\Exception $e) {
             return ['status' => 'error', $e->getMessage()];
         }
-
     }
+
     public function actionGetAllUsers()
     {
         $users = User::find()->where([])->asArray()->all();
         if ($users) {
-            $users = array_map(function ($u){
-                $u['img'] =Url::to('@web/users/images/' . $u['img'], true);
+            $users = array_map(function ($u) {
+                $u['img'] = Url::to('@web/users/images/' . $u['img'], true);
                 return $u;
-            },$users);
+            }, $users);
             return ['status' => 'ok', 'users' => $users];
         } else {
             return ['status' => 'error', 'details' => 'There is no user'];
+        }
+    }
+
+    public function actionExport_to_excel_file($t)
+    {
+        $data = User::find()->where([])->all();
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'First Name');
+        $sheet->setCellValue('B1', 'Last name');
+        $sheet->setCellValue('C1', 'Email');
+        $sheet->setCellValue('D1', 'Role');
+        $i = 2;
+        foreach ($data as $userInfo) {
+            $sheet->setCellValue("A$i", $userInfo->first_name);
+            $sheet->setCellValue("B$i", $userInfo->last_name);
+            $sheet->setCellValue("C$i", $userInfo->email);
+            $sheet->setCellValue("D$i", $userInfo->role);
+            $i++;
+        }
+
+
+        $fileName = date('Y-m-d');
+        $writer = new Xlsx($spreadsheet);
+        $writer->save("excelFiles/" . "$fileName.xlsx");
+        $this->response->sendFile("../web/excelFiles/$fileName.xlsx", "$fileName.xlsx");
+    }
+
+    public function actionGenerate_users_excel_file_template()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'First Name');
+        $sheet->setCellValue('B1', 'Last name');
+        $sheet->setCellValue('C1', 'Email');
+        $sheet->setCellValue('D1', 'Password');
+        $sheet->setCellValue('E1', 'Role');
+
+        $fileName = yii::$app->getSecurity()->generateRandomString(10);
+        $writer = new Xlsx($spreadsheet);
+        if (!is_dir('../web/excelFiles')) {
+            mkdir('../web/excelFiles');
+        }
+
+        $writer->save("excelFiles/" . $fileName . ".xlsx");
+        $this->response->sendFile("../web/excelFiles/" . $fileName . ".xlsx", "$fileName.xlsx");
+    }
+
+    public function actionImport_users_excel_file()
+    {
+        if (isset($_FILES['userSheetInfo'])) {
+            $file = $_FILES['userSheetInfo'];
+            $tmpName = yii::$app->security->generateRandomString();
+            $inputFile = 'excelFiles/' . $tmpName . '.xlsx';
+            move_uploaded_file($file['tmp_name'], $inputFile);
+            $spreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFile);
+            $usersArray = $spreadSheet->getActiveSheet()->toArray();
+            //To remove the first row in file
+            $tmpExcelFields = array_splice($usersArray, 0, 1);
+            //This condition to check the template
+            if (
+                $tmpExcelFields[0][0] != 'First Name' ||
+                $tmpExcelFields[0][1] != 'Last name' ||
+                $tmpExcelFields[0][2] != 'Email' ||
+                $tmpExcelFields[0][3] != 'Password' ||
+                $tmpExcelFields[0][4] != 'Role'
+            ) {
+                return ['status' => 'error', 'details' => 'This excel file is not a validate file'];
+            }
+            $i = 0;
+            $errorArr = [];
+            foreach ($usersArray as $user) {
+                $i++;
+                if (filter_var($user[4], FILTER_VALIDATE_EMAIL)) {
+                    $isExist = User::findOne(['email' => $user[4]]);
+                    if ($isExist === null) {
+                        $newUser = new User();
+                        $newUser->first_name = htmlspecialchars(stripslashes(trim($user[0])));
+                        $newUser->last_name = htmlspecialchars(stripslashes(trim($user[1])));
+                        $newUser->email = filter_var($user[2], FILTER_VALIDATE_EMAIL);
+                        $newUser->password = Yii::$app->security->generatePasswordHash($user[3]);
+
+                        if (!in_array((int)$user[4], User::ROLE)) {
+                            array_push($errorArr, ['error' => "<b>$user[0]</b> has invalid role"]);
+                            continue;
+                        }
+                        $newUser->role = $user[4];
+                        if ($newUser->validate()) {
+                            $newUser->save();
+                        } else {
+                            array_push($errorArr, ['error' => "<b>$user[2]</b> ", 'details' => $newUser->getErrors()]);
+                        }
+                    } else {
+                        array_push($errorArr, ['error' => "<b>$user[4]</b> User already exist"]);
+                    }
+                } else {
+                    array_push($errorArr, ['error' => "<b>$user[4]</b> Please enter valid email address"]);
+                }
+            }
+            return ['status' => 'ok', 'errorDetails' => $errorArr];
+        } else {
+            return ['status' => 'error', 'details' => 'There is no file uploaded'];
         }
     }
 }

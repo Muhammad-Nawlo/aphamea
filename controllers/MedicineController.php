@@ -172,12 +172,9 @@ class MedicineController extends \yii\web\Controller
         $medicineImages = UploadedFile::getInstancesByName('medicineImages');
         if (!empty($medicineImages)) {
             HelperFunction::createFolderIfNotExist('@app/web/medicines/images');
+            HelperFunction::deletePhotos($medicine->imgs, 'medicines');
             $imagesName = [];
             foreach ($medicineImages as $img) {
-                if (file_exists($img->name)) {
-                    $imagesName[] = $img->name;
-                    continue;
-                }
                 $name = Yii::$app->security->generateRandomString(5) . '.' . $img->extension;
                 $img->saveAs(Url::to('@app/web/medicines/images') . '/' . $name);
                 $imagesName[] = $name;
@@ -276,66 +273,3 @@ class MedicineController extends \yii\web\Controller
         }
     }
 }
-
-
-
-
-
-
-
-
-
-//$errors = [
-//    'notExist' => [],
-//    'medicineErrors' => [],
-//];
-//
-//$data = json_decode(Yii::$app->request->post(), true);
-//if (!isset($data['medicines'])) {
-//    return ["status" => "error", "details" => "There are missing params (medicines)"];
-//}
-//
-//if (!isset($data['deletedMedicines'])) {
-//    return ["status" => "error", "details" => "There are missing params (deletedMedicines)"];
-//}
-//if (!empty($data['deletedMedicines'])) {
-//    foreach ($data['deletedMedicines'] as $id) {
-//        $medicine = Medicine::findOne(['id' => (int)$id]);
-//        if ($medicine !== null) {
-//            $medicine->delete();
-//        } else {
-//            $errors['notExist'][] = ["Medicine that has this id $id is not exist"];
-//        }
-//    }
-//}
-//
-//foreach ($data['medicines'] as $medicine) {
-//    $medicine = (array)$medicine;
-//    if ($medicine['id'] === '') {
-//        $newMedicine = new Medicine();
-//    } else {
-//        $newMedicine = Medicine::findOne(['id' => (int)$medicine['id']]);
-//    }
-//    $newMedicine->load($medicine, '');
-//    $medicineImages = UploadedFile::getInstancesByName('medicineImages');
-//    if (!empty($medicineImages)) {
-//        HelperFunction::createFolderIfNotExist('@app/web/medicines/images');
-//        $imagesName = [];
-//        foreach ($medicineImages as $img) {
-//            if (!file_exists($img->name)) {
-//                $name = Yii::$app->security->generateRandomString(5) . '.' . $img->extension;
-//                $img->saveAs(Url::to('@app/web/medicines/images') . '/' . $name);
-//                $imagesName[] = $name;
-//            } else {
-//                $imagesName[] = $img->name;
-//            }
-//        }
-//        $newMedicine->imgs = implode(',', $imagesName);
-//    }
-//    if ($newMedicine->validate()) {
-//        $newMedicine->save();
-//    } else {
-//        $errors['medicineErrors'][] = $newMedicine->getErrors();
-//    }
-//}
-//return ['status' => 'ok', 'errors' => $errors];
