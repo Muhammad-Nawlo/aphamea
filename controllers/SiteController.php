@@ -164,7 +164,7 @@ class SiteController extends Controller
                 return ['status' => 'error', 'details' => $user->getErrors()];
             }
         } catch (\Exception $e) {
-            return ['status' => 'error', $e->getMessage()];
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
