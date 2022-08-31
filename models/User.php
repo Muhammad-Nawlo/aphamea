@@ -30,7 +30,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     //Sales Representative
     //Scientific representative
     //Agent
-    const ROLE = [1, 2, 3, 4, 5];
+    const ROLE = [0, 1, 2, 3, 4, 5];
 
     /**
      * {@inheritdoc}
@@ -50,7 +50,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             [[
                 'img', 'accessToken', 'email', 'password', 'first_name', 'last_name'
             ], 'string', 'max' => 255],
-            ['email','unique'],
+            ['email', 'unique'],
             [['regionId'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['regionId' => 'id']],
         ];
     }
