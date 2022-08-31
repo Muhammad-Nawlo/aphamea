@@ -37,14 +37,14 @@ class MedicineController extends \yii\web\Controller
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::class,
-            'authMethods' => [
-                HttpBearerAuth::class,
-                QueryParamAuth::class,
-                JwtHttpBearerAuth::class
-            ]
-        ];
+        // $behaviors['authenticator'] = [
+        //     'class' => CompositeAuth::class,
+        //     'authMethods' => [
+        //         HttpBearerAuth::class,
+        //         QueryParamAuth::class,
+        //         JwtHttpBearerAuth::class
+        //     ]
+        // ];
         return $behaviors;
     }
 
@@ -115,134 +115,179 @@ class MedicineController extends \yii\web\Controller
     public function actionAdd()
     {
         $data = (array)(Yii::$app->request->post());
-        $newMedicine = new Medicine();
-        $newMedicine->load($data, '');
-        $medicineImages = UploadedFile::getInstancesByName('medicineImages');
-        if (!empty($medicineImages)) {
-            HelperFunction::createFolderIfNotExist('@app/web/medicines/images');
-            $imagesName = [];
-            foreach ($medicineImages as $img) {
-                $name = Yii::$app->security->generateRandomString(5) . '.' . $img->extension;
-                $img->saveAs(Url::to('@app/web/medicines/images') . '/' . $name);
-                $imagesName[] = $name;
-            }
-            $newMedicine->imgs = implode(',', $imagesName);
+        if (
+            !isset($data['productName']) ||
+            !isset($data['indications']) ||
+            !isset($data['packing']) ||
+            !isset($data['composition']) ||
+            !isset($data['price']) ||
+            !isset($data['netPrice']) ||
+            !isset($data['pharmaceuticalFormId']) ||
+            !isset($data['categoryId'])
+        ) {
+            return ['status' => 'error', 'details' => 'There are missing params'];
         }
-        if ($newMedicine->validate()) {
-            $newMedicine->save();
-
+        try {
             $pharmaceuticalForm = PharmaceuticalForm::findOne(['id' => (int)$data['pharmaceuticalFormId']]);
-            if ($pharmaceuticalForm !== null) {
+            $category = Category::findOne(['id' => $data['categoryId']]);
+            if ($pharmaceuticalForm === null) {
+
+                return ['status' => 'error', 'details' => 'Pharmaceutical Form Id is not valid'];
+            }
+            if ($category === null) {
+                return ['status' => 'error', 'details' => 'Category Id is not valid'];
+            }
+
+            $newMedicine = new Medicine();
+            $newMedicine->load($data, '');
+            $medicineImages = UploadedFile::getInstancesByName('medicineImages');
+            if (!empty($medicineImages)) {
+                HelperFunction::createFolderIfNotExist('@app/web/medicines/images');
+                $imagesName = [];
+                foreach ($medicineImages as $img) {
+                    $name = Yii::$app->security->generateRandomString(5) . '.' . $img->extension;
+                    $img->saveAs(Url::to('@app/web/medicines/images') . '/' . $name);
+                    $imagesName[] = $name;
+                }
+                $newMedicine->imgs = implode(',', $imagesName);
+            }
+            if ($newMedicine->validate()) {
+                $newMedicine->save();
+
                 $pm = new MedicinePharmaceuticalForm();
                 $pm->medicineId = $newMedicine->id;
                 $pm->pharmaceuticalFormId = $pharmaceuticalForm->id;
-                $pm->save();
-            } else {
-                return ['status' => 'error', 'details' => 'There is no pharmaceutical form that has this id'];
-            }
-
-            $category = Category::findOne(['id' => $data['categoryId']]);
-            if ($category !== null) {
+                if ($pm->validate()) {
+                    $pm->save();
+                } else {
+                    return ['status' => 'error', 'details' => $pm->getErrors()];
+                }
                 $c = new MedicineCategory();
                 $c->medicineId = $newMedicine->id;
                 $c->categoryId = $category->id;
-                $c->save();
+                if ($c->validate()) {
+                    $c->save();
+                } else {
+                    return ['status' => 'error', 'details' => $c->getErrors()];
+                }
+                return ['status' => 'ok'];
             } else {
-                return ['status' => 'error', 'details' => 'There is no category that has this id'];
+                return ['status' => 'error', 'details' => $newMedicine->getErrors()];
             }
-
-
-            return ['status' => 'ok'];
-        } else {
-            return ['status' => 'error', 'details' => $newMedicine->getErrors()];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
     public function actionUpdate()
     {
         $data = (array)(Yii::$app->request->post());
-        if (!isset($data['id']))
-            return ['status' => 'error', 'details' => 'There is no medicine that has this id'];
-
-        $medicine = Medicine::findOne(['id' => (int)$data['id']]);
-        if ($medicine === null)
-            return ['status' => 'error', 'details' => "There is no medicine that has this id"];
-
-        $medicine->load($data, '');
-        $medicineImages = UploadedFile::getInstancesByName('medicineImages');
-        if (!empty($medicineImages)) {
-            HelperFunction::createFolderIfNotExist('@app/web/medicines/images');
-            HelperFunction::deletePhotos($medicine->imgs, 'medicines');
-            $imagesName = [];
-            foreach ($medicineImages as $img) {
-                $name = Yii::$app->security->generateRandomString(5) . '.' . $img->extension;
-                $img->saveAs(Url::to('@app/web/medicines/images') . '/' . $name);
-                $imagesName[] = $name;
-            }
-            $medicine->imgs = implode(',', $imagesName);
+        if (
+            !isset($data['productName']) ||
+            !isset($data['indications']) ||
+            !isset($data['packing']) ||
+            !isset($data['composition']) ||
+            !isset($data['price']) ||
+            !isset($data['netPrice']) ||
+            !isset($data['pharmaceuticalFormId']) ||
+            !isset($data['categoryId']) ||
+            !isset($data['id'])
+        ) {
+            return ['status' => 'error', 'details' => 'There are missing params'];
         }
-        if ($medicine->validate()) {
-            $medicine->save();
 
+        try {
             $pharmaceuticalForm = PharmaceuticalForm::findOne(['id' => (int)$data['pharmaceuticalFormId']]);
-            if ($pharmaceuticalForm !== null) {
+            $category = Category::findOne(['id' => $data['categoryId']]);
+            if ($pharmaceuticalForm === null) {
+                return ['status' => 'error', 'details' => 'Pharmaceutical Form Id is not valid'];
+            }
+            if ($category === null) {
+                return ['status' => 'error', 'details' => 'Category Id is not valid'];
+            }
+
+            $medicine = Medicine::findOne(['id' => (int)$data['id']]);
+            if ($medicine === null)
+                return ['status' => 'error', 'details' => "There is no medicine that has this id"];
+
+            $medicine->load($data, '');
+            $medicineImages = UploadedFile::getInstancesByName('medicineImages');
+            if (!empty($medicineImages)) {
+                HelperFunction::createFolderIfNotExist('@app/web/medicines/images');
+                HelperFunction::deletePhotos($medicine->imgs, 'medicines');
+                $imagesName = [];
+                foreach ($medicineImages as $img) {
+                    $name = Yii::$app->security->generateRandomString(5) . '.' . $img->extension;
+                    $img->saveAs(Url::to('@app/web/medicines/images') . '/' . $name);
+                    $imagesName[] = $name;
+                }
+                $medicine->imgs = implode(',', $imagesName);
+            }
+            if ($medicine->validate()) {
+                $medicine->save();
+                MedicinePharmaceuticalForm::findOne(['medicineId' => $medicine->id])->delete();
+                MedicineCategory::findOne(['medicineId' => $medicine->id])->delete();
+
                 $pm = new MedicinePharmaceuticalForm();
                 $pm->medicineId = $medicine->id;
                 $pm->pharmaceuticalFormId = $pharmaceuticalForm->id;
-                $pm->save();
-            } else {
-                return ['status' => 'error', 'details' => 'There is no pharmaceutical form that has this id'];
-            }
-
-            $category = Category::findOne(['id' => $data['categoryId']]);
-            if ($category !== null) {
+                if ($pm->validate()) {
+                    $pm->save();
+                } else {
+                    return ['status' => 'error', 'details' => $pm->getErrors()];
+                }
                 $c = new MedicineCategory();
                 $c->medicineId = $medicine->id;
                 $c->categoryId = $category->id;
-                $c->save();
+                if ($c->validate()) {
+                    $c->save();
+                } else {
+                    return ['status' => 'error', 'details' => $c->getErrors()];
+                }
+                return ['status' => 'ok'];
             } else {
-                return ['status' => 'error', 'details' => 'There is no category that has this id'];
+                return ['status' => 'error', 'details' => $medicine->getErrors()];
             }
-            return ['status' => 'ok'];
-        } else {
-            return ['status' => 'error', 'details' => $medicine->getErrors()];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
     public function actionGet($id = null, $barcode = null)
     {
-        if ($id != null) {
-            $medicine = Medicine::find()
-                ->where(['id' => (int)$id])
-                ->asArray()
-                ->one();
-        } elseif ($barcode != null) {
-            $medicine = Medicine::find()
-                ->where(['barcode' => (int)$id])
-                ->asArray()
-                ->one();
-        } else {
-            return ['status' => 'error', 'details' => 'You should send either id or barcode params'];
-        }
-        if ($medicine === null)
-            return ['status' => 'error', 'details' => "There is no medicine that has this id ($id) or this barcode ($barcode)"];
-
-
-        $imgs = explode(',', $medicine['imgs']);
-        $images = [];
-        if (!empty($imgs)) {
-            foreach ($imgs as $i) {
-                $images[] = Url::to('@web/medicines/images/' . $i, true);
+        try {
+            if ($id === null && $barcode === null) {
+                return ['status' => 'error', 'details' => 'You should send either id or barcode params'];
             }
-        }
-        $medicine['imgs'] = $images;
-        $relatedMedicine = Medicine::find()
-            ->where(['categoryId' => $medicine['categoryId']])
-            ->andWhere(['NOT' => ['id' => [(int)$medicine['id']]]])
-            ->orderBy(new Expression('rand()'))
-            ->limit(4);
+            if ($id != null) {
+                $medicine = Medicine::find()
+                    ->where(['id' => (int)$id])
+                    ->asArray()
+                    ->one();
+            } elseif ($barcode != null) {
+                $medicine = Medicine::find()
+                    ->where(['barcode' => (int)$id])
+                    ->asArray()
+                    ->one();
+            }
+            if ($medicine === null)
+                return ['status' => 'error', 'details' => "There is no medicine that has this id ($id) or this barcode ($barcode)"];
 
-        return ['status' => 'ok', 'medicine' => $medicine, 'relatedMedicine' => $relatedMedicine];
+
+            $imgs = explode(',', $medicine['imgs']);
+            $images = [];
+            if (!empty($imgs)) {
+                foreach ($imgs as $i) {
+                    $images[] = Url::to('@web/medicines/images/' . $i, true);
+                }
+            }
+            $medicine['imgs'] = $images;
+
+
+            return ['status' => 'ok', 'medicine' => $medicine];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
+        }
     }
 
     public function actionGetAll($searchText = null)

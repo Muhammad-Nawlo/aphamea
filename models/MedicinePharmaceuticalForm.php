@@ -7,6 +7,7 @@ use Yii;
 /**
  * This is the model class for table "medicine_pharmaceutical_form".
  *
+ * @property int $id
  * @property int|null $pharmaceuticalFormId
  * @property int|null $medicineId
  *
@@ -41,6 +42,7 @@ class MedicinePharmaceuticalForm extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'id' => 'ID',
             'pharmaceuticalFormId' => 'Pharmaceutical Form ID',
             'medicineId' => 'Medicine ID',
         ];

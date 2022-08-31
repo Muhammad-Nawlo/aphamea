@@ -19,6 +19,7 @@ class m220809_212202_create_medicine_pharmaceutical_form_table extends Migration
             $option = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
         $this->createTable(self::TABLE_NAME, [
+            'id'=>$this->primaryKey(),
             'pharmaceuticalFormId' => $this->integer(),
             'medicineId' => $this->integer(),
         ], $option);

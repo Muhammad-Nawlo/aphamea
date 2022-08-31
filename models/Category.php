@@ -29,7 +29,7 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'string', 'max' => 255],
-            ['name','unique']
+            ['name', 'unique']
         ];
     }
 
@@ -51,6 +51,7 @@ class Category extends \yii\db\ActiveRecord
      */
     public function getMedicineCategories()
     {
-        return $this->hasMany(MedicineCategory::className(), ['categoryId' => 'id']);
+        return $this->hasMany(Medicine::class, ['id' => 'medicineId'])
+            ->viaTable('medicine_category', ['categoryId' => 'id']);
     }
 }
