@@ -97,6 +97,7 @@ class CategoryController extends \yii\web\Controller
                     $category = Category::findOne(['id' => (int)$id]);
                     if ($category !== null && MedicineCategory::findOne(['categoryId' => (int)$id]) === null) {
                         MedicineCategory::deleteAll(['categoryId' => (int)$id]);
+                        
                         $category->delete();
                     } else {
                         if ($category) {

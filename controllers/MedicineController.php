@@ -37,14 +37,14 @@ class MedicineController extends \yii\web\Controller
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
-        // $behaviors['authenticator'] = [
-        //     'class' => CompositeAuth::class,
-        //     'authMethods' => [
-        //         HttpBearerAuth::class,
-        //         QueryParamAuth::class,
-        //         JwtHttpBearerAuth::class
-        //     ]
-        // ];
+        $behaviors['authenticator'] = [
+            'class' => CompositeAuth::class,
+            'authMethods' => [
+                HttpBearerAuth::class,
+                QueryParamAuth::class,
+                JwtHttpBearerAuth::class
+            ]
+        ];
         return $behaviors;
     }
 

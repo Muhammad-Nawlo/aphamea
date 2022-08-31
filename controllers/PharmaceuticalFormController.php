@@ -3,7 +3,9 @@
 namespace app\controllers;
 
 use app\models\Medicine;
+use app\models\MedicinePharmaceuticalForm;
 use app\models\PharmaceuticalForm;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use sizeg\jwt\JwtHttpBearerAuth;
 use Yii;
 use yii\db\Query;
@@ -11,6 +13,7 @@ use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\Cors;
+use yii\helpers\Url;
 
 class PharmaceuticalFormController extends \yii\web\Controller
 {
@@ -72,19 +75,19 @@ class PharmaceuticalFormController extends \yii\web\Controller
         return ['msg' => 'ok', 'status' => 'working'];
     }
 
-//    public function actionReadPharmaceuticalForms()
-//    {
-//        $spreadSheet = IOFactory::load(Url::to('@app/web/medicines.xlsx'));
-//        $spreadSheetArray = $spreadSheet->getActiveSheet()->toArray();
-//        array_splice($spreadSheetArray, 0, 1);
-//        foreach ($spreadSheetArray as $p) {
-//            $newPharmaceuticalForm = new PharmaceuticalForm();
-//            $newPharmaceuticalForm->name = trim($p[4]);
-//            if ($newPharmaceuticalForm->validate()) {
-//                $newPharmaceuticalForm->save();
-//            }
-//        }
-//    }
+    public function actionReadPharmaceuticalForms()
+    {
+        $spreadSheet = IOFactory::load(Url::to('@app/web/medicines.xlsx'));
+        $spreadSheetArray = $spreadSheet->getActiveSheet()->toArray();
+        array_splice($spreadSheetArray, 0, 1);
+        foreach ($spreadSheetArray as $p) {
+            $newPharmaceuticalForm = new PharmaceuticalForm();
+            $newPharmaceuticalForm->name = trim($p[4]);
+            if ($newPharmaceuticalForm->validate()) {
+                $newPharmaceuticalForm->save();
+            }
+        }
+    }
 
     public function actionAdd()
     {
@@ -108,9 +111,9 @@ class PharmaceuticalFormController extends \yii\web\Controller
             if (!empty($data['deletedPharmaceuticalForms'])) {
                 foreach ($data['deletedPharmaceuticalForms'] as $id) {
                     $pharmaceuticalForm = PharmaceuticalForm::findOne(['id' => (int)$id]);
-                    if ($pharmaceuticalForm !== null && Medicine::findOne(['pharmaceuticalFormId' => (int)$id]) === null) {
+                    if ($pharmaceuticalForm !== null && MedicinePharmaceuticalForm::findOne(['pharmaceuticalFormId' => (int)$id]) === null) {
+                        MedicinePharmaceuticalForm::deleteAll(['pharmaceuticalFormId' => (int)$id]);
                         $pharmaceuticalForm->delete();
-                        Medicine::deleteAll(['pharmaceuticalFormId' => (int)$id]);
                     } else {
                         if ($pharmaceuticalForm) {
                             $errors['used'][] = ["Pharmaceutical Form that has this name $pharmaceuticalForm->name is used"];
@@ -157,7 +160,7 @@ class PharmaceuticalFormController extends \yii\web\Controller
     }
 
 
-    function actionGet_medicines($pharmaceuticalFormId)
+    function actionGetMedicines($id)
     {
         try {
             $medicines = (new Query())
@@ -175,11 +178,11 @@ class PharmaceuticalFormController extends \yii\web\Controller
                 ->from('medicine_pharmaceutical_form')
                 ->innerJoin('medicine', 'medicine.id=medicine_pharmaceutical_form.medicineId')
                 ->innerJoin('pharmaceutical_form', 'pharmaceutical_form.id=medicine_pharmaceutical_form.pharmaceuticalFormId')
-                ->where(['pharmaceutical_form.id' => $pharmaceuticalFormId])
+                ->where(['pharmaceutical_form.id' => $id])
                 ->all();
 
             if (empty($medicines))
-                return ['status' => 'error', 'details' => "There are no medicine that has this Pharmaceutical Form id ($pharmaceuticalFormId)"];
+                return ['status' => 'error', 'details' => "There are no medicine that has this Pharmaceutical Form id ($id)"];
 
             return ['status' => 'ok', 'medicines' => $medicines];
         } catch (\Exception $e) {
