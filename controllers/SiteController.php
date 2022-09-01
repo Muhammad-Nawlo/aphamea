@@ -124,12 +124,25 @@ class SiteController extends Controller
             $data = (array)json_decode(Yii::$app->request->getRawBody());
             $email = ArrayHelper::getValue($data, 'email', '');
             $password = ArrayHelper::getValue($data, 'password', '');
-            $isDataValid = HelperFunction::checkEmptyData([$email, $password]);
+            $firstName = ArrayHelper::getValue($data, 'firstName', '');
+            $lastName = ArrayHelper::getValue($data, 'lastName', '');
+            $isDataValid = HelperFunction::checkEmptyData([$email, $password, $firstName, $lastName]);
             if ($isDataValid) {
                 return $isDataValid;
             }
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                return ['status' => 'error', 'details' => 'Your email is not valid'];
+            }
+            if ((strlen($firstName) < 2 && strlen($firstName) > 20) ||
+                (strlen($lastName) < 2 && strlen($lastName) > 20)
+            ) {
+                return ['status'=>'error','details'=>'First name and last name should be more than 2 and less than 20 charachter'];
+            }
             $newUser = new User();
             $newUser->email = trim($email);
+            $newUser->first_name = trim($firstName);
+            $newUser->last_name = trim($lastName);
+
             if (strlen($password) < 8 || strlen($password) > 20) {
                 return ['status' => 'error', 'details' => 'Your password should be between 8 and 20 charachter'];
             }
