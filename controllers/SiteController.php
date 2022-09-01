@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\helpers\HelperFunction;
+use app\models\Contact;
 use app\models\User;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -109,10 +110,10 @@ class SiteController extends Controller
         $user->save();
         $user = $user->toArray();
         $user['img'] = Url::to('@web/users/images/' . $user['img'], true);
+        $user['userContacts'] = Contact::findAll(['userId' => $user['id']]);
 
         return [
             'status' => 'ok',
-            'accessToken' => (string)$accessToken,
             'userInfo' => $user
         ];
     }
@@ -129,9 +130,8 @@ class SiteController extends Controller
             }
             $newUser = new User();
             $newUser->email = trim($email);
-            if(strlen($password)<8||strlen($password)>20){
+            if (strlen($password) < 8 || strlen($password) > 20) {
                 return ['status' => 'error', 'details' => 'Your password should be between 8 and 20 charachter'];
-
             }
             $newUser->password = Yii::$app->security->generatePasswordHash(trim($password));
             if ($newUser->validate()) {
@@ -147,23 +147,50 @@ class SiteController extends Controller
 
     public function actionSaveUserInfo()
     {
+        $errors = [];
         try {
             $data = (array)Yii::$app->request->post();
-            $user = User::findOne((int)$data['id']);
-            if ($user === null) return ["status" => "error", "details" => "There is no user that has this id"];
+            if (!isset($data['email']))
+                return ["status" => "error", "details" => "There is missing param"];
+
+            $user = User::findOne(['email' => $data['email']]);
+            if ($user === null) return ["status" => "error", "details" => "There is no user that has this email"];
 
             $user->load($data, '');
-
+            $userContacts = isset($data['userContacts']) ? (array)$data['userContacts'] : [];
             $userImage = UploadedFile::getInstanceByName('userImage');
             if ($userImage !== null) {
                 HelperFunction::createFolderIfNotExist(Url::to('@app/web/users/images'));
+                HelperFunction::deletePhotos($user->img, 'users/images');
                 $name = Yii::$app->security->generateRandomString(5) . '.' . $userImage->extension;
                 $userImage->saveAs(Url::to('@app/web/users/images') . '/' . $name);
                 $user->img = $name;
             }
+
+            if ($userContacts) {
+                Contact::deleteAll(['userId' => $user->id]);
+                foreach ($userContacts as $c) {
+                    if (
+                        (!isset($c['type']) && !in_array((int)$c['type'], Contact::CONTACT_TYPES)) ||
+                        !isset($c['content'])
+                    ) {
+                        $errors[] = 'The content of contact is invalid';
+                    }
+                    $newContact = new Contact();
+                    $newContact->userId = $user->id;
+                    $newContact->type = (int)$c['type'];
+                    $newContact->content = $c['content'];
+                    if ($newContact->validate()) {
+                        $newContact->save();
+                    } else {
+                        $errors[] = $newContact->getErrors();
+                    }
+                }
+            }
+
             if ($user->validate()) {
                 $user->save();
-                return ['status' => 'ok'];
+                return ['status' => 'ok', 'errors' => $errors];
             } else {
                 return ['status' => 'error', 'details' => $user->getErrors()];
             }
@@ -266,9 +293,8 @@ class SiteController extends Controller
                         $newUser->first_name = htmlspecialchars(stripslashes(trim($user[0])));
                         $newUser->last_name = htmlspecialchars(stripslashes(trim($user[1])));
                         $newUser->email = filter_var($user[2], FILTER_VALIDATE_EMAIL);
-                        if(strlen(trim($user[3])<8 ||strlen(trim($user[3]))>20)){
+                        if (strlen(trim($user[3]) < 8 || strlen(trim($user[3])) > 20)) {
                             array_push($errorArr, ['error' => "<b>$user[0]</b>, Password should be between 8 and 20 charachter"]);
-
                         }
                         $newUser->password = Yii::$app->security->generatePasswordHash($user[3]);
 

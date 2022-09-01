@@ -18,6 +18,7 @@ use Yii;
  */
 class Contact extends \yii\db\ActiveRecord
 {
+    const CONTACT_TYPES = [0, 1, 2, 3, 4, 5, 6];
     /**
      * {@inheritdoc}
      */
@@ -68,16 +69,16 @@ class Contact extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'userId']);
-    }
+    // public function getUser()
+    // {
+    //     return $this->hasOne(User::className(), ['id' => 'userId']);
+    // }
     public function beforeValidate()
     {
         if (!parent::beforeValidate()) {
             return false;
         }
-        $this->companyId = (int)$this->companyId;
+        $this->companyId = $this->companyId ? (int)$this->companyId : null;
         $this->userId = (int)$this->userId;
         $this->type = (int)$this->type;
         return true;
