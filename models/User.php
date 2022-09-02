@@ -16,8 +16,8 @@ use yii\web\IdentityInterface;
  * @property string|null $accessToken
  * @property string|null $email
  * @property string|null $password
- * @property string|null $first_name
- * @property string|null $last_name
+ * @property string|null $firstName
+ * @property string|null $lastName
  *
  * @property CompanyTeam[] $companyTeams
  * @property Contact[] $contacts
@@ -48,7 +48,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return [
             [['regionId', 'role', 'companyId'], 'integer'],
             [[
-                'img', 'accessToken', 'email', 'password', 'first_name', 'last_name'
+                'img', 'accessToken', 'email', 'password', 'firstName', 'lastName'
             ], 'string', 'max' => 255],
             ['email', 'unique'],
             [['regionId'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['regionId' => 'id']],
@@ -69,8 +69,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'accessToken' => 'Access Token',
             'email' => 'Email',
             'password' => 'Password',
-            "first_name",
-            "last_name",
+            "firstName",
+            "lastName",
         ];
     }
 

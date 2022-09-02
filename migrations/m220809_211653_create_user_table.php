@@ -20,8 +20,8 @@ class m220809_211653_create_user_table extends Migration
         }
         $this->createTable(self::TABLE_NAME, [
             'id' => $this->primaryKey(),
-            'first_name' => $this->string(),
-            'last_name' => $this->string(),
+            'firstName' => $this->string(),
+            'lastName' => $this->string(),
             'regionId' => $this->integer(),
             'img' => $this->string(),
             'role' => $this->integer(),
