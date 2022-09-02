@@ -1,4 +1,5 @@
 <?php
+
 namespace app\controllers;
 
 use app\models\City;
@@ -38,6 +39,7 @@ class AreaController extends Controller
         ];
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::class,
+            'except' => ['get-countries', 'get-cities', 'get-regions'],
             'authMethods' => [
                 HttpBearerAuth::class,
                 QueryParamAuth::class,
