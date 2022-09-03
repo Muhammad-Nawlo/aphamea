@@ -140,8 +140,8 @@ class SiteController extends Controller
             }
             $newUser = new User();
             $newUser->email = trim($email);
-            $newUser->first_name = trim($firstName);
-            $newUser->last_name = trim($lastName);
+            $newUser->firstName = trim($firstName);
+            $newUser->lastName = trim($lastName);
 
             if (strlen($password) < 8 || strlen($password) > 20) {
                 return ['status' => 'error', 'details' => 'Your password should be between 8 and 20 charachter'];
