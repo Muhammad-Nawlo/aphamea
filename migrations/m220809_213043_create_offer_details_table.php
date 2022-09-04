@@ -19,6 +19,7 @@ class m220809_213043_create_offer_details_table extends Migration
             $option = 'CHARACTER SET utf8 COLLATE utf8_general_ci ENGINE=InnoDB';
         }
         $this->createTable(self::TABLE_NAME, [
+            'id'=>$this->primaryKey(),
             'medicineId' => $this->integer(),
             'offerId' => $this->integer(),
             'quantity' => $this->integer(),

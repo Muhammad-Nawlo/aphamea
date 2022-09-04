@@ -33,14 +33,14 @@ class OfferController extends Controller
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::class,
-            'authMethods' => [
-                HttpBearerAuth::class,
-                QueryParamAuth::class,
-                JwtHttpBearerAuth::class
-            ]
-        ];
+        // $behaviors['authenticator'] = [
+        //     'class' => CompositeAuth::class,
+        //     'authMethods' => [
+        //         HttpBearerAuth::class,
+        //         QueryParamAuth::class,
+        //         JwtHttpBearerAuth::class
+        //     ]
+        // ];
         return $behaviors;
     }
 
@@ -77,163 +77,183 @@ class OfferController extends Controller
 
     function actionAdd()
     {
-        $errors = [];
-        $data = (array)json_decode(Yii::$app->request->getRawBody());
-        if (
-            !isset($data['name']) ||
-            !isset($data['offerDetails'])
-        ) {
-            return ['status' => 'error', 'details' => 'There are missing params (name or offerDetail)'];
-        }
-        $offerDetails = (array)$data['offerDetails'];
-        if (empty($offerDetails)) {
-            return ['status' => 'error', 'details' => 'Offer details are empty'];
-        }
-        $newOffer = new Offer();
-        $newOffer->name = trim($data['name']);
-        $newOffer->creationDate = date('Y-m-d');
-        $newOffer->offerStatus = 1;
-        if ($newOffer->validate()) {
-            $newOffer->save();
-            foreach ($offerDetails as $o) {
-                $o = (array)$o;
-                $newOfferDetails = new OfferDetails();
-                $newOfferDetails->offerId = $newOffer->id;
-                $newOfferDetails->medicineId = (int)$o['medicineId'];
-                $newOfferDetails->quantity = (int)$o['quantity'];
-                $newOfferDetails->extraMedicineId = (int)$o['extraMedicineId'];
-                $newOfferDetails->extraQuantity = (int)$o['extraQuantity'];
-                if ($newOfferDetails->validate()) {
-                    $newOfferDetails->save();
-                } else {
-                    $errors[] = $newOfferDetails->getErrors();
+        try {
+            $errors = [];
+            $data = (array)json_decode(Yii::$app->request->getRawBody());
+            if (!isset($data['name']) || !isset($data['offerDetails']))
+                return ['status' => 'error', 'details' => 'There are missing params (name or offerDetail)'];
+
+            $offerDetails = (array)$data['offerDetails'];
+            if (empty($offerDetails))
+                return ['status' => 'error', 'details' => 'Offer details should not be empty'];
+
+            $newOffer = new Offer();
+            $newOffer->name = trim($data['name']);
+            $newOffer->creationDate = date('Y-m-d');
+            $newOffer->offerStatus = 1;
+            if ($newOffer->validate()) {
+                $newOffer->save();
+                foreach ($offerDetails as $o) {
+                    $o = (array)$o;
+                    $newOfferDetails = new OfferDetails();
+                    $newOfferDetails->offerId = $newOffer->id;
+                    $newOfferDetails->medicineId = (int)$o['medicineId'];
+                    $newOfferDetails->quantity = (int)$o['quantity'];
+                    $newOfferDetails->extraMedicineId = (int)$o['extraMedicineId'];
+                    $newOfferDetails->extraQuantity = (int)$o['extraQuantity'];
+                    if ($newOfferDetails->validate()) {
+                        $newOfferDetails->save();
+                    } else {
+                        $errors[] = $newOfferDetails->getErrors();
+                    }
                 }
+                return ['status' => 'ok', 'errors' => $errors];
+            } else {
+                return ['status' => 'error', 'details' => $newOffer->getErrors()];
             }
-
-            return ['status' => 'ok', 'errors' => $errors];
-        } else {
-            return ['status' => 'error', 'details' => $newOffer->getErrors()];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
-
     }
 
     function actionUpdate()
     {
-        $errors = [];
-        $data = (array)json_decode(Yii::$app->request->getRawBody());
-        if (
-            !isset($data['id']) ||
-            !isset($data['name']) ||
-            !isset($data['offerDetails'])
-        ) {
-            return ['status' => 'error', 'details' => 'There are missing params (name or offerDetail)'];
-        }
-        $offerDetails = (array)$data['offerDetails'];
-        if (empty($offerDetails))
-            return ['status' => 'error', 'details' => 'Offer details are empty'];
+        try {
+            $errors = [];
+            $data = (array)json_decode(Yii::$app->request->getRawBody());
+            if (
+                !isset($data['id']) ||
+                !isset($data['name']) ||
+                !isset($data['offerDetails'])
+            )
+                return ['status' => 'error', 'details' => 'There are missing params (id or name or offerDetail)'];
 
-        $offer = Offer::findOne(['id' => (int)$data['id']]);
-        if ($offer === null)
-            return ['status' => 'error', 'details' => 'There is no offer that has this id'];
+            $offerDetails = (array)$data['offerDetails'];
+            if (empty($offerDetails))
+                return ['status' => 'error', 'details' => 'Offer details are empty'];
 
-        $offer->name = trim($data['name']);
-        if ($offer->validate()) {
-            $offer->save();
-            OfferDetails::deleteAll(['offerId' => $offer->id]);
-            foreach ($offerDetails as $o) {
-                $o = (array)$o;
-                $newOfferDetails = new OfferDetails();
-                $newOfferDetails->offerId = $offer->id;
-                $newOfferDetails->medicineId = (int)$o['medicineId'];
-                $newOfferDetails->quantity = (int)$o['quantity'];
-                $newOfferDetails->extraMedicineId = (int)$o['extraMedicineId'];
-                $newOfferDetails->extraQuantity = (int)$o['extraQuantity'];
-                if ($newOfferDetails->validate()) {
-                    $newOfferDetails->save();
-                } else {
-                    $errors[] = $newOfferDetails->getErrors();
+            $offer = Offer::findOne(['id' => (int)$data['id']]);
+            if ($offer === null)
+                return ['status' => 'error', 'details' => 'There is no offer that has this id'];
+
+            $offer->name = trim($data['name']);
+            if ($offer->validate()) {
+                $offer->save();
+                OfferDetails::deleteAll(['offerId' => $offer->id]);
+                foreach ($offerDetails as $o) {
+                    $o = (array)$o;
+                    $newOfferDetails = new OfferDetails();
+                    $newOfferDetails->offerId = $offer->id;
+                    $newOfferDetails->medicineId = (int)$o['medicineId'];
+                    $newOfferDetails->quantity = (int)$o['quantity'];
+                    $newOfferDetails->extraMedicineId = (int)$o['extraMedicineId'];
+                    $newOfferDetails->extraQuantity = (int)$o['extraQuantity'];
+                    if ($newOfferDetails->validate()) {
+                        $newOfferDetails->save();
+                    } else {
+                        $errors[] = $newOfferDetails->getErrors();
+                    }
                 }
+                return ['status' => 'ok', 'errors' => $errors];
+            } else {
+                return ['status' => 'error', 'details' => $offer->getErrors()];
             }
-            return ['status' => 'ok', 'errors' => $errors];
-        } else {
-            return ['status' => 'error', 'details' => $offer->getErrors()];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
-
     }
 
     function actionChangeStatus($id, $status)
     {
-        $offer = Offer::findOne(['id' => (int)$id]);
-        if ($offer === null)
-            return ['status' => 'error', 'details' => 'There is no offer that has this id'];
+        try {
+            $offer = Offer::findOne(['id' => (int)$id]);
+            if ($offer === null)
+                return ['status' => 'error', 'details' => 'There is no offer that has this id'];
 
-        $offer->offerStatus = (int)$status;
-        if ($offer->validate()) {
-            $offer->save();
-        } else {
-            return ['status' => 'error', 'details' => $offer->getErrors()];
+            if (!in_array((int)$status, [0, 1]))
+                return ['status' => 'error', 'details' => 'The status of the offer is not valid'];
+
+            $offer->offerStatus = (int)$status;
+            if ($offer->validate()) {
+                $offer->save();
+                return ['status' => 'ok'];
+            } else {
+                return ['status' => 'error', 'details' => $offer->getErrors()];
+            }
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
     function actionDelete()
     {
-        $id = Yii::$app->request->post('id');
-        if ($id === null)
-            return ['status' => 'error', 'details' => 'There is a missing param (id)'];
+        try {
+            $id = Yii::$app->request->post('id');
+            if ($id === null)
+                return ['status' => 'error', 'details' => 'There is a missing param (id)'];
 
-        $offer = Offer::findOne(['id' => (int)$id]);
-        if ($offer === null)
-            return ['status' => 'error', 'details' => 'There is no offer that has this id'];
-        $orderDetails = OrderDetails::findOne(['offerId' => (int)$id]);
-        if ($orderDetails !== null) {
-            $orderNotCompleted = Order::findOne(['id' => $orderDetails->orderId, 'isCompleted' => 0]);
-            if ($orderNotCompleted !== null)
-                return ['status' => 'error', 'details' => 'There is an order that no completed so you can not delete this offer'];
-        }
-        OfferDetails::deleteAll(['offerId' => $offer->id]);
-        if ($offer->delete()) {
-            return ['status' => 'ok'];
-        } else {
-            return ['status' => 'error', 'details' => $offer->delete()];
+            $offer = Offer::findOne(['id' => (int)$id]);
+            if ($offer === null)
+                return ['status' => 'error', 'details' => 'There is no offer that has this id'];
 
+            $orderDetails = OrderDetails::findOne(['offerId' => (int)$id]);
+            if ($orderDetails !== null) {
+                $orderNotCompleted = Order::findOne(['id' => $orderDetails->orderId, 'isCompleted' => 0]);
+                if ($orderNotCompleted !== null)
+                    return ['status' => 'error', 'details' => 'There is an order that no completed so you can not delete this offer'];
+            }
+            OfferDetails::deleteAll(['offerId' => $offer->id]);
+            if ($offer->delete()) {
+                return ['status' => 'ok'];
+            } else {
+                return ['status' => 'error', 'details' => $offer->delete()];
+            }
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
     function actionGetAll()
     {
-        $offers = Offer::find()->asArray()->all();
-        if ($offers) {
-            return ['status' => 'ok', 'offers' => $offers];
-        } else {
-            return ['status' => 'error', 'details' => 'There is no offer'];
+        try {
+            $offers = Offer::find()->asArray()->all();
+            if ($offers) {
+                return ['status' => 'ok', 'offers' => $offers];
+            } else {
+                return ['status' => 'error', 'details' => 'There is no offer'];
+            }
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
     function actionGet($id)
     {
-        $offer = Offer::findOne(['id' => (int)$id]);
-        if ($offer === null)
-            return ['status' => 'error', 'details' => 'There is no offer that has this id'];
+        try {
+            $offer = Offer::findOne(['id' => (int)$id]);
+            if ($offer === null)
+                return ['status' => 'error', 'details' => 'There is no offer that has this id'];
 
-        $offerDetails = (new Query())
-            ->select([
-                'medicine.productName as medicineName',
-                'medicine.price as medicinePrice',
-                'medicine.netPrice as medicineNetPrice',
-                'order_details.quantity',
-                'extraMedicine.productName as extraMedicineName',
-                'extraMedicine.price as extraMedicinePrice',
-                'extraMedicine.netPrice as extraMedicineNetPrice',
-                'order_details.extraQuantity'
-            ])
-            ->from('order_details')
-            ->innerJoin('medicine', 'medicine.id =order_details.medicineId ')
-            ->innerJoin('medicine extraMedicine', 'extraMedicine.id =order_details.extraMedicineId ')
-            ->where(['order_details.offerId ' => $offer->id])
-            ->all();
+            $offerDetails = (new Query())
+                ->select([
+                    'medicine.productName as medicineName',
+                    'medicine.price as medicinePrice',
+                    'medicine.netPrice as medicineNetPrice',
+                    'offer_details.quantity',
+                    'extraMedicine.productName as extraMedicineName',
+                    'extraMedicine.price as extraMedicinePrice',
+                    'extraMedicine.netPrice as extraMedicineNetPrice',
+                    'offer_details.extraQuantity'
+                ])
+                ->from('offer_details')
+                ->innerJoin('medicine', 'medicine.id =offer_details.medicineId ')
+                ->innerJoin('medicine extraMedicine', 'extraMedicine.id =offer_details.extraMedicineId ')
+                ->where(['offerId' => (int)$id])
+                ->all();
 
-        return ['status' => 'ok', 'offer' => $offer, 'offerDetails' => $offerDetails];
+            return ['status' => 'ok', 'offer' => $offer, 'offerDetails' => $offerDetails];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
+        }
     }
-
-
 }

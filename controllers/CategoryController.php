@@ -97,7 +97,7 @@ class CategoryController extends \yii\web\Controller
                     $category = Category::findOne(['id' => (int)$id]);
                     if ($category !== null && MedicineCategory::findOne(['categoryId' => (int)$id]) === null) {
                         MedicineCategory::deleteAll(['categoryId' => (int)$id]);
-                        
+
                         $category->delete();
                     } else {
                         if ($category) {
@@ -115,6 +115,10 @@ class CategoryController extends \yii\web\Controller
                     $newCategory = new Category();
                 } else {
                     $newCategory = Category::findOne(['id' => (int)$category['id']]);
+                    if ($newCategory === null) {
+                        $errors['notExist'][] = ["Category that has this id " . $category['id'] . " is not exist"];
+                        continue;
+                    }
                 }
                 $newCategory->name = trim($category['name']);
                 if ($newCategory->validate()) {

@@ -130,6 +130,10 @@ class PharmaceuticalFormController extends \yii\web\Controller
                     $newPharmaceuticalForm = new PharmaceuticalForm();
                 } else {
                     $newPharmaceuticalForm = PharmaceuticalForm::findOne(['id' => (int)$p['id']]);
+                    if ($newPharmaceuticalForm === null) {
+                        $errors['notExist'][] = ["Pharmaceutical Form that has this id " . $p['id'] . " is not exist"];
+                        continue;
+                    }
                 }
                 $newPharmaceuticalForm->name = trim($p['name']);
                 if ($newPharmaceuticalForm->validate()) {

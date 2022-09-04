@@ -71,4 +71,10 @@ class Offer extends \yii\db\ActiveRecord
     {
         return $this->hasMany(OrderDetails::className(), ['offerId' => 'id']);
     }
+
+    public function getMedicines()
+    {
+        $this->hasMany(Medicine::class, ['id' => 'medicineId'])
+            ->viaTable('offer_details', ['offerId' => 'id']);
+    }
 }
