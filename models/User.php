@@ -69,8 +69,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'accessToken' => 'Access Token',
             'email' => 'Email',
             'password' => 'Password',
-            "firstName",
-            "lastName",
+            "firstName"=>"First Name",
+            "lastName"=>"Last Name",
         ];
     }
 
