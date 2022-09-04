@@ -239,8 +239,8 @@ class SiteController extends Controller
         $sheet->setCellValue('D1', 'Role');
         $i = 2;
         foreach ($data as $userInfo) {
-            $sheet->setCellValue("A$i", $userInfo->first_name);
-            $sheet->setCellValue("B$i", $userInfo->last_name);
+            $sheet->setCellValue("A$i", $userInfo->firstName);
+            $sheet->setCellValue("B$i", $userInfo->lastName);
             $sheet->setCellValue("C$i", $userInfo->email);
             $sheet->setCellValue("D$i", $userInfo->role);
             $i++;
@@ -303,8 +303,8 @@ class SiteController extends Controller
                     $isExist = User::findOne(['email' => $user[4]]);
                     if ($isExist === null) {
                         $newUser = new User();
-                        $newUser->first_name = htmlspecialchars(stripslashes(trim($user[0])));
-                        $newUser->last_name = htmlspecialchars(stripslashes(trim($user[1])));
+                        $newUser->firstName = htmlspecialchars(stripslashes(trim($user[0])));
+                        $newUser->lastName = htmlspecialchars(stripslashes(trim($user[1])));
                         $newUser->email = filter_var($user[2], FILTER_VALIDATE_EMAIL);
                         if (strlen(trim($user[3]) < 8 || strlen(trim($user[3])) > 20)) {
                             array_push($errorArr, ['error' => "<b>$user[0]</b>, Password should be between 8 and 20 charachter"]);
