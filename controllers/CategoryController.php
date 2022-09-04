@@ -136,7 +136,7 @@ class CategoryController extends \yii\web\Controller
     public function actionGetAll()
     {
         $categories = Category::find()->where([])->asArray()->all();
-        return ['status' => 'status', 'categories' => $categories];
+        return ['status' => 'ok', 'categories' => $categories];
     }
 
     function actionGet($id)

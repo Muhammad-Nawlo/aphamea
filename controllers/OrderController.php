@@ -154,9 +154,9 @@ class OrderController extends Controller
                 'orders.isCanceled',
                 'orders.isCompleted',
                 'user.first_name as ufirstName',
-                'user.last_name as ulastName',
-                'representative.first_name as rfirstName',
-                'representative.last_name as rlastName',
+                'user.lastName as ulastName',
+                'representative.firstName as rfirstName',
+                'representative.lastName as rlastName',
                 'offer.name',
                 'order.quantity'
             ])
