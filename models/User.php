@@ -12,22 +12,26 @@ use yii\web\IdentityInterface;
  * @property string|null $firstName
  * @property string|null $lastName
  * @property int|null $regionId
+ * @property int|null $cityId
+ * @property int|null $countryId
  * @property string|null $img
  * @property int|null $role
  * @property string|null $accessToken
  * @property string|null $email
  * @property string|null $password
- * @property string|null $specialMarks
+ * @property string|null $specialMark
  *
+ * @property City $city
  * @property CompanyTeam[] $companyTeams
  * @property Contact[] $contacts
+ * @property Country $country
  * @property Order[] $orders
  * @property Order[] $orders0
  * @property Region $region
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
-        //Doctor
+    //Doctor
     //Pharmacist
     //Sales Representative
     //Scientific representative
@@ -47,9 +51,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['regionId', 'role'], 'integer'],
-            [['firstName', 'lastName', 'img', 'accessToken', 'email', 'password', 'specialMarks'], 'string', 'max' => 255],
+            [['regionId', 'cityId', 'countryId', 'role'], 'integer'],
+            [['firstName', 'lastName', 'img', 'accessToken', 'email', 'password', 'specialMark'], 'string', 'max' => 255],
             [['email'], 'unique'],
+            [['cityId'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['cityId' => 'id']],
+            [['countryId'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['countryId' => 'id']],
             [['regionId'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['regionId' => 'id']],
         ];
     }
@@ -64,13 +70,25 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'firstName' => 'First Name',
             'lastName' => 'Last Name',
             'regionId' => 'Region ID',
+            'cityId' => 'City ID',
+            'countryId' => 'Country ID',
             'img' => 'Img',
             'role' => 'Role',
             'accessToken' => 'Access Token',
             'email' => 'Email',
             'password' => 'Password',
-            'specialMarks' => 'Special Marks',
+            'specialMark' => 'Special Marks',
         ];
+    }
+
+    /**
+     * Gets query for [[City]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCity()
+    {
+        return $this->hasOne(City::className(), ['id' => 'cityId']);
     }
 
     /**
@@ -91,6 +109,16 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function getContacts()
     {
         return $this->hasMany(Contact::className(), ['userId' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Country]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCountry()
+    {
+        return $this->hasOne(Country::className(), ['id' => 'countryId']);
     }
 
     /**
@@ -122,9 +150,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasOne(Region::className(), ['id' => 'regionId']);
     }
-     /**
-     * {@inheritdoc}
-     */
     public static function findIdentity($id)
     {
         return User::findOne($id);

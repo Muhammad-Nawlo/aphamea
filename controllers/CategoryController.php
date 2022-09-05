@@ -53,14 +53,14 @@ class CategoryController extends \yii\web\Controller
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
-        // $behaviors['authenticator'] = [
-        //     'class' => CompositeAuth::class,
-        //     'authMethods' => [
-        //         HttpBearerAuth::class,
-        //         QueryParamAuth::class,
-        //         JwtHttpBearerAuth::class
-        //     ]
-        // ];
+        $behaviors['authenticator'] = [
+            'class' => CompositeAuth::class,
+            'authMethods' => [
+                HttpBearerAuth::class,
+                QueryParamAuth::class,
+                JwtHttpBearerAuth::class
+            ]
+        ];
         return $behaviors;
     }
 
@@ -91,7 +91,7 @@ class CategoryController extends \yii\web\Controller
         $writer->save("excelFiles/" . $fileName . ".xlsx");
         $this->response->sendFile("../web/excelFiles/" . $fileName . ".xlsx", "$fileName.xlsx");
     }
-    
+
     public function actionImport_excel_file()
     {
         if (isset($_FILES['sheet'])) {
@@ -116,7 +116,7 @@ class CategoryController extends \yii\web\Controller
                 $isExist = Category::findOne(['name' => trim($category[0])]);
                 if ($isExist === null) {
                     $newCategory = new Category();
-                    if (trim($category[0])==='') {
+                    if (trim($category[0]) === '') {
                         array_push($errorArr, ['error' => "<b>$category[0]</b> Category should not be empty"]);
                         continue;
                     }
@@ -198,44 +198,29 @@ class CategoryController extends \yii\web\Controller
 
     public function actionGetAll()
     {
-        $categories = Category::find()->where([])->asArray()->all();
+        $categories = Category::find()->where([])->with('medicines')->asArray()->all();
         return ['status' => 'ok', 'categories' => $categories];
     }
 
     function actionGet($id)
     {
-        $category = Category::find()->where(['id' => (int)$id])->one();
+        $category = Category::find()->where(['id' => (int)$id])->with('medicines')->asArray()->one();
         if ($category === null)
             return ["status" => "error", "details" => "There is no category"];
-
         return ['status' => 'ok', 'category' => $category];
     }
 
     function actionGetMedicines($categoryId)
     {
         try {
-            $medicines = (new Query())
-                ->select([
-                    "productName",
-                    "indications",
-                    "barcode",
-                    "composition",
-                    "packing",
-                    "expiredDate",
-                    "price",
-                    "netPrice",
-                    "name as categoryName"
-                ])
-                ->from('medicine_category')
-                ->innerJoin('medicine', 'medicine.id=medicine_category.medicineId')
-                ->innerJoin('category', 'category.id=medicine_category.categoryId')
-                ->where(['category.id' => $categoryId])
-                ->all();
+            $category = Category::find()->where(['id' => (int)$categoryId])->with('medicines')->asArray()->one();
+            if ($category === null)
+                return ["status" => "error", "details" => "There is no category"];
 
-            if (empty($medicines))
+            if (empty($category['medicines']))
                 return ['status' => 'error', 'details' => "There are no medicine that has this category id ($categoryId)"];
 
-            return ['status' => 'ok', 'medicines' => $medicines];
+            return ['status' => 'ok', 'medicines' => $category['medicines']];
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
         }

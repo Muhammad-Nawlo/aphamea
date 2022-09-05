@@ -53,4 +53,10 @@ class Category extends \yii\db\ActiveRecord
     {
         return $this->hasMany(MedicineCategory::className(), ['categoryId' => 'id']);
     }
+
+    public function getMedicines()
+    {
+        return $this->hasMany(Medicine::class, ['id' => 'medicineId'])
+            ->viaTable('medicine_category', ['categoryId' => 'id']);
+    }
 }

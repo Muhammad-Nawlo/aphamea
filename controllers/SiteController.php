@@ -57,15 +57,15 @@ class SiteController extends Controller
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::class,
-            'except' => ['login', 'signup', 'index', 'save-user-info'],
-            'authMethods' => [
-                HttpBearerAuth::class,
-                QueryParamAuth::class,
-                JwtHttpBearerAuth::class
-            ]
-        ];
+        // $behaviors['authenticator'] = [
+        //     'class' => CompositeAuth::class,
+        //     'except' => ['login', 'signup', 'index', 'save-user-info'],
+        //     'authMethods' => [
+        //         HttpBearerAuth::class,
+        //         QueryParamAuth::class,
+        //         JwtHttpBearerAuth::class
+        //     ]
+        // ];
         return $behaviors;
     }
 
@@ -80,7 +80,6 @@ class SiteController extends Controller
         return ['status' => 'ok', 'status' => 'It\'s working'];
     }
 
-    //modify this to login by default
     public function actionLogin()
     {
         $data = (array)json_decode(Yii::$app->request->getRawBody(), true);
@@ -90,27 +89,31 @@ class SiteController extends Controller
         $isValidRequest = HelperFunction::checkEmptyData([$data['email'], $data['password']]);
         if ($isValidRequest) return $isValidRequest;
 
-        $user = User::find()->where(['email' => $data['email']])->with('contacts')->one();
+        $user = User::find()
+            ->where(['email' => $data['email']])
+            ->with('contacts', 'region', 'city', 'country')
+            ->asArray()
+            ->one();
+
         if ($user === null) return ['status' => 'error', 'details' => 'Email is not exist or wrong'];
 
-        if (!Yii::$app->security->validatePassword($data['password'], $user->password))
+        if (!Yii::$app->security->validatePassword($data['password'], $user['password']))
             return ['status' => 'error', 'details' => 'Password is not exist'];
 
         $accessToken = Yii::$app->jwt->getBuilder()
             ->setIssuer('http://localhost')
             ->setAudience('http://localhost')
-            ->setId((string)$user->id, true)
+            ->setId((string)$user['id'], true)
             ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
             ->setNotBefore(time() + 60)
             ->setExpiration(time() + 99900999) // Configures the expiration time of the token (exp claim)
-            ->set('uid', (string)$user->id) // Configures a new claim, called "uid"
+            ->set('uid', (string)$user['id']) // Configures a new claim, called "uid"
             ->getToken(); // Retrieves the generated token
-        $user->accessToken = (string)$accessToken;
+        User::updateAll(['accessToken' => (string)$accessToken], ['id' => $user['id']]);
 
-        $user->save();
-        $user = $user->toArray();
-        $user['img'] = Url::to('@web/users/images/' . $user['img'], true);
-        $user['userContacts'] = Contact::findAll(['userId' => $user['id']]);
+        $user['accessToken'] = (string)$accessToken;
+        if ($user['img'])
+            $user['img'] = Url::to('@web/users/images/' . $user['img'], true);
 
         return [
             'status' => 'ok',
@@ -136,17 +139,18 @@ class SiteController extends Controller
             if ((strlen($firstName) < 2 && strlen($firstName) > 20) ||
                 (strlen($lastName) < 2 && strlen($lastName) > 20)
             ) {
-                return ['status'=>'error','details'=>'First name and last name should be more than 2 and less than 20 charachter'];
+                return ['status' => 'error', 'details' => 'First name and last name should be more than 2 and less than 20 charachter'];
             }
+            if (strlen($password) < 8 || strlen($password) > 20) {
+                return ['status' => 'error', 'details' => 'Your password should be between 8 and 20 charachter'];
+            }
+
             $newUser = new User();
             $newUser->email = trim($email);
             $newUser->firstName = trim($firstName);
             $newUser->lastName = trim($lastName);
-
-            if (strlen($password) < 8 || strlen($password) > 20) {
-                return ['status' => 'error', 'details' => 'Your password should be between 8 and 20 charachter'];
-            }
             $newUser->password = Yii::$app->security->generatePasswordHash(trim($password));
+
             if ($newUser->validate()) {
                 $newUser->save();
                 return ['status' => 'ok'];
@@ -214,10 +218,13 @@ class SiteController extends Controller
 
     public function actionGetAllUsers()
     {
-        $users = User::find()->where([])->asArray()->all();
+        $users = User::find()->where([])
+            ->with('contacts', 'region', 'city', 'country')
+            ->asArray()->all();
         if ($users) {
             $users = array_map(function ($u) {
-                $u['img'] = Url::to('@web/users/images/' . $u['img'], true);
+                if ($u['img'])
+                    $u['img'] = Url::to('@web/users/images/' . $u['img'], true);
                 return $u;
             }, $users);
             return ['status' => 'ok', 'users' => $users];
@@ -226,7 +233,7 @@ class SiteController extends Controller
         }
     }
 
-    public function actionExport_to_excel_file($t)
+    public function actionExportToExcelFile()
     {
         $data = User::find()->where([])->all();
 
@@ -246,14 +253,14 @@ class SiteController extends Controller
             $i++;
         }
 
-
         $fileName = date('Y-m-d');
         $writer = new Xlsx($spreadsheet);
-        $writer->save("excelFiles/" . "$fileName.xlsx");
-        $this->response->sendFile("../web/excelFiles/$fileName.xlsx", "$fileName.xlsx");
+        HelperFunction::createFolderIfNotExist(Url::to('@app/web/excelFiles/users'));
+        $writer->save("excelFiles/users/" . "$fileName.xlsx");
+        $this->response->sendFile(Url::to("@app/web/excelFiles/users/$fileName.xlsx"), "$fileName.xlsx");
     }
 
-    public function actionGenerate_users_excel_file_template()
+    public function actionGenerateExcelFileTemplate()
     {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -266,20 +273,19 @@ class SiteController extends Controller
 
         $fileName = yii::$app->getSecurity()->generateRandomString(10);
         $writer = new Xlsx($spreadsheet);
-        if (!is_dir('../web/excelFiles')) {
-            mkdir('../web/excelFiles');
-        }
+        HelperFunction::createFolderIfNotExist(Url::to('@app/web/excelFiles/users'));
 
-        $writer->save("excelFiles/" . $fileName . ".xlsx");
-        $this->response->sendFile("../web/excelFiles/" . $fileName . ".xlsx", "$fileName.xlsx");
+
+        $writer->save("excelFiles/users" . $fileName . ".xlsx");
+        $this->response->sendFile(Url::to("@app/web/excelFiles/users" . $fileName . ".xlsx"), "$fileName.xlsx");
     }
 
-    public function actionImport_users_excel_file()
+    public function actionImportExcelFile()
     {
-        if (isset($_FILES['userSheetInfo'])) {
-            $file = $_FILES['userSheetInfo'];
+        if (isset($_FILES['sheet'])) {
+            $file = $_FILES['sheet'];
             $tmpName = yii::$app->security->generateRandomString();
-            $inputFile = 'excelFiles/' . $tmpName . '.xlsx';
+            $inputFile = 'excelFiles/users/' . $tmpName . '.xlsx';
             move_uploaded_file($file['tmp_name'], $inputFile);
             $spreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFile);
             $usersArray = $spreadSheet->getActiveSheet()->toArray();
@@ -299,7 +305,7 @@ class SiteController extends Controller
             $errorArr = [];
             foreach ($usersArray as $user) {
                 $i++;
-                if (filter_var($user[4], FILTER_VALIDATE_EMAIL)) {
+                if (filter_var($user[2], FILTER_VALIDATE_EMAIL)) {
                     $isExist = User::findOne(['email' => $user[4]]);
                     if ($isExist === null) {
                         $newUser = new User();
@@ -312,7 +318,7 @@ class SiteController extends Controller
                         $newUser->password = Yii::$app->security->generatePasswordHash($user[3]);
 
                         if (!in_array((int)$user[4], User::ROLE)) {
-                            array_push($errorArr, ['error' => "<b>$user[0]</b> has invalid role"]);
+                            array_push($errorArr, ['error' => "<b>$user[2]</b> has invalid role"]);
                             continue;
                         }
                         $newUser->role = $user[4];

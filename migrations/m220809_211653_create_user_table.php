@@ -23,14 +23,18 @@ class m220809_211653_create_user_table extends Migration
             'firstName' => $this->string(),
             'lastName' => $this->string(),
             'regionId' => $this->integer(),
+            'cityId' => $this->integer(),
+            'countryId' => $this->integer(),
             'img' => $this->string(),
             'role' => $this->integer(),
             'accessToken' => $this->string(),
             'email' => $this->string()->unique(),
             'password' => $this->string(),
-            'specialMarks' => $this->string()
+            'specialMark' => $this->string()
         ], $options);
         $this->addForeignKey('fk_user_region_regionId', self::TABLE_NAME, 'regionId', 'region', 'id');
+        $this->addForeignKey('fk_user_region_cityId', self::TABLE_NAME, 'cityId', 'city', 'id');
+        $this->addForeignKey('fk_user_region_countryId', self::TABLE_NAME, 'countryId', 'country', 'id');
     }
 
     /**
@@ -38,6 +42,8 @@ class m220809_211653_create_user_table extends Migration
      */
     public function safeDown()
     {
+        $this->dropForeignKey('fk_user_region_countryId', self::TABLE_NAME);
+        $this->dropForeignKey('fk_user_region_cityId', self::TABLE_NAME);
         $this->dropForeignKey('fk_user_region_regionId', self::TABLE_NAME);
         $this->dropTable(self::TABLE_NAME);
     }
