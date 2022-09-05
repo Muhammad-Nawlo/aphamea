@@ -69,18 +69,8 @@ class Contact extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    // public function getUser()
-    // {
-    //     return $this->hasOne(User::className(), ['id' => 'userId']);
-    // }
-    public function beforeValidate()
+    public function getUser()
     {
-        if (!parent::beforeValidate()) {
-            return false;
-        }
-        $this->companyId = $this->companyId ? (int)$this->companyId : null;
-        $this->userId = (int)$this->userId;
-        $this->type = (int)$this->type;
-        return true;
+        return $this->hasOne(User::className(), ['id' => 'userId']);
     }
 }

@@ -73,23 +73,4 @@ class CompanyTeam extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'userId']);
     }
-
-    public function beforeValidate()
-    {
-        if(!parent::beforeValidate()){
-            return false;
-        }
-        $this->companyId = (int)$this->companyId;
-        $this->userId = (int)$this->userId;
-        return true;
-    }
-    // public function beforeSave($insert)
-    // {
-    //     if (!parent::beforeSave($insert)) {
-    //         return false;
-    //     }
-    //     $this->companyId = (int)$this->companyId;
-    //     $this->userId = (int)$this->userId;
-    //     return true;
-    // }
 }

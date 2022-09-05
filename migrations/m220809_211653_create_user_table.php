@@ -25,7 +25,6 @@ class m220809_211653_create_user_table extends Migration
             'regionId' => $this->integer(),
             'img' => $this->string(),
             'role' => $this->integer(),
-            'companyId' => $this->integer(),
             'accessToken' => $this->string(),
             'email' => $this->string()->unique(),
             'password' => $this->string(),

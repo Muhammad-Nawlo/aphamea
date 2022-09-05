@@ -11,7 +11,6 @@ use Yii;
  * @property int|null $userId
  * @property int|null $representativeId
  * @property string|null $orderDate
- * @property int|null $companyId
  * @property int|null $isCanceled
  * @property int|null $isCompleted
  *
@@ -35,7 +34,7 @@ class Order extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['userId', 'representativeId', 'companyId', 'isCanceled', 'isCompleted'], 'integer'],
+            [['userId', 'representativeId', 'isCanceled', 'isCompleted'], 'integer'],
             [['orderDate'], 'safe'],
             [['representativeId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['representativeId' => 'id']],
             [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
@@ -52,7 +51,6 @@ class Order extends \yii\db\ActiveRecord
             'userId' => 'User ID',
             'representativeId' => 'Representative ID',
             'orderDate' => 'Order Date',
-            'companyId' => 'Company ID',
             'isCanceled' => 'Is Canceled',
             'isCompleted' => 'Is Completed',
         ];
@@ -68,11 +66,6 @@ class Order extends \yii\db\ActiveRecord
         return $this->hasMany(OrderDetails::className(), ['orderId' => 'id']);
     }
 
-    public function getOffers()
-    {
-        return $this->hasMany(Offer::class, ['id' => 'test'])->viaTable('order_details', ['orderId' => 'id']);
-    }
-
     /**
      * Gets query for [[Representative]].
      *
@@ -80,7 +73,7 @@ class Order extends \yii\db\ActiveRecord
      */
     public function getRepresentative()
     {
-        return $this->hasOne(User::class, ['id' => 'representativeId']);
+        return $this->hasOne(User::className(), ['id' => 'representativeId']);
     }
 
     /**
@@ -90,6 +83,6 @@ class Order extends \yii\db\ActiveRecord
      */
     public function getUser()
     {
-        return $this->hasOne(User::class, ['id' => 'userId']);
+        return $this->hasOne(User::className(), ['id' => 'userId']);
     }
 }

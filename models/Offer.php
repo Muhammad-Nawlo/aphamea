@@ -35,6 +35,7 @@ class Offer extends \yii\db\ActiveRecord
             [['creationDate'], 'safe'],
             [['offerStatus', 'orderCount'], 'integer'],
             [['name'], 'string', 'max' => 255],
+            [['name'], 'unique'],
         ];
     }
 
@@ -70,11 +71,5 @@ class Offer extends \yii\db\ActiveRecord
     public function getOrderDetails()
     {
         return $this->hasMany(OrderDetails::className(), ['offerId' => 'id']);
-    }
-
-    public function getMedicines()
-    {
-        $this->hasMany(Medicine::class, ['id' => 'medicineId'])
-            ->viaTable('offer_details', ['offerId' => 'id']);
     }
 }

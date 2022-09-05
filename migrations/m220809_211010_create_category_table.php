@@ -20,7 +20,7 @@ class m220809_211010_create_category_table extends Migration
         }
         $this->createTable(self::TABLE_NAME, [
             'id' => $this->primaryKey(),
-            'name' => $this->string()
+            'name' => $this->string()->unique()
         ], $options);
     }
 

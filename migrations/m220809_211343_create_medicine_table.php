@@ -20,7 +20,7 @@ class m220809_211343_create_medicine_table extends Migration
         }
         $this->createTable(self::TABLE_NAME, [
             'id' => $this->primaryKey(),
-            'barcode' => $this->string(),
+            'barcode' => $this->string()->unique(),
             'productName' => $this->string(),
             'indications' => $this->string(),
             'packing' => $this->integer(),

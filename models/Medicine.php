@@ -44,6 +44,7 @@ class Medicine extends \yii\db\ActiveRecord
             [['expiredDate'], 'safe'],
             [['price', 'netPrice'], 'number'],
             [['barcode', 'productName', 'indications', 'imgs'], 'string', 'max' => 255],
+            [['barcode'], 'unique'],
         ];
     }
 
@@ -73,8 +74,7 @@ class Medicine extends \yii\db\ActiveRecord
      */
     public function getMedicineCategories()
     {
-        return $this->hasMany(Category::class, ['id' => 'categoryId'])
-            ->viaTable('medicine_category', ['medicineId' => 'id']);
+        return $this->hasMany(MedicineCategory::className(), ['medicineId' => 'id']);
     }
 
     /**
@@ -84,8 +84,7 @@ class Medicine extends \yii\db\ActiveRecord
      */
     public function getMedicinePharmaceuticalForms()
     {
-        return $this->hasMany(PharmaceuticalForm::class, ['id' => 'pharmaceuticalFormId'])
-        ->viaTable('medicine_pharmaceutical_form', ['medicineId', 'id']);
+        return $this->hasMany(MedicinePharmaceuticalForm::className(), ['medicineId' => 'id']);
     }
 
     /**
@@ -106,17 +105,5 @@ class Medicine extends \yii\db\ActiveRecord
     public function getOfferDetails0()
     {
         return $this->hasMany(OfferDetails::className(), ['medicineId' => 'id']);
-    }
-
-    public function beforeValidate()
-    {
-        if (!parent::beforeValidate()) {
-            return false;
-        }
-        $this->packing = (int)$this->packing;
-        $this->price = (float)$this->price;
-        $this->netPrice = (float)$this->netPrice;
-
-        return true;
     }
 }

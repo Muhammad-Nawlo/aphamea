@@ -23,7 +23,6 @@ class m220809_213234_create_order_table extends Migration
             'userId' => $this->integer(),
             'representativeId' => $this->integer(),
             'orderDate' => $this->dateTime(),
-            'companyId' => $this->integer(),
             'isCanceled' => $this->boolean(),
             'isCompleted' => $this->boolean(),
         ], $option);

@@ -9,29 +9,30 @@ use yii\web\IdentityInterface;
  * This is the model class for table "user".
  *
  * @property int $id
+ * @property string|null $firstName
+ * @property string|null $lastName
  * @property int|null $regionId
  * @property string|null $img
  * @property int|null $role
- * @property int|null $companyId
  * @property string|null $accessToken
  * @property string|null $email
  * @property string|null $password
- * @property string|null $firstName
- * @property string|null $lastName
+ * @property string|null $specialMarks
  *
  * @property CompanyTeam[] $companyTeams
  * @property Contact[] $contacts
+ * @property Order[] $orders
+ * @property Order[] $orders0
  * @property Region $region
  */
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
-    //Doctor
+        //Doctor
     //Pharmacist
     //Sales Representative
     //Scientific representative
     //Agent
     const ROLE = [0, 1, 2, 3, 4, 5];
-
     /**
      * {@inheritdoc}
      */
@@ -46,11 +47,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['regionId', 'role', 'companyId'], 'integer'],
-            [[
-                'img', 'accessToken', 'email', 'password', 'firstName', 'lastName'
-            ], 'string', 'max' => 255],
-            ['email', 'unique'],
+            [['regionId', 'role'], 'integer'],
+            [['firstName', 'lastName', 'img', 'accessToken', 'email', 'password', 'specialMarks'], 'string', 'max' => 255],
+            [['email'], 'unique'],
             [['regionId'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['regionId' => 'id']],
         ];
     }
@@ -62,15 +61,15 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
+            'firstName' => 'First Name',
+            'lastName' => 'Last Name',
             'regionId' => 'Region ID',
             'img' => 'Img',
             'role' => 'Role',
-            'companyId' => 'Company ID',
             'accessToken' => 'Access Token',
             'email' => 'Email',
             'password' => 'Password',
-            "firstName"=>"First Name",
-            "lastName"=>"Last Name",
+            'specialMarks' => 'Special Marks',
         ];
     }
 
@@ -95,6 +94,26 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     }
 
     /**
+     * Gets query for [[Orders]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrders()
+    {
+        return $this->hasMany(Order::className(), ['representativeId' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Orders0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getOrders0()
+    {
+        return $this->hasMany(Order::className(), ['userId' => 'id']);
+    }
+
+    /**
      * Gets query for [[Region]].
      *
      * @return \yii\db\ActiveQuery
@@ -103,8 +122,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasOne(Region::className(), ['id' => 'regionId']);
     }
-
-    /**
+     /**
      * {@inheritdoc}
      */
     public static function findIdentity($id)

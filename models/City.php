@@ -13,6 +13,7 @@ use Yii;
  * @property int|null $countryId
  *
  * @property Country $country
+ * @property Region[] $regions
  */
 class City extends \yii\db\ActiveRecord
 {
@@ -57,5 +58,15 @@ class City extends \yii\db\ActiveRecord
     public function getCountry()
     {
         return $this->hasOne(Country::className(), ['id' => 'countryId']);
+    }
+
+    /**
+     * Gets query for [[Regions]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRegions()
+    {
+        return $this->hasMany(Region::className(), ['cityId' => 'id']);
     }
 }

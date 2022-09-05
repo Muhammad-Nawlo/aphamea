@@ -52,16 +52,4 @@ class Activity extends \yii\db\ActiveRecord
             'isRead' => 'Is Read',
         ];
     }
-
-    public function beforeSave($insert)
-    {
-        if(!parent::beforeSave($insert)){
-            return false;
-        }
-        if($this->isNewRecord){
-            $this->isRead = 0;
-            $this->publishedDate = date('Y-m-d h:i:s');
-        }
-        return true;
-    }
 }

@@ -22,7 +22,6 @@ class m220809_211438_create_region_table extends Migration
             'id' => $this->primaryKey(),
             'cityId' => $this->integer(),
             'region' => $this->string(),
-            'specialMark' => $this->string()
         ], $options);
         $this->addForeignKey('fk_city_region_cityId', 'region', 'cityId', 'city', 'id');
     }

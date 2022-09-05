@@ -20,7 +20,7 @@ class m220809_213035_create_offer_table extends Migration
         }
         $this->createTable(self::TABLE_NAME, [
             'id' => $this->primaryKey(),
-            'name' => $this->string(),
+            'name' => $this->string()->unique(),
             'creationDate' => $this->dateTime(),
             'offerStatus'=>$this->boolean(),
             'orderCount'=>$this->integer()
