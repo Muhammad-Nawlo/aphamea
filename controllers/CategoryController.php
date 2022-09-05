@@ -2,16 +2,18 @@
 
 namespace app\controllers;
 
+use Yii;
+use yii\db\Query;
+use yii\filters\Cors;
 use app\models\Category;
 use app\models\Medicine;
 use app\models\MedicineCategory;
 use sizeg\jwt\JwtHttpBearerAuth;
-use Yii;
-use yii\db\Query;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
-use yii\filters\Cors;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class CategoryController extends \yii\web\Controller
 {
@@ -70,7 +72,68 @@ class CategoryController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        return ['status' => 'ok', 'msg' => 'It\'s working'];
+        return ['status' => 'ok', 'status' => 'It\'s working'];
+    }
+
+    public function actionGenerate_excel_file_template()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'Name');
+
+        $fileName = yii::$app->getSecurity()->generateRandomString(10);
+        $writer = new Xlsx($spreadsheet);
+        if (!is_dir('../web/excelFiles')) {
+            mkdir('../web/excelFiles');
+        }
+
+        $writer->save("excelFiles/" . $fileName . ".xlsx");
+        $this->response->sendFile("../web/excelFiles/" . $fileName . ".xlsx", "$fileName.xlsx");
+    }
+    
+    public function actionImport_excel_file()
+    {
+        if (isset($_FILES['sheet'])) {
+            $file = $_FILES['sheet'];
+            $tmpName = yii::$app->security->generateRandomString();
+            $inputFile = 'excelFiles/' . $tmpName . '.xlsx';
+            move_uploaded_file($file['tmp_name'], $inputFile);
+            $spreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFile);
+            $categoryArray = $spreadSheet->getActiveSheet()->toArray();
+            //To remove the first row in file
+            $tmpExcelFields = array_splice($categoryArray, 0, 1);
+            //This condition to check the template
+            if (
+                $tmpExcelFields[0][0] != 'Name'
+            ) {
+                return ['status' => 'error', 'details' => 'This excel file is not a validate file'];
+            }
+            $i = 0;
+            $errorArr = [];
+            foreach ($categoryArray as $category) {
+                $i++;
+                $isExist = Category::findOne(['name' => trim($category[0])]);
+                if ($isExist === null) {
+                    $newCategory = new Category();
+                    if (trim($category[0])==='') {
+                        array_push($errorArr, ['error' => "<b>$category[0]</b> Category should not be empty"]);
+                        continue;
+                    }
+                    $newCategory->name = trim($category[0]);
+                    if ($newCategory->validate()) {
+                        $newCategory->save();
+                    } else {
+                        array_push($errorArr, ['error' => "<b>$category[0]</b> ", 'details' => $newCategory->getErrors()]);
+                    }
+                } else {
+                    array_push($errorArr, ['error' => "<b>$category[0]</b> Category already exist"]);
+                }
+            }
+            return ['status' => 'ok', 'errorDetails' => $errorArr];
+        } else {
+            return ['status' => 'error', 'details' => 'There is no file uploaded'];
+        }
     }
 
     public function actionAdd()
@@ -129,7 +192,7 @@ class CategoryController extends \yii\web\Controller
             }
             return ['status' => 'ok', 'errors' => $errors];
         } catch (\Exception $e) {
-            return ['msg' => 'error', 'details' => $e->getMessage()];
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
@@ -174,7 +237,7 @@ class CategoryController extends \yii\web\Controller
 
             return ['status' => 'ok', 'medicines' => $medicines];
         } catch (\Exception $e) {
-            return ['msg' => 'error', 'details' => $e->getMessage()];
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 }

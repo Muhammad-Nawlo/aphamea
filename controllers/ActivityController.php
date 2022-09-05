@@ -70,7 +70,7 @@ class ActivityController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        return ['msg' => 'ok', 'status' => 'working'];
+        return ['status' => 'ok', 'status' => 'working'];
     }
 
 
@@ -107,7 +107,7 @@ class ActivityController extends \yii\web\Controller
                 return ['status' => 'error', 'details' => $newActivity->getErrors()];
             }
         } catch (\Exception $e) {
-            return ['msg' => 'error', 'details' => $e->getMessage()];
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
 
 
@@ -129,7 +129,7 @@ class ActivityController extends \yii\web\Controller
             }
             return ['status' => 'ok'];
         } catch (\Exception $e) {
-            return ['msg' => 'error', 'details' => $e->getMessage()];
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
@@ -157,7 +157,7 @@ class ActivityController extends \yii\web\Controller
                 return ["status" => "error", "details" => "There is no activity"];
             }
         } catch (\Exception $e) {
-            return ['msg' => 'error', 'details' => $e->getMessage()];
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
@@ -181,7 +181,7 @@ class ActivityController extends \yii\web\Controller
                 'activity' => $activity
             ];
         } catch (\Exception $e) {
-            return ['msg' => 'error', 'details' => $e->getMessage()];
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
@@ -226,7 +226,7 @@ class ActivityController extends \yii\web\Controller
                 return ['status' => 'error', 'details' => $activity->getErrors()];
             }
         } catch (\Exception $e) {
-            return ['msg' => 'error', 'details' => $e->getMessage()];
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 }

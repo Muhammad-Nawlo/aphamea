@@ -16,6 +16,8 @@ use Yii;
  * @property int|null $isCompleted
  *
  * @property OrderDetails[] $orderDetails
+ * @property User $representative
+ * @property User $user
  */
 class Order extends \yii\db\ActiveRecord
 {
@@ -35,6 +37,8 @@ class Order extends \yii\db\ActiveRecord
         return [
             [['userId', 'representativeId', 'companyId', 'isCanceled', 'isCompleted'], 'integer'],
             [['orderDate'], 'safe'],
+            [['representativeId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['representativeId' => 'id']],
+            [['userId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['userId' => 'id']],
         ];
     }
 
@@ -62,5 +66,30 @@ class Order extends \yii\db\ActiveRecord
     public function getOrderDetails()
     {
         return $this->hasMany(OrderDetails::className(), ['orderId' => 'id']);
+    }
+
+    public function getOffers()
+    {
+        return $this->hasMany(Offer::class, ['id' => 'test'])->viaTable('order_details', ['orderId' => 'id']);
+    }
+
+    /**
+     * Gets query for [[Representative]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRepresentative()
+    {
+        return $this->hasOne(User::class, ['id' => 'representativeId']);
+    }
+
+    /**
+     * Gets query for [[User]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUser()
+    {
+        return $this->hasOne(User::class, ['id' => 'userId']);
     }
 }

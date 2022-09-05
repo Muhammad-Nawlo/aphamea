@@ -72,7 +72,7 @@ class CompanyController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        return ['msg' => 'ok', 'status' => 'working'];
+        return ['status' => 'ok', 'status' => 'working'];
     }
 
     public function actionGet($id)
@@ -89,7 +89,7 @@ class CompanyController extends \yii\web\Controller
             $company['logo'] = Url::to('@app/web/company/images/' . $company['logo'], true);
             return ['status' => 'ok', 'company' => $company];
         } catch (\Exception $e) {
-            return ['msg' => 'error', 'details' => $e->getMessage()];
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
@@ -165,7 +165,7 @@ class CompanyController extends \yii\web\Controller
                 return ['status' => 'error', 'details' => $company->getErrors()];
             }
         } catch (\Exception $e) {
-            return ['msg' => 'error', 'details' => $e->getMessage()];
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
@@ -183,7 +183,7 @@ class CompanyController extends \yii\web\Controller
                 return ['status' => 'error', 'details' => $companyContact->getErrors()];
             }
         } catch (\Exception $e) {
-            return ['msg' => 'error', 'details' => $e->getMessage()];
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
@@ -201,7 +201,7 @@ class CompanyController extends \yii\web\Controller
                 return ['status' => 'error', 'details' => $companyTeam->getErrors()];
             }
         } catch (\Exception $e) {
-            return ['msg' => 'error', 'details' => $e->getMessage()];
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 }

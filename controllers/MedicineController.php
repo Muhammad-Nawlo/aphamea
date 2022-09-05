@@ -2,22 +2,25 @@
 
 namespace app\controllers;
 
-use app\helpers\HelperFunction;
+use Yii;
+use yii\helpers\Url;
+use yii\filters\Cors;
+use yii\web\Response;
+use yii\db\Expression;
 use app\models\Category;
 use app\models\Medicine;
+use yii\web\UploadedFile;
+use app\helpers\HelperFunction;
 use app\models\MedicineCategory;
-use app\models\MedicinePharmaceuticalForm;
-use app\models\PharmaceuticalForm;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 use sizeg\jwt\JwtHttpBearerAuth;
-use Yii;
-use yii\db\Expression;
+use app\models\PharmaceuticalForm;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
-use yii\filters\Cors;
-use yii\helpers\Url;
-use yii\web\UploadedFile;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use app\models\MedicinePharmaceuticalForm;
 
 class MedicineController extends \yii\web\Controller
 {
@@ -76,7 +79,87 @@ class MedicineController extends \yii\web\Controller
 
     public function actionIndex()
     {
-        return ['msg' => 'ok', 'status' => 'working'];
+        return ['status' => 'ok', 'status' => 'working'];
+    }
+    public function actionGenerate_excel_file_template()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'Barcode');
+        $sheet->setCellValue('A1', 'Product Name');
+        $sheet->setCellValue('A1', 'Indications');
+        $sheet->setCellValue('A1', 'Packing');
+        $sheet->setCellValue('A1', 'Composition');
+        $sheet->setCellValue('A1', 'Expired Date');
+        $sheet->setCellValue('A1', 'Price');
+        $sheet->setCellValue('A1', 'Net Price');
+
+        $fileName = yii::$app->getSecurity()->generateRandomString(10);
+        $writer = new Xlsx($spreadsheet);
+        if (!is_dir('../web/excelFiles')) {
+            mkdir('../web/excelFiles');
+        }
+
+        $writer->save("excelFiles/" . $fileName . ".xlsx");
+        $this->response->sendFile("../web/excelFiles/" . $fileName . ".xlsx", "$fileName.xlsx");
+    }
+    public function actionImport_excel_file()
+    {
+        if (isset($_FILES['sheet'])) {
+            $file = $_FILES['sheet'];
+            $tmpName = yii::$app->security->generateRandomString();
+            $inputFile = 'excelFiles/' . $tmpName . '.xlsx';
+            move_uploaded_file($file['tmp_name'], $inputFile);
+            $spreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFile);
+            $medicineArray = $spreadSheet->getActiveSheet()->toArray();
+            //To remove the first row in file
+            $tmpExcelFields = array_splice($medicineArray, 0, 1);
+            //This condition to check the template
+            if (
+                $tmpExcelFields[0][0] != 'Barcode' ||
+                $tmpExcelFields[0][1] != 'Product Name' ||
+                $tmpExcelFields[0][2] != 'Indications' ||
+                $tmpExcelFields[0][3] != 'Packing' ||
+                $tmpExcelFields[0][4] != 'Composition' ||
+                $tmpExcelFields[0][5] != 'Expired Date' ||
+                $tmpExcelFields[0][6] != 'Price' ||
+                $tmpExcelFields[0][7] != 'Net Price'
+            ) {
+                return ['status' => 'error', 'details' => 'This excel file is not a validate file'];
+            }
+            $i = 0;
+            $errorArr = [];
+            foreach ($medicineArray as $m) {
+                $i++;
+                $isExsist = Medicine::findOne(['productName' => trim($m[1])]);
+                if ($isExsist !== null) {
+                    array_push($errorArr, ['error' => "<b>$m[1]</b> Medicine already exist"]);
+                    continue;
+                }
+                $newMedicine = new Medicine();
+                if (trim($m[1]) === '') {
+                    array_push($errorArr, ['error' => "<b>$m[1]</b> Medicine name should not be empty"]);
+                    continue;
+                }
+                $newMedicine->barcode = trim($m[0]);
+                $newMedicine->productName = trim($m[1]);
+                $newMedicine->indications = trim($m[2]);
+                $newMedicine->packing = trim($m[3]);
+                $newMedicine->composition = trim($m[4]);
+                $newMedicine->expiredDate = trim($m[5]);
+                $newMedicine->price = (float)$m[6];
+                $newMedicine->netPrice = (float) $m[7];
+                if ($newMedicine->validate()) {
+                    $newMedicine->save();
+                } else {
+                    array_push($errorArr, ['error' => "<b>$m[1]</b> ", 'details' => $newMedicine->getErrors()]);
+                }
+            }
+            return ['status' => 'ok', 'errorDetails' => $errorArr];
+        } else {
+            return ['status' => 'error', 'details' => 'There is no file uploaded'];
+        }
     }
 
     public function actionReadMedicines()

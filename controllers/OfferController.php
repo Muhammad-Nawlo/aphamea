@@ -72,7 +72,7 @@ class OfferController extends Controller
 
     public function actionIndex()
     {
-        return ['msg' => 'ok', 'status' => 'working'];
+        return ['status' => 'ok', 'status' => 'working'];
     }
 
     function actionAdd()

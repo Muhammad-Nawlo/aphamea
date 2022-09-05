@@ -13,10 +13,12 @@ use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
 use yii\filters\Cors;
+use yii\helpers\Url;
 use yii\web\Controller;
 
 class OrderController extends Controller
 {
+
     public $enableCsrfValidation = false;
 
     public function behaviors()
@@ -33,14 +35,14 @@ class OrderController extends Controller
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::class,
-            'authMethods' => [
-                HttpBearerAuth::class,
-                QueryParamAuth::class,
-                JwtHttpBearerAuth::class
-            ]
-        ];
+        // $behaviors['authenticator'] = [
+        //     'class' => CompositeAuth::class,
+        //     'authMethods' => [
+        //         HttpBearerAuth::class,
+        //         QueryParamAuth::class,
+        //         JwtHttpBearerAuth::class
+        //     ]
+        // ];
         return $behaviors;
     }
 
@@ -72,104 +74,134 @@ class OrderController extends Controller
 
     public function actionIndex()
     {
-        return ['msg' => 'ok', 'status' => 'working'];
+        return ['status' => 'ok', 'status' => 'working'];
     }
 
     function actionAdd()
     {
-        $errors = [];
-        $data = (array)json_decode(Yii::$app->request->getRawBody());
-        if (!isset($data['userId']) || !isset($data['representativeId']) || !isset($data['orderDetails']))
-            return ['status' => 'error', 'details' => 'There are missing params ( userId or representativeId)'];
+        try {
+            $errors = [];
+            $data = (array)json_decode(Yii::$app->request->getRawBody());
+            if (!isset($data['userId']) || !isset($data['representativeId']) || !isset($data['orderDetails']))
+                return ['status' => 'error', 'details' => 'There are missing params (userId or representativeId or orderDetails)'];
 
-        $orderDetails = $data['orderDetails'];
-        if (empty($orderDetails))
-            return ['status' => 'error', 'details' => 'Order details should not be empty'];
+            $orderDetails = $data['orderDetails'];
+            if (empty($orderDetails))
+                return ['status' => 'error', 'details' => 'Order details should not be empty'];
 
-        $newOrder = new Order();
-        $newOrder->userId = (int)$data['userId'];
-        $newOrder->representativeId = (int)$data['representativeId'];
-        $newOrder->orderDate = date('Y-m-d H:i:s');
-        $newOrder->isCanceled = 0;
-        $newOrder->isCompleted = 0;
-        if ($newOrder->validate()) {
-            $newOrder->save();
-            foreach ($orderDetails as $o) {
-                $o = (array)$o;
-                $newOrderDetails = new OrderDetails();
-                $newOrderDetails->orderId = $newOrder->id;
-                $newOrderDetails->offerId = (int)$o['offerId'];
-                $newOrderDetails->quantity = (int)$o['quantity'];
-                if ($newOrderDetails->validate()) {
-                    $newOrderDetails->save();
-                } else {
-                    $errors[] = $newOrderDetails->getErrors();
+            $newOrder = new Order();
+            $newOrder->userId = (int)$data['userId'];
+            $newOrder->representativeId = (int)$data['representativeId'];
+            $newOrder->orderDate = date('Y-m-d H:i:s');
+            $newOrder->isCanceled = 0;
+            $newOrder->isCompleted = 0;
+            if ($newOrder->validate()) {
+                $newOrder->save();
+                foreach ($orderDetails as $o) {
+                    $o = (array)$o;
+                    $newOrderDetails = new OrderDetails();
+                    $newOrderDetails->orderId = $newOrder->id;
+                    $newOrderDetails->offerId = (int)$o['offerId'];
+                    $newOrderDetails->quantity = (int)$o['quantity'];
+                    if ($newOrderDetails->validate()) {
+                        $newOrderDetails->save();
+                    } else {
+                        $errors[] = $newOrderDetails->getErrors();
+                    }
                 }
+                return ['status' => 'ok', 'errors' => $errors];
+            } else {
+                return ['status' => 'error', 'details' => $newOrder->getErrors()];
             }
-        } else {
-            return ['status' => 'error', 'details' => $newOrder->getErrors()];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
     function actionCompleted($id)
     {
-        $order = Order::findOne(['id' => (int)$id]);
-        if ($order === null)
-            return ['status' => 'error', 'details' => 'There is no order that has this id'];
+        try {
+            $order = Order::findOne(['id' => (int)$id]);
+            if ($order === null)
+                return ['status' => 'error', 'details' => 'There is no order that has this id'];
 
-        if ($order->isCompleted === 1)
-            return ['status' => 'error', 'details' => 'The order is already completed'];
-        $order->isCompleted = 1;
-        if ($order->validate() && $order->save()) {
-            return ['status' => 'ok'];
-        } else {
-            return ['status' => 'error', 'details' => $order->getErrors()];
+            if ($order->isCompleted === 1)
+                return ['status' => 'error', 'details' => 'The order is already completed'];
+
+            $order->isCompleted = 1;
+            if ($order->validate() && $order->save()) {
+                return ['status' => 'ok'];
+            } else {
+                return ['status' => 'error', 'details' => $order->getErrors()];
+            }
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
     function actionCanceled($id)
     {
-        $order = Order::findOne(['id' => (int)$id]);
-        if ($order === null)
-            return ['status' => 'error', 'details' => 'There is no order that has this id'];
+        try {
+            $order = Order::findOne(['id' => (int)$id]);
+            if ($order === null)
+                return ['status' => 'error', 'details' => 'There is no order that has this id'];
 
-        if ($order->isCanceled === 1)
-            return ['status' => 'error', 'details' => 'The order is already canceled'];
+            if ($order->isCanceled === 1)
+                return ['status' => 'error', 'details' => 'The order is already canceled'];
 
-        $order->isCanceled = 1;
-        if ($order->validate() && $order->save()) {
-            return ['status' => 'ok'];
-        } else {
-            return ['status' => 'error', 'details' => $order->getErrors()];
+            $order->isCanceled = 1;
+            if ($order->validate() && $order->save()) {
+                return ['status' => 'ok'];
+            } else {
+                return ['status' => 'error', 'details' => $order->getErrors()];
+            }
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
     function actionGetAll()
     {
-        $orderArr = [];
-        $orders = (new Query())
-            ->select([
-                'orders.id as orderId',
-                'orders.date as orderDate',
-                'orders.isCanceled',
-                'orders.isCompleted',
-                'user.first_name as ufirstName',
-                'user.lastName as ulastName',
-                'representative.firstName as rfirstName',
-                'representative.lastName as rlastName',
-                'offer.name',
-                'order.quantity'
-            ])
-            ->from('orders')
-            ->innerJoin('order_details', 'order_details.orderId=orders.id')
-            ->innerJoin('offfer', 'offer.id=order_details.offerId')
-            ->innerJoin('user', 'user.id=order_details.userId')
-            ->innerJoin('user representative', 'user.id=order_details.representativeId')
-            ->all();
-        if ($orders) {
-            return ['status' => 'ok', 'orders' => $orders];
-        } else {
-            return ['status' => 'error', 'details' => 'There is no order'];
+        try {
+            $orders = (new Query())
+                ->select([
+                    'order.id as orderId',
+                    'order.orderDate as orderDate',
+                    'order.isCanceled',
+                    'order.isCompleted',
+                    'user.firstName as ufirstName',
+                    'user.lastName as ulastName',
+                    'representative.firstName as rfirstName',
+                    'representative.lastName as rlastName',
+                ])
+                ->from('order')
+                ->innerJoin('user', 'user.id=order.userId')
+                ->innerJoin('user representative', 'representative.id=order.representativeId')
+                ->all();
+            if ($orders) {
+                return ['status' => 'ok', 'orders' => $orders];
+            } else {
+                return ['status' => 'error', 'details' => 'There is no order'];
+            }
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
+    // function actionGet($id)
+    // {
+    //     try {
+    //         $order = Order::findOne(['id' => (int)$id]);
+    //         if ($order === null)
+    //             return ['status' => 'error', 'details' => 'There is no order that has this id'];
+
+    //         $orderDetails = OrderDetails::find()->where(['orderId' => $order->id])->all();
+    //         $offer = [];
+    //         foreach ($orderDetails as $od) {
+    //         }
+
+    //         // return $orderDetails->offer;
+    //     } catch (\Exception $e) {
+    //         return ['status' => 'error', 'details' => $e->getMessage()];
+    //     }
+    // }
 }

@@ -27,6 +27,9 @@ class m220809_213234_create_order_table extends Migration
             'isCanceled' => $this->boolean(),
             'isCompleted' => $this->boolean(),
         ], $option);
+        $this->addForeignKey('fk_user_order_userId', self::TABLE_NAME, 'userId', 'user', 'id');
+        $this->addForeignKey('fk_user_order_representativeId', self::TABLE_NAME, 'representativeId', 'user', 'id');
+
     }
 
     /**

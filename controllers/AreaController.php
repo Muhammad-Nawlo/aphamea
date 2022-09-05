@@ -77,7 +77,7 @@ class AreaController extends Controller
 
     public function actionIndex()
     {
-        return ['msg' => 'ok', 'status' => 'working'];
+        return ['status' => 'ok', 'status' => 'working'];
     }
 
     //    public function actionReadCountries()
