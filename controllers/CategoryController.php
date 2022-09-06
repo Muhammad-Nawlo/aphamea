@@ -4,14 +4,18 @@ namespace app\controllers;
 
 use Yii;
 use yii\db\Query;
+use yii\helpers\Url;
 use yii\filters\Cors;
+use yii\web\Response;
 use app\models\Category;
 use app\models\Medicine;
+use app\helpers\HelperFunction;
 use app\models\MedicineCategory;
 use sizeg\jwt\JwtHttpBearerAuth;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -75,7 +79,7 @@ class CategoryController extends \yii\web\Controller
         return ['status' => 'ok', 'status' => 'It\'s working'];
     }
 
-    public function actionGenerate_excel_file_template()
+    public function actionGenerateExcelFileTemplate()
     {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -84,55 +88,58 @@ class CategoryController extends \yii\web\Controller
 
         $fileName = yii::$app->getSecurity()->generateRandomString(10);
         $writer = new Xlsx($spreadsheet);
-        if (!is_dir('../web/excelFiles')) {
-            mkdir('../web/excelFiles');
-        }
+        HelperFunction::createFolderIfNotExist(Url::to('@app/web/excelFiles/categories'));
 
-        $writer->save("excelFiles/" . $fileName . ".xlsx");
-        $this->response->sendFile("../web/excelFiles/" . $fileName . ".xlsx", "$fileName.xlsx");
+
+        $writer->save("excelFiles/categories" . $fileName . ".xlsx");
+        $this->response->sendFile(Url::to("@app/web/excelFiles/categories" . $fileName . ".xlsx"), "$fileName.xlsx");
     }
 
-    public function actionImport_excel_file()
+    public function actionImportExcelFile()
     {
-        if (isset($_FILES['sheet'])) {
-            $file = $_FILES['sheet'];
-            $tmpName = yii::$app->security->generateRandomString();
-            $inputFile = 'excelFiles/' . $tmpName . '.xlsx';
-            move_uploaded_file($file['tmp_name'], $inputFile);
-            $spreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFile);
-            $categoryArray = $spreadSheet->getActiveSheet()->toArray();
-            //To remove the first row in file
-            $tmpExcelFields = array_splice($categoryArray, 0, 1);
-            //This condition to check the template
-            if (
-                $tmpExcelFields[0][0] != 'Name'
-            ) {
-                return ['status' => 'error', 'details' => 'This excel file is not a validate file'];
-            }
-            $i = 0;
-            $errorArr = [];
-            foreach ($categoryArray as $category) {
-                $i++;
-                $isExist = Category::findOne(['name' => trim($category[0])]);
-                if ($isExist === null) {
-                    $newCategory = new Category();
-                    if (trim($category[0]) === '') {
-                        array_push($errorArr, ['error' => "<b>$category[0]</b> Category should not be empty"]);
-                        continue;
-                    }
-                    $newCategory->name = trim($category[0]);
-                    if ($newCategory->validate()) {
-                        $newCategory->save();
-                    } else {
-                        array_push($errorArr, ['error' => "<b>$category[0]</b> ", 'details' => $newCategory->getErrors()]);
-                    }
-                } else {
-                    array_push($errorArr, ['error' => "<b>$category[0]</b> Category already exist"]);
+        try {
+            if (isset($_FILES['sheet'])) {
+                $file = $_FILES['sheet'];
+                $tmpName = yii::$app->security->generateRandomString();
+                $inputFile = 'excelFiles/categories' . $tmpName . '.xlsx';
+                move_uploaded_file($file['tmp_name'], $inputFile);
+                $spreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFile);
+                $categoryArray = $spreadSheet->getActiveSheet()->toArray();
+                //To remove the first row in file
+                $tmpExcelFields = array_splice($categoryArray, 0, 1);
+                //This condition to check the template
+                if (
+                    $tmpExcelFields[0][0] != 'Name'
+                ) {
+                    return ['status' => 'error', 'details' => 'This excel file is not a validate file'];
                 }
+                $i = 0;
+                $errorArr = [];
+                foreach ($categoryArray as $category) {
+                    $i++;
+                    $isExist = Category::findOne(['name' => trim($category[0])]);
+                    if ($isExist === null) {
+                        $newCategory = new Category();
+                        if (trim($category[0]) === '') {
+                            array_push($errorArr, ['error' => "<b>$category[0]</b> Category should not be empty"]);
+                            continue;
+                        }
+                        $newCategory->name = trim($category[0]);
+                        if ($newCategory->validate()) {
+                            $newCategory->save();
+                        } else {
+                            array_push($errorArr, ['error' => "<b>$category[0]</b> ", 'details' => $newCategory->getErrors()]);
+                        }
+                    } else {
+                        array_push($errorArr, ['error' => "<b>$category[0]</b> Category already exist"]);
+                    }
+                }
+                return ['status' => 'ok', 'errorDetails' => $errorArr];
+            } else {
+                return ['status' => 'error', 'details' => 'There is no file uploaded'];
             }
-            return ['status' => 'ok', 'errorDetails' => $errorArr];
-        } else {
-            return ['status' => 'error', 'details' => 'There is no file uploaded'];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
@@ -199,6 +206,9 @@ class CategoryController extends \yii\web\Controller
     public function actionGetAll()
     {
         $categories = Category::find()->where([])->with('medicines')->asArray()->all();
+        if (!$categories)
+            return ['status' => 'error', 'details' => 'There is no category that has this id'];
+
         return ['status' => 'ok', 'categories' => $categories];
     }
 
@@ -206,7 +216,8 @@ class CategoryController extends \yii\web\Controller
     {
         $category = Category::find()->where(['id' => (int)$id])->with('medicines')->asArray()->one();
         if ($category === null)
-            return ["status" => "error", "details" => "There is no category"];
+            return ["status" => "error", "details" => 'There is no category that has this id'];
+
         return ['status' => 'ok', 'category' => $category];
     }
 
@@ -215,10 +226,12 @@ class CategoryController extends \yii\web\Controller
         try {
             $category = Category::find()->where(['id' => (int)$categoryId])->with('medicines')->asArray()->one();
             if ($category === null)
-                return ["status" => "error", "details" => "There is no category"];
+                return ["status" => "error", "details" => 'There is category that has this id'];
+
 
             if (empty($category['medicines']))
-                return ['status' => 'error', 'details' => "There are no medicine that has this category id ($categoryId)"];
+                return ["status" => "error", "details" => 'There is no medicine that has this category id'];
+
 
             return ['status' => 'ok', 'medicines' => $category['medicines']];
         } catch (\Exception $e) {

@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use app\models\Medicine;
+use app\models\MedicinePharmaceuticalForm;
 
 /**
  * This is the model class for table "pharmaceutical_form".
@@ -52,5 +54,12 @@ class PharmaceuticalForm extends \yii\db\ActiveRecord
     public function getMedicinePharmaceuticalForms()
     {
         return $this->hasMany(MedicinePharmaceuticalForm::className(), ['pharmaceuticalFormId' => 'id']);
+    }
+
+
+    public function getMedicines()
+    {
+        return $this->hasMany(Medicine::class, ['id' => 'medicineId'])
+            ->viaTable('medicine_pharmaceutical_form', ['pharmaceuticalFormId' => 'id']);
     }
 }

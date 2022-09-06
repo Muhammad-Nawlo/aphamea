@@ -2,18 +2,20 @@
 
 namespace app\controllers;
 
-use app\helpers\HelperFunction;
-use app\models\Company;
-use app\models\CompanyTeam;
-use app\models\Contact;
-use sizeg\jwt\JwtHttpBearerAuth;
 use Yii;
+use app\models\User;
+use yii\helpers\Url;
+use yii\filters\Cors;
+use yii\web\Response;
+use app\models\Company;
+use app\models\Contact;
+use yii\web\UploadedFile;
+use app\models\CompanyTeam;
+use app\helpers\HelperFunction;
+use sizeg\jwt\JwtHttpBearerAuth;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
-use yii\filters\Cors;
-use yii\helpers\Url;
-use yii\web\UploadedFile;
 
 class CompanyController extends \yii\web\Controller
 {
@@ -85,8 +87,10 @@ class CompanyController extends \yii\web\Controller
                 ->one();
             if ($company === null)
                 return ['status' => 'error', 'details' => "There is no company that has this id ($id)"];
-            $company['img'] = Url::to('@app/web/company/images/' . $company['img'], true);
-            $company['logo'] = Url::to('@app/web/company/images/' . $company['logo'], true);
+
+            $company['img'] = Url::to('@web/company/images/' . $company['img'], true);
+            $company['logo'] = Url::to('@web/company/images/' . $company['logo'], true);
+            
             return ['status' => 'ok', 'company' => $company];
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
@@ -134,6 +138,10 @@ class CompanyController extends \yii\web\Controller
                             $teamMember = new CompanyTeam();
                         } else {
                             $teamMember = CompanyTeam::findOne(['id' => $member['id']]);
+                            if ($teamMember === null) {
+                                $errors['teamErrors'][] = 'There is no member that has this id ' . $member['id'];
+                                continue;
+                            }
                         }
                         $teamMember->load($member, '');
                         if ($teamMember->validate()) {
@@ -151,6 +159,10 @@ class CompanyController extends \yii\web\Controller
                             $companyContact = new  Contact();
                         } else {
                             $companyContact = Contact::findOne(['id' => (int)$contact['id']]);
+                            if ($companyContact === null) {
+                                $errors['contactErrors'][] = 'There is no contact that has this id ' . $contact['id'];
+                                continue;
+                            }
                         }
                         $companyContact->load($contact, '');
                         if ($companyContact->validate()) {

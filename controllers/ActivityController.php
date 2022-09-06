@@ -82,7 +82,7 @@ class ActivityController extends \yii\web\Controller
                 return ["status" => "error", "details" => "There are missing params"];
 
             if (!in_array($data['type'], Activity::ACTIVITY_TYPE)) {
-                return ['status' => 'error', 'details' => 'The type of activity is incorrect'];
+                return ['status' => 'error', 'details' => 'The type of activity is not valid'];
             }
 
             $newActivity = new Activity();
@@ -109,8 +109,6 @@ class ActivityController extends \yii\web\Controller
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
         }
-
-
     }
 
     public function actionDelete()
@@ -154,7 +152,7 @@ class ActivityController extends \yii\web\Controller
                 }, $activities);
                 return ['status' => 'ok', 'activities' => $activities];
             } else {
-                return ["status" => "error", "details" => "There is no activity"];
+                return ["status" => "error", "details" => 'There is no activity'];
             }
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
@@ -166,7 +164,7 @@ class ActivityController extends \yii\web\Controller
         try {
             $activity = Activity::find()->where(['id' => (int)$id])->asArray()->one();
             if ($activity === null)
-                return ["status" => "error", "details" => "There is no activity"];
+                return ["status" => "error", "details" => 'There is no activity that has this id '.$id];
 
             $imgs = explode(',', $activity['imgs']);
             $images = [];
@@ -189,7 +187,7 @@ class ActivityController extends \yii\web\Controller
     {
         try {
             $data = (array)(Yii::$app->request->post());
-            if (!isset($data['id']) ||!isset($data['type']) || !isset($data['content']))
+            if (!isset($data['id']) || !isset($data['type']) || !isset($data['content']))
                 return ["status" => "error", "details" => "There are missing params"];
 
             if (!in_array($data['type'], Activity::ACTIVITY_TYPE)) {
@@ -206,7 +204,7 @@ class ActivityController extends \yii\web\Controller
             $imagesName = [];
             if (!empty($activityImages)) {
                 HelperFunction::createFolderIfNotExist('@app/web/activities/images');
-                HelperFunction::deletePhotos($activity->imgs,'activities');
+                HelperFunction::deletePhotos($activity->imgs, 'activities');
 
                 foreach ($activityImages as $img) {
                     if (!file_exists($img->name)) {

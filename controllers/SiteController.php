@@ -57,15 +57,15 @@ class SiteController extends Controller
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
-        // $behaviors['authenticator'] = [
-        //     'class' => CompositeAuth::class,
-        //     'except' => ['login', 'signup', 'index', 'save-user-info'],
-        //     'authMethods' => [
-        //         HttpBearerAuth::class,
-        //         QueryParamAuth::class,
-        //         JwtHttpBearerAuth::class
-        //     ]
-        // ];
+        $behaviors['authenticator'] = [
+            'class' => CompositeAuth::class,
+            'except' => ['login', 'signup', 'index', 'save-user-info'],
+            'authMethods' => [
+                HttpBearerAuth::class,
+                QueryParamAuth::class,
+                JwtHttpBearerAuth::class
+            ]
+        ];
         return $behaviors;
     }
 
@@ -183,6 +183,9 @@ class SiteController extends Controller
                 $userImage->saveAs(Url::to('@app/web/users/images') . '/' . $name);
                 $user->img = $name;
             }
+            if (!in_array((int)$data['role'], User::ROLE)) {
+                return ["status" => "error", "details" => "The role is not valid"];
+            }
 
             if ($userContacts) {
                 Contact::deleteAll(['userId' => $user->id]);
@@ -214,6 +217,25 @@ class SiteController extends Controller
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
         }
+    }
+
+    public function actionGetUserInfo()
+    {
+        $user = User::find()
+            ->where(['id' => Yii::$app->user->identity->id])
+            ->with('contacts', 'region', 'city', 'country')
+            ->asArray()
+            ->one();
+        if ($user === null)
+            return ['status' => 'error', 'details' => 'There is no user that has this id'];
+
+        if ($user['img'])
+            $user['img'] = Url::to('@web/users/images/' . $user['img'], true);
+
+        return [
+            'status' => 'ok',
+            'userInfo' => $user
+        ];
     }
 
     public function actionGetAllUsers()

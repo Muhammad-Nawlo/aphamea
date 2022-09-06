@@ -8,6 +8,7 @@ use yii\helpers\Url;
 use yii\filters\Cors;
 use yii\web\Response;
 use app\models\Medicine;
+use app\helpers\HelperFunction;
 use sizeg\jwt\JwtHttpBearerAuth;
 use app\models\PharmaceuticalForm;
 use yii\filters\auth\CompositeAuth;
@@ -78,7 +79,7 @@ class PharmaceuticalFormController extends \yii\web\Controller
         return ['status' => 'ok', 'status' => 'working'];
     }
 
-    public function actionGenerate_excel_file_template()
+    public function actionGeneratExcelFileTemplate()
     {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -87,55 +88,57 @@ class PharmaceuticalFormController extends \yii\web\Controller
 
         $fileName = yii::$app->getSecurity()->generateRandomString(10);
         $writer = new Xlsx($spreadsheet);
-        if (!is_dir('../web/excelFiles')) {
-            mkdir('../web/excelFiles');
-        }
+        HelperFunction::createFolderIfNotExist(Url::to('@app/web/excelFiles/pharmaceuticalForms'));
 
-        $writer->save("excelFiles/" . $fileName . ".xlsx");
-        $this->response->sendFile("../web/excelFiles/" . $fileName . ".xlsx", "$fileName.xlsx");
+        $writer->save("excelFiles/pharmaceuticalForms" . $fileName . ".xlsx");
+        $this->response->sendFile("../web/excelFiles/pharmaceuticalForms" . $fileName . ".xlsx", "$fileName.xlsx");
     }
 
-    public function actionImport_excel_file()
+    public function actionImportExcelFile()
     {
-        if (isset($_FILES['sheet'])) {
-            $file = $_FILES['sheet'];
-            $tmpName = yii::$app->security->generateRandomString();
-            $inputFile = 'excelFiles/' . $tmpName . '.xlsx';
-            move_uploaded_file($file['tmp_name'], $inputFile);
-            $spreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFile);
-            $pharmaceuticalFormArray = $spreadSheet->getActiveSheet()->toArray();
-            //To remove the first row in file
-            $tmpExcelFields = array_splice($pharmaceuticalFormArray, 0, 1);
-            //This condition to check the template
-            if (
-                $tmpExcelFields[0][0] != 'Name'
-            ) {
-                return ['status' => 'error', 'details' => 'This excel file is not a validate file'];
-            }
-            $i = 0;
-            $errorArr = [];
-            foreach ($pharmaceuticalFormArray as $p) {
-                $i++;
-                $isExist = PharmaceuticalForm::findOne(['name' => trim($p[0])]);
-                if ($isExist === null) {
-                    $newPharmaceuticalForm = new PharmaceuticalForm();
-                    if (trim($p[0]) === '') {
-                        array_push($errorArr, ['error' => "<b>$p[0]</b> Pharmaceutical Form should not be empty"]);
-                        continue;
-                    }
-                    $newPharmaceuticalForm->name = trim($p[0]);
-                    if ($newPharmaceuticalForm->validate()) {
-                        $newPharmaceuticalForm->save();
-                    } else {
-                        array_push($errorArr, ['error' => "<b>$p[0]</b> ", 'details' => $newPharmaceuticalForm->getErrors()]);
-                    }
-                } else {
-                    array_push($errorArr, ['error' => "<b>$p[0]</b> Pharmaceutical Form already exist"]);
+        try {
+            if (isset($_FILES['sheet'])) {
+                $file = $_FILES['sheet'];
+                $tmpName = yii::$app->security->generateRandomString();
+                $inputFile = 'excelFiles/pharmaceuticalForms' . $tmpName . '.xlsx';
+                move_uploaded_file($file['tmp_name'], $inputFile);
+                $spreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFile);
+                $pharmaceuticalFormArray = $spreadSheet->getActiveSheet()->toArray();
+                //To remove the first row in file
+                $tmpExcelFields = array_splice($pharmaceuticalFormArray, 0, 1);
+                //This condition to check the template
+                if (
+                    $tmpExcelFields[0][0] != 'Name'
+                ) {
+                    return ['status' => 'error', 'details' => 'This excel file is not a validate file'];
                 }
+                $i = 0;
+                $errorArr = [];
+                foreach ($pharmaceuticalFormArray as $p) {
+                    $i++;
+                    $isExist = PharmaceuticalForm::findOne(['name' => trim($p[0])]);
+                    if ($isExist === null) {
+                        $newPharmaceuticalForm = new PharmaceuticalForm();
+                        if (trim($p[0]) === '') {
+                            array_push($errorArr, ['error' => "<b>$p[0]</b> Pharmaceutical Form should not be empty"]);
+                            continue;
+                        }
+                        $newPharmaceuticalForm->name = trim($p[0]);
+                        if ($newPharmaceuticalForm->validate()) {
+                            $newPharmaceuticalForm->save();
+                        } else {
+                            array_push($errorArr, ['error' => "<b>$p[0]</b> ", 'details' => $newPharmaceuticalForm->getErrors()]);
+                        }
+                    } else {
+                        array_push($errorArr, ['error' => "<b>$p[0]</b> Pharmaceutical Form already exist"]);
+                    }
+                }
+                return ['status' => 'ok', 'errorDetails' => $errorArr];
+            } else {
+                return ['status' => 'error', 'details' => 'There is no file uploaded'];
             }
-            return ['status' => 'ok', 'errorDetails' => $errorArr];
-        } else {
-            return ['status' => 'error', 'details' => 'There is no file uploaded'];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
@@ -200,13 +203,17 @@ class PharmaceuticalFormController extends \yii\web\Controller
 
     public function actionGetAll()
     {
-        $pharmaceuticalForm = PharmaceuticalForm::find()->where([])->asArray()->all();
-        return ['status' => 'ok', 'pharmaceuticalForm' => $pharmaceuticalForm];
+        $pharmaceuticalForms = PharmaceuticalForm::find()->where([])->with('medicines')->asArray()->all();
+        if (!$pharmaceuticalForms)
+            return ["status" => "error", "details" => "There is no Pharmaceutical Form"];
+
+        return ['status' => 'ok', 'pharmaceuticalForm' => $pharmaceuticalForms];
     }
 
     function actionGet($id)
     {
-        $pharmaceuticalForm = PharmaceuticalForm::find()->where(['id' => (int)$id])->one();
+        $pharmaceuticalForm = PharmaceuticalForm::find()->with('medicines')->where(['id' => (int)$id])->asArray()->one();
+
         if ($pharmaceuticalForm === null)
             return ["status" => "error", "details" => "There is no Pharmaceutical Form"];
 
@@ -217,28 +224,15 @@ class PharmaceuticalFormController extends \yii\web\Controller
     function actionGetMedicines($id)
     {
         try {
-            $medicines = (new Query())
-                ->select([
-                    "productName",
-                    "indications",
-                    "barcode",
-                    "composition",
-                    "packing",
-                    "expiredDate",
-                    "price",
-                    "netPrice",
-                    "name"
-                ])
-                ->from('medicine_pharmaceutical_form')
-                ->innerJoin('medicine', 'medicine.id=medicine_pharmaceutical_form.medicineId')
-                ->innerJoin('pharmaceutical_form', 'pharmaceutical_form.id=medicine_pharmaceutical_form.pharmaceuticalFormId')
-                ->where(['pharmaceutical_form.id' => $id])
-                ->all();
+            $pharmaceuticalForm = PharmaceuticalForm::find()->with('medicines')->where(['id' => (int)$id])->asArray()->one();
 
-            if (empty($medicines))
+            if ($pharmaceuticalForm === null)
+                return ["status" => "error", "details" => "There is no Pharmaceutical Form"];
+
+            if (empty($pharmaceuticalForm['medicines']))
                 return ['status' => 'error', 'details' => "There are no medicine that has this Pharmaceutical Form id ($id)"];
 
-            return ['status' => 'ok', 'medicines' => $medicines];
+            return ['status' => 'ok', 'medicines' => $pharmaceuticalForm['medicines']];
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
         }

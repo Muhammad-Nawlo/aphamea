@@ -40,14 +40,14 @@ class MedicineController extends \yii\web\Controller
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::class,
-            'authMethods' => [
-                HttpBearerAuth::class,
-                QueryParamAuth::class,
-                JwtHttpBearerAuth::class
-            ]
-        ];
+        // $behaviors['authenticator'] = [
+        //     'class' => CompositeAuth::class,
+        //     'authMethods' => [
+        //         HttpBearerAuth::class,
+        //         QueryParamAuth::class,
+        //         JwtHttpBearerAuth::class
+        //     ]
+        // ];
         return $behaviors;
     }
 
@@ -81,119 +81,173 @@ class MedicineController extends \yii\web\Controller
     {
         return ['status' => 'ok', 'status' => 'working'];
     }
-    public function actionGenerate_excel_file_template()
+    public function actionGenerateExcelFileTemplate()
     {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         $sheet->setCellValue('A1', 'Barcode');
-        $sheet->setCellValue('A1', 'Product Name');
-        $sheet->setCellValue('A1', 'Indications');
-        $sheet->setCellValue('A1', 'Packing');
-        $sheet->setCellValue('A1', 'Composition');
-        $sheet->setCellValue('A1', 'Expired Date');
-        $sheet->setCellValue('A1', 'Price');
-        $sheet->setCellValue('A1', 'Net Price');
+        $sheet->setCellValue('B1', 'Product Name');
+        $sheet->setCellValue('C1', 'Indications');
+        $sheet->setCellValue('D1', 'Packing');
+        $sheet->setCellValue('E1', 'Composition');
+        $sheet->setCellValue('F1', 'Expired Date');
+        $sheet->setCellValue('G1', 'Price');
+        $sheet->setCellValue('H1', 'Net Price');
+        $sheet->setCellValue('I1', 'Category');
+        $sheet->setCellValue('J1', 'Pharmaceutical Form');
 
         $fileName = yii::$app->getSecurity()->generateRandomString(10);
         $writer = new Xlsx($spreadsheet);
-        if (!is_dir('../web/excelFiles')) {
-            mkdir('../web/excelFiles');
-        }
+        HelperFunction::createFolderIfNotExist(Url::to('@app/web/excelFiles/medicines'));
 
-        $writer->save("excelFiles/" . $fileName . ".xlsx");
-        $this->response->sendFile("../web/excelFiles/" . $fileName . ".xlsx", "$fileName.xlsx");
+
+        $writer->save("excelFiles/medicines" . $fileName . ".xlsx");
+        $this->response->sendFile("../web/excelFiles/medicines" . $fileName . ".xlsx", "$fileName.xlsx");
     }
-    public function actionImport_excel_file()
+    public function actionImportExcelFile()
     {
-        if (isset($_FILES['sheet'])) {
-            $file = $_FILES['sheet'];
-            $tmpName = yii::$app->security->generateRandomString();
-            $inputFile = 'excelFiles/' . $tmpName . '.xlsx';
-            move_uploaded_file($file['tmp_name'], $inputFile);
-            $spreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFile);
-            $medicineArray = $spreadSheet->getActiveSheet()->toArray();
-            //To remove the first row in file
-            $tmpExcelFields = array_splice($medicineArray, 0, 1);
-            //This condition to check the template
-            if (
-                $tmpExcelFields[0][0] != 'Barcode' ||
-                $tmpExcelFields[0][1] != 'Product Name' ||
-                $tmpExcelFields[0][2] != 'Indications' ||
-                $tmpExcelFields[0][3] != 'Packing' ||
-                $tmpExcelFields[0][4] != 'Composition' ||
-                $tmpExcelFields[0][5] != 'Expired Date' ||
-                $tmpExcelFields[0][6] != 'Price' ||
-                $tmpExcelFields[0][7] != 'Net Price'
-            ) {
-                return ['status' => 'error', 'details' => 'This excel file is not a validate file'];
+        try {
+            if (isset($_FILES['sheet'])) {
+                $file = $_FILES['sheet'];
+                $tmpName = yii::$app->security->generateRandomString();
+                $inputFile = 'excelFiles/' . $tmpName . '.xlsx';
+                move_uploaded_file($file['tmp_name'], $inputFile);
+                $spreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFile);
+                $medicineArray = $spreadSheet->getActiveSheet()->toArray();
+                //To remove the first row in file
+                $tmpExcelFields = array_splice($medicineArray, 0, 1);
+                //This condition to check the template
+                if (
+                    $tmpExcelFields[0][0] != 'Barcode' ||
+                    $tmpExcelFields[0][1] != 'Product Name' ||
+                    $tmpExcelFields[0][2] != 'Indications' ||
+                    $tmpExcelFields[0][3] != 'Packing' ||
+                    $tmpExcelFields[0][4] != 'Composition' ||
+                    $tmpExcelFields[0][5] != 'Expired Date' ||
+                    $tmpExcelFields[0][6] != 'Price' ||
+                    $tmpExcelFields[0][7] != 'Net Price' ||
+                    $tmpExcelFields[0][8] != 'Category' ||
+                    $tmpExcelFields[0][9] != 'Pharmaceutical Form'
+                ) {
+                    return ['status' => 'error', 'details' => 'This excel file is not a validate file'];
+                }
+                $i = 0;
+                $errorArr = [];
+                foreach ($medicineArray as $m) {
+                    if (
+                        empty($m[0]) ||
+                        empty($m[1]) ||
+                        empty($m[2]) ||
+                        empty($m[3]) ||
+                        empty($m[4]) ||
+                        empty($m[5]) ||
+                        empty($m[6]) ||
+                        empty($m[7]) ||
+                        empty($m[8])
+                    ) {
+                        array_push($errorArr, ['error' => "There are missing data in this row ($i)"]);
+                    }
+                    $i++;
+                    $isExsist = Medicine::findOne(['productName' => trim($m[1])]);
+                    if ($isExsist !== null) {
+                        array_push($errorArr, ['error' => "<b>$m[1]</b> Medicine already exist"]);
+                        continue;
+                    }
+                    $newMedicine = new Medicine();
+                    if (trim($m[1]) === '') {
+                        array_push($errorArr, ['error' => "<b>$m[1]</b> Medicine name should not be empty"]);
+                        continue;
+                    }
+                    $category = Category::findOne(['name' => trim($m[8])]);
+                    $pharmaceuticalForm = PharmaceuticalForm::findOne(['name' => trim($m[9])]);
+
+                    if ($category === null) {
+                        $category = new Category();
+                        if (trim($m[8]) === '') {
+                            array_push($errorArr, ['error' => "<b>$m[1]</b> does not have a category"]);
+                            continue;
+                        }
+                        $category->name =  trim($m[9]);
+                        $category->save();
+                    }
+
+                    if ($pharmaceuticalForm === null) {
+                        if (trim($m[9]) === '') {
+                            array_push($errorArr, ['error' => "<b>$m[1]</b> does not have a pharmaceutical Form"]);
+                            continue;
+                        }
+                        $pharmaceuticalForm = new PharmaceuticalForm();
+                        $pharmaceuticalForm->name =  trim($m[9]);
+                        $pharmaceuticalForm->save();
+                    }
+
+                    $newMedicine->barcode = trim($m[0]);
+                    $newMedicine->productName = trim($m[1]);
+                    $newMedicine->indications = trim($m[2]);
+                    $newMedicine->packing = trim($m[3]);
+                    $newMedicine->composition = trim($m[4]);
+                    $newMedicine->expiredDate = trim($m[5]);
+                    $newMedicine->price = (float)$m[6];
+                    $newMedicine->netPrice = (float) $m[7];
+                    if ($newMedicine->validate()) {
+                        $newMedicine->save();
+
+                        $pm = new MedicinePharmaceuticalForm();
+                        $pm->medicineId = $newMedicine->id;
+                        $pm->pharmaceuticalFormId = $pharmaceuticalForm->id;
+
+                        $pm->save();
+
+                        $c = new MedicineCategory();
+                        $c->medicineId = $newMedicine->id;
+                        $c->categoryId = $category->id;
+                        $c->save();
+                    } else {
+                        array_push($errorArr, ['error' => "<b>$m[1]</b> ", 'details' => $newMedicine->getErrors()]);
+                    }
+                }
+                return ['status' => 'ok', 'errorDetails' => $errorArr];
+            } else {
+                return ['status' => 'error', 'details' => 'There is no file uploaded'];
             }
-            $i = 0;
-            $errorArr = [];
-            foreach ($medicineArray as $m) {
-                $i++;
-                $isExsist = Medicine::findOne(['productName' => trim($m[1])]);
-                if ($isExsist !== null) {
-                    array_push($errorArr, ['error' => "<b>$m[1]</b> Medicine already exist"]);
-                    continue;
-                }
-                $newMedicine = new Medicine();
-                if (trim($m[1]) === '') {
-                    array_push($errorArr, ['error' => "<b>$m[1]</b> Medicine name should not be empty"]);
-                    continue;
-                }
-                $newMedicine->barcode = trim($m[0]);
-                $newMedicine->productName = trim($m[1]);
-                $newMedicine->indications = trim($m[2]);
-                $newMedicine->packing = trim($m[3]);
-                $newMedicine->composition = trim($m[4]);
-                $newMedicine->expiredDate = trim($m[5]);
-                $newMedicine->price = (float)$m[6];
-                $newMedicine->netPrice = (float) $m[7];
-                if ($newMedicine->validate()) {
-                    $newMedicine->save();
-                } else {
-                    array_push($errorArr, ['error' => "<b>$m[1]</b> ", 'details' => $newMedicine->getErrors()]);
-                }
-            }
-            return ['status' => 'ok', 'errorDetails' => $errorArr];
-        } else {
-            return ['status' => 'error', 'details' => 'There is no file uploaded'];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 
-    public function actionReadMedicines()
-    {
-        $spreadSheet = IOFactory::load(Url::to('@app/web/aphamea.xlsx'));
-        $spreadSheetArray = $spreadSheet->getActiveSheet()->toArray();
-        array_splice($spreadSheetArray, 0, 1);
-        foreach ($spreadSheetArray as $m) {
-            $newMedicine = new Medicine();
-            $newMedicine->productName = $m[1];
-            $newMedicine->indications = $m[5];
-            $newMedicine->packing = $m[6];
-            $newMedicine->composition = $m[4];
-            if ($newMedicine->validate()) {
-                $newMedicine->save();
+    // public function actionReadMedicines()
+    // {
+    //     $spreadSheet = IOFactory::load(Url::to('@app/web/aphamea.xlsx'));
+    //     $spreadSheetArray = $spreadSheet->getActiveSheet()->toArray();
+    //     array_splice($spreadSheetArray, 0, 1);
+    //     foreach ($spreadSheetArray as $m) {
+    //         $newMedicine = new Medicine();
+    //         $newMedicine->productName = $m[1];
+    //         $newMedicine->indications = $m[5];
+    //         $newMedicine->packing = $m[6];
+    //         $newMedicine->composition = $m[4];
+    //         if ($newMedicine->validate()) {
+    //             $newMedicine->save();
 
-                $pharmaceuticalForm = PharmaceuticalForm::findOne(['name' => $m[2]]);
-                if ($pharmaceuticalForm === null) continue;
+    //             $pharmaceuticalForm = PharmaceuticalForm::findOne(['name' => $m[2]]);
+    //             if ($pharmaceuticalForm === null) continue;
 
-                $pm = new MedicinePharmaceuticalForm();
-                $pm->medicineId = $newMedicine->id;
-                $pm->pharmaceuticalFormId = $pharmaceuticalForm->id;
-                $pm->save();
+    //             $pm = new MedicinePharmaceuticalForm();
+    //             $pm->medicineId = $newMedicine->id;
+    //             $pm->pharmaceuticalFormId = $pharmaceuticalForm->id;
+    //             $pm->save();
 
 
-                $category = Category::findOne(['name' => $m[3]]);
-                if ($category === null) continue;
-                $cm = new MedicineCategory();
-                $cm->medicineId = $newMedicine->id;
-                $cm->categoryId = $pharmaceuticalForm->id;
-                $cm->save();
-            }
-        }
-    }
+    //             $category = Category::findOne(['name' => $m[3]]);
+    //             if ($category === null) continue;
+    //             $cm = new MedicineCategory();
+    //             $cm->medicineId = $newMedicine->id;
+    //             $cm->categoryId = $pharmaceuticalForm->id;
+    //             $cm->save();
+    //         }
+    //     }
+    // }
 
     public function actionAdd()
     {
@@ -339,17 +393,19 @@ class MedicineController extends \yii\web\Controller
     public function actionGet($id = null, $barcode = null)
     {
         try {
-            if ($id === null && $barcode === null) {
+            if (($id === null && $barcode === null) || ($id !== null && $barcode !== null)) {
                 return ['status' => 'error', 'details' => 'You should send either id or barcode params'];
             }
             if ($id != null) {
                 $medicine = Medicine::find()
                     ->where(['id' => (int)$id])
+                    ->with('categories', 'pharmaceuticalForms')
                     ->asArray()
                     ->one();
             } elseif ($barcode != null) {
                 $medicine = Medicine::find()
-                    ->where(['barcode' => (int)$id])
+                    ->where(['barcode' => (int)$barcode])
+                    ->with('categories', 'pharmaceuticalForms')
                     ->asArray()
                     ->one();
             }
@@ -359,13 +415,13 @@ class MedicineController extends \yii\web\Controller
 
             $imgs = explode(',', $medicine['imgs']);
             $images = [];
-            if (!empty($imgs)) {
+            if ($imgs !== false) {
                 foreach ($imgs as $i) {
-                    $images[] = Url::to('@web/medicines/images/' . $i, true);
+                    if ($i)
+                        $images[] = Url::to('@web/medicines/images/' . $i, true);
                 }
             }
             $medicine['imgs'] = $images;
-
 
             return ['status' => 'ok', 'medicine' => $medicine];
         } catch (\Exception $e) {
@@ -378,9 +434,11 @@ class MedicineController extends \yii\web\Controller
         if ($searchText != null) {
             $medicines = Medicine::find()
                 ->where(['like', 'productName', trim($searchText) . '%', false])
+                ->with('categories', 'pharmaceuticalForms')
                 ->asArray()->all();
         } else {
             $medicines = Medicine::find()
+                ->with('categories', 'pharmaceuticalForms')
                 ->asArray()->all();
         }
         if ($medicines) {
@@ -389,7 +447,8 @@ class MedicineController extends \yii\web\Controller
                 $images = [];
                 if (!empty($imgs)) {
                     foreach ($imgs as $i) {
-                        $images[] = Url::to('@web/medicines/images/' . $i, true);
+                        if ($i)
+                            $images[] = Url::to('@web/medicines/images/' . $i, true);
                     }
                 }
                 $m['imgs'] = $images;
