@@ -144,7 +144,8 @@ class MedicineController extends \yii\web\Controller
                         empty($m[5]) ||
                         empty($m[6]) ||
                         empty($m[7]) ||
-                        empty($m[8])
+                        empty($m[8])||
+                        empty($m[9])
                     ) {
                         array_push($errorArr, ['error' => "There are missing data in this row ($i)"]);
                     }
@@ -168,7 +169,7 @@ class MedicineController extends \yii\web\Controller
                             array_push($errorArr, ['error' => "<b>$m[1]</b> does not have a category"]);
                             continue;
                         }
-                        $category->name =  trim($m[9]);
+                        $category->name =  trim($m[8]);
                         $category->save();
                     }
 
