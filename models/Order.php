@@ -65,6 +65,12 @@ class Order extends \yii\db\ActiveRecord
     {
         return $this->hasMany(OrderDetails::className(), ['orderId' => 'id']);
     }
+    
+    public function getOffers()
+    {
+        return $this->hasMany(Offer::class,['id'=>'offerId'])
+        ->viaTable('order_details',['orderId'=>'id']);
+    }
 
     /**
      * Gets query for [[Representative]].

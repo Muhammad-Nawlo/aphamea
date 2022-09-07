@@ -35,14 +35,14 @@ class OrderController extends Controller
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
-        // $behaviors['authenticator'] = [
-        //     'class' => CompositeAuth::class,
-        //     'authMethods' => [
-        //         HttpBearerAuth::class,
-        //         QueryParamAuth::class,
-        //         JwtHttpBearerAuth::class
-        //     ]
-        // ];
+        $behaviors['authenticator'] = [
+            'class' => CompositeAuth::class,
+            'authMethods' => [
+                HttpBearerAuth::class,
+                QueryParamAuth::class,
+                JwtHttpBearerAuth::class
+            ]
+        ];
         return $behaviors;
     }
 
@@ -88,6 +88,9 @@ class OrderController extends Controller
             $orderDetails = $data['orderDetails'];
             if (empty($orderDetails))
                 return ['status' => 'error', 'details' => 'Order details should not be empty'];
+
+            if ((int)$data['representativeId'] === (int)$data['userId'])
+                return ['status' => 'error', 'details' => 'User id should not be the same as Representative id'];
 
             $newOrder = new Order();
             $newOrder->userId = (int)$data['userId'];
@@ -163,21 +166,7 @@ class OrderController extends Controller
     function actionGetAll()
     {
         try {
-            $orders = (new Query())
-                ->select([
-                    'order.id as orderId',
-                    'order.orderDate as orderDate',
-                    'order.isCanceled',
-                    'order.isCompleted',
-                    'user.firstName as ufirstName',
-                    'user.lastName as ulastName',
-                    'representative.firstName as rfirstName',
-                    'representative.lastName as rlastName',
-                ])
-                ->from('order')
-                ->innerJoin('user', 'user.id=order.userId')
-                ->innerJoin('user representative', 'representative.id=order.representativeId')
-                ->all();
+            $orders = Order::find()->with('representative', 'user')->asArray()->all();
             if ($orders) {
                 return ['status' => 'ok', 'orders' => $orders];
             } else {
@@ -187,21 +176,31 @@ class OrderController extends Controller
             return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
-    // function actionGet($id)
-    // {
-    //     try {
-    //         $order = Order::findOne(['id' => (int)$id]);
-    //         if ($order === null)
-    //             return ['status' => 'error', 'details' => 'There is no order that has this id'];
 
-    //         $orderDetails = OrderDetails::find()->where(['orderId' => $order->id])->all();
-    //         $offer = [];
-    //         foreach ($orderDetails as $od) {
-    //         }
+    function actionGet($id)
+    {
+        try {
+            $order = Order::find()->where(['id' => (int)$id])->with('offers', 'orderDetails')->asArray()->one();
 
-    //         // return $orderDetails->offer;
-    //     } catch (\Exception $e) {
-    //         return ['status' => 'error', 'details' => $e->getMessage()];
-    //     }
-    // }
+            if ($order === null)
+                return ['status' => 'error', 'details' => 'There is no order that has this id'];
+
+            $offers = [];
+
+            foreach ($order['offers'] as $key => $offer) {
+                $offer  = Offer::find()->where(['id' => $offer['id']])
+                    ->with('medicines', 'extraMedicines')
+                    ->asArray()
+                    ->one();
+                $offer['quantity'] = $order['orderDetails'][$key]['quantity'];
+                $offers[] = $offer;
+            }
+            $order['offers'] = $offers;
+            unset($order['orderDetails']);
+
+            return ['status' => 'ok', 'order' => $order];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
+        }
+    }
 }

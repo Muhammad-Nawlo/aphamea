@@ -33,14 +33,14 @@ class OfferController extends Controller
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
-        // $behaviors['authenticator'] = [
-        //     'class' => CompositeAuth::class,
-        //     'authMethods' => [
-        //         HttpBearerAuth::class,
-        //         QueryParamAuth::class,
-        //         JwtHttpBearerAuth::class
-        //     ]
-        // ];
+        $behaviors['authenticator'] = [
+            'class' => CompositeAuth::class,
+            'authMethods' => [
+                HttpBearerAuth::class,
+                QueryParamAuth::class,
+                JwtHttpBearerAuth::class
+            ]
+        ];
         return $behaviors;
     }
 
@@ -216,7 +216,7 @@ class OfferController extends Controller
     function actionGetAll()
     {
         try {
-            $offers = Offer::find()->asArray()->all();
+            $offers = Offer::find()->with('medicines','extraMedicines')->asArray()->all();
             if ($offers) {
                 return ['status' => 'ok', 'offers' => $offers];
             } else {
