@@ -13,7 +13,7 @@ use Yii;
  * @property string|null $indications
  * @property int|null $packing
  * @property string|null $composition
- * @property string|null $expiredDate
+ * @property int|null $expiredDate
  * @property string|null $imgs
  * @property float|null $price
  * @property float|null $netPrice
@@ -39,9 +39,8 @@ class Medicine extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['packing'], 'integer'],
+            [['packing', 'expiredDate'], 'integer'],
             [['composition'], 'string'],
-            [['expiredDate'], 'safe'],
             [['price', 'netPrice'], 'number'],
             [['barcode', 'productName', 'indications', 'imgs'], 'string', 'max' => 255],
             [['barcode'], 'unique'],
@@ -75,17 +74,6 @@ class Medicine extends \yii\db\ActiveRecord
     public function getMedicineCategories()
     {
         return $this->hasMany(MedicineCategory::className(), ['medicineId' => 'id']);
-    }
-
-    public function getCategories()
-    {
-        return $this->hasMany(Category::class, ['id' => 'categoryId'])
-            ->viaTable('medicine_category', ['medicineId' => 'id']);
-    }
-    public function getPharmaceuticalForms()
-    {
-        return $this->hasMany(PharmaceuticalForm::class, ['id' => 'pharmaceuticalFormId'])
-            ->viaTable('medicine_pharmaceutical_form', ['medicineId' => 'id']);
     }
 
     /**

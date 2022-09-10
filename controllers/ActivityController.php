@@ -88,6 +88,7 @@ class ActivityController extends \yii\web\Controller
             $newActivity = new Activity();
             $newActivity->type = $data['type'];
             $newActivity->content = $data['content'];
+            $newActivity->publishedDate = date('Y-m-d h:i:s');
             $activityImages = UploadedFile::getInstancesByName('activityImages');
             $imagesName = [];
             if (!empty($activityImages)) {

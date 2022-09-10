@@ -207,6 +207,22 @@ class PharmaceuticalFormController extends \yii\web\Controller
         if (!$pharmaceuticalForms)
             return ["status" => "error", "details" => "There is no Pharmaceutical Form"];
 
+            $pharmaceuticalForms = array_map(function ($p) {
+                $p['medicines'] = array_map(function ($m) {
+                    $imgs = explode(',', $m['imgs']);
+                    $images = [];
+                    if ($imgs !== false) {
+                        foreach ($imgs as $i) {
+                            if ($i)
+                                $images[] = Url::to('@web/medicines/images/' . $i, true);
+                        }
+                    }
+                    $m['imgs'] = $images;
+                    return $m;
+                }, $p['medicines']);
+                return $p;
+            }, $pharmaceuticalForms);
+
         return ['status' => 'ok', 'pharmaceuticalForm' => $pharmaceuticalForms];
     }
 
@@ -216,6 +232,20 @@ class PharmaceuticalFormController extends \yii\web\Controller
 
         if ($pharmaceuticalForm === null)
             return ["status" => "error", "details" => "There is no Pharmaceutical Form"];
+
+        $pharmaceuticalForm['medicines'] = array_map(function ($m) {
+            $imgs = explode(',', $m['imgs']);
+            $images = [];
+            if ($imgs !== false) {
+                foreach ($imgs as $i) {
+                    if ($i)
+                        $images[] = Url::to('@web/medicines/images/' . $i, true);
+                }
+            }
+            $m['imgs'] = $images;
+            return $m;
+        }, $pharmaceuticalForm['medicines']);
+
 
         return ['status' => 'ok', 'pharmaceuticalForm' => $pharmaceuticalForm];
     }
@@ -231,6 +261,19 @@ class PharmaceuticalFormController extends \yii\web\Controller
 
             if (empty($pharmaceuticalForm['medicines']))
                 return ['status' => 'error', 'details' => "There are no medicine that has this Pharmaceutical Form id ($id)"];
+
+            $pharmaceuticalForm['medicines'] = array_map(function ($m) {
+                $imgs = explode(',', $m['imgs']);
+                $images = [];
+                if ($imgs !== false) {
+                    foreach ($imgs as $i) {
+                        if ($i)
+                            $images[] = Url::to('@web/medicines/images/' . $i, true);
+                    }
+                }
+                $m['imgs'] = $images;
+                return $m;
+            }, $pharmaceuticalForm['medicines']);
 
             return ['status' => 'ok', 'medicines' => $pharmaceuticalForm['medicines']];
         } catch (\Exception $e) {

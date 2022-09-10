@@ -208,6 +208,22 @@ class CategoryController extends \yii\web\Controller
         $categories = Category::find()->where([])->with('medicines')->asArray()->all();
         if (!$categories)
             return ['status' => 'error', 'details' => 'There is no category that has this id'];
+            
+        $categories = array_map(function ($c) {
+            $c['medicines'] = array_map(function ($m) {
+                $imgs = explode(',', $m['imgs']);
+                $images = [];
+                if ($imgs !== false) {
+                    foreach ($imgs as $i) {
+                        if ($i)
+                            $images[] = Url::to('@web/medicines/images/' . $i, true);
+                    }
+                }
+                $m['imgs'] = $images;
+                return $m;
+            }, $c['medicines']);
+            return $c;
+        }, $categories);
 
         return ['status' => 'ok', 'categories' => $categories];
     }
@@ -217,6 +233,19 @@ class CategoryController extends \yii\web\Controller
         $category = Category::find()->where(['id' => (int)$id])->with('medicines')->asArray()->one();
         if ($category === null)
             return ["status" => "error", "details" => 'There is no category that has this id'];
+
+        $category['medicines'] = array_map(function ($m) {
+            $imgs = explode(',', $m['imgs']);
+            $images = [];
+            if ($imgs !== false) {
+                foreach ($imgs as $i) {
+                    if ($i)
+                        $images[] = Url::to('@web/medicines/images/' . $i, true);
+                }
+            }
+            $m['imgs'] = $images;
+            return $m;
+        }, $category['medicines']);
 
         return ['status' => 'ok', 'category' => $category];
     }
@@ -231,6 +260,20 @@ class CategoryController extends \yii\web\Controller
 
             if (empty($category['medicines']))
                 return ["status" => "error", "details" => 'There is no medicine that has this category id'];
+
+
+            $category['medicines'] = array_map(function ($m) {
+                $imgs = explode(',', $m['imgs']);
+                $images = [];
+                if ($imgs !== false) {
+                    foreach ($imgs as $i) {
+                        if ($i)
+                            $images[] = Url::to('@web/medicines/images/' . $i, true);
+                    }
+                }
+                $m['imgs'] = $images;
+                return $m;
+            }, $category['medicines']);
 
 
             return ['status' => 'ok', 'medicines' => $category['medicines']];

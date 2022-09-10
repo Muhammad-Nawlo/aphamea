@@ -25,7 +25,7 @@ class m220809_211343_create_medicine_table extends Migration
             'indications' => $this->string(),
             'packing' => $this->integer(),
             'composition' => $this->text(),
-            'expiredDate' => $this->dateTime(),
+            'expiredDate' => $this->integer(),
             'imgs' => $this->string(),
             'price' => $this->float(),
             'netPrice' => $this->float()
