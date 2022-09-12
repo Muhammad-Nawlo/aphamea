@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\helpers\HelperFunction;
 use app\models\Activity;
+use PhpOffice\PhpSpreadsheet\Calculation\Logical\Boolean;
 use sizeg\jwt\JwtHttpBearerAuth;
 use Yii;
 use yii\filters\auth\CompositeAuth;
@@ -78,7 +79,7 @@ class ActivityController extends \yii\web\Controller
     {
         try {
             $data = (array)(Yii::$app->request->post());
-            if (!isset($data['type']) || !isset($data['content']))
+            if (!isset($data['type']) || !isset($data['content']) || !isset($data['title']))
                 return ["status" => "error", "details" => "There are missing params"];
 
             if (!in_array($data['type'], Activity::ACTIVITY_TYPE)) {
@@ -87,6 +88,7 @@ class ActivityController extends \yii\web\Controller
 
             $newActivity = new Activity();
             $newActivity->type = $data['type'];
+            $newActivity->title = $data['title'];
             $newActivity->content = $data['content'];
             $newActivity->publishedDate = date('Y-m-d h:i:s');
             $activityImages = UploadedFile::getInstancesByName('activityImages');
@@ -132,13 +134,33 @@ class ActivityController extends \yii\web\Controller
         }
     }
 
-    public function actionGetAll($type)
+    public function actionGetAll()
     {
         try {
+            $data = (array)json_decode(Yii::$app->request->getRawBody());
+            if (!isset($data['type']) || !isset($data['searchFilters']))
+                return ['status' => 'error', 'details' => 'There are missing params'];
+
+            $searchFilters = (array)$data['searchFilters']->filters;
+            $searchText = trim($data['searchFilters']->searchText);
+            $type = (int)$data['type'];
+
             if (!in_array((int)$type, Activity::ACTIVITY_TYPE))
                 return ['status' => 'error', 'details' => 'The type of activity is not valid'];
 
-            $activities = Activity::find()->where(['type' => (int)$type])->all();
+            $activities = Activity::find()->andFilterwhere(['type' => (int)$type]);
+
+            foreach ($searchFilters as $s) {
+                $s = (array)$s;
+                if (!isset($s['name']) || !isset($s['status']))
+                    continue;
+                if (!in_array($s['name'], ['title', 'content']))
+                    continue;
+                if ((bool)$s['status'] === true)
+                    $activities->andFilterWhere(['like', $s['name'],  '%' . trim($searchText) . '%', false]);
+            }
+            
+            $activities = (array)$activities->all();
             if ($activities) {
                 $activities = array_map(function ($a) {
                     $imgs = explode(',', $a['imgs']);
@@ -165,7 +187,7 @@ class ActivityController extends \yii\web\Controller
         try {
             $activity = Activity::find()->where(['id' => (int)$id])->asArray()->one();
             if ($activity === null)
-                return ["status" => "error", "details" => 'There is no activity that has this id '.$id];
+                return ["status" => "error", "details" => 'There is no activity that has this id ' . $id];
 
             $imgs = explode(',', $activity['imgs']);
             $images = [];

@@ -40,7 +40,7 @@ class MedicineController extends \yii\web\Controller
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
-        
+
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::class,
             'authMethods' => [
@@ -145,7 +145,7 @@ class MedicineController extends \yii\web\Controller
                         empty($m[5]) ||
                         empty($m[6]) ||
                         empty($m[7]) ||
-                        empty($m[8])||
+                        empty($m[8]) ||
                         empty($m[9])
                     ) {
                         array_push($errorArr, ['error' => "There are missing data in this row ($i)"]);
@@ -392,6 +392,26 @@ class MedicineController extends \yii\web\Controller
         }
     }
 
+    public  function actionDelete()
+    {
+        try {
+            $data = (array)json_decode(Yii::$app->request->getRawBody(), true);
+            if (!isset($data['id'])) {
+                return ["status" => "error", "details" => "There are missing param"];
+            }
+            $medicine = Medicine::findOne(['id' => (int)$data['id']]);
+            if ($medicine === null)
+                return ["status" => "error", "details" => "There is no medicine that has this id "];
+
+            if (!$medicine->delete()) {
+                return ["status" => "error", "details" => $medicine->getErrors()];
+            }
+            return ['status' => 'ok'];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
+        }
+    }
+
     public function actionGet($id = null, $barcode = null)
     {
         try {
@@ -431,34 +451,52 @@ class MedicineController extends \yii\web\Controller
         }
     }
 
-    public function actionGetAll($searchText = null)
+    public function actionGetAll()
     {
-        if ($searchText != null) {
-            $medicines = Medicine::find()
-                ->where(['like', 'productName', trim($searchText) . '%', false])
+        try {
+            $medicines = Medicine::find();
+
+            $data = (array)json_decode(Yii::$app->request->getRawBody());
+            if (!isset($data['searchFilters']))
+                return ['status' => 'error', 'details' => 'There are missing params'];
+
+            $searchFilters = (array)$data['searchFilters']->filters;
+            $searchText = trim($data['searchFilters']->searchText);
+
+            foreach ($searchFilters as $s) {
+                $s = (array)$s;
+                if (!isset($s['name']) || !isset($s['status']))
+                    continue;
+                if (!in_array($s['name'], ['productName', 'indications', 'composition']))
+                    continue;
+
+                if ((bool)$s['status'] === true)
+                    $medicines->andFilterWhere(['like', $s['name'],  '%' . trim($searchText) . '%', false]);
+            }
+
+            $medicines = $medicines
                 ->with('categories', 'pharmaceuticalForms')
-                ->asArray()->all();
-        } else {
-            $medicines = Medicine::find()
-                ->with('categories', 'pharmaceuticalForms')
-                ->asArray()->all();
-        }
-        if ($medicines) {
-            $medicines = array_map(function ($m) {
-                $imgs = explode(',', $m['imgs']);
-                $images = [];
-                if (!empty($imgs)) {
-                    foreach ($imgs as $i) {
-                        if ($i)
-                            $images[] = Url::to('@web/medicines/images/' . $i, true);
+                ->asArray()
+                ->all();
+            if ($medicines) {
+                $medicines = array_map(function ($m) {
+                    $imgs = explode(',', $m['imgs']);
+                    $images = [];
+                    if (!empty($imgs)) {
+                        foreach ($imgs as $i) {
+                            if ($i)
+                                $images[] = Url::to('@web/medicines/images/' . $i, true);
+                        }
                     }
-                }
-                $m['imgs'] = $images;
-                return $m;
-            }, $medicines);
-            return ['status' => 'ok', 'medicines' => $medicines];
-        } else {
-            return ['status' => 'error', 'details' => 'There is no medicine yet'];
+                    $m['imgs'] = $images;
+                    return $m;
+                }, $medicines);
+                return ['status' => 'ok', 'medicines' => $medicines];
+            } else {
+                return ['status' => 'error', 'details' => 'There is no medicine yet'];
+            }
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 }

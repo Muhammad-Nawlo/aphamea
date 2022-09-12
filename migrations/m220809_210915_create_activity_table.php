@@ -23,6 +23,7 @@ class m220809_210915_create_activity_table extends Migration
             'type' => $this->integer(),
             'publishedDate' => $this->dateTime(),
             'imgs' => $this->string(),
+            'title' => $this->string(),
             'content' => $this->text(),
             'isRead' => $this->boolean()
         ], $options);

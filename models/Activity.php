@@ -11,12 +11,14 @@ use Yii;
  * @property int|null $type
  * @property string|null $publishedDate
  * @property string|null $imgs
+ * @property string|null $title
  * @property string|null $content
  * @property int|null $isRead
  */
 class Activity extends \yii\db\ActiveRecord
 {
     const ACTIVITY_TYPE = [0, 1, 2, 3];
+
     /**
      * {@inheritdoc}
      */
@@ -34,7 +36,7 @@ class Activity extends \yii\db\ActiveRecord
             [['type', 'isRead'], 'integer'],
             [['publishedDate'], 'safe'],
             [['content'], 'string'],
-            [['imgs'], 'string', 'max' => 255],
+            [['imgs', 'title'], 'string', 'max' => 255],
         ];
     }
 
@@ -48,6 +50,7 @@ class Activity extends \yii\db\ActiveRecord
             'type' => 'Type',
             'publishedDate' => 'Published Date',
             'imgs' => 'Imgs',
+            'title' => 'Title',
             'content' => 'Content',
             'isRead' => 'Is Read',
         ];

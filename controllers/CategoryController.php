@@ -205,27 +205,31 @@ class CategoryController extends \yii\web\Controller
 
     public function actionGetAll()
     {
-        $categories = Category::find()->where([])->with('medicines')->asArray()->all();
-        if (!$categories)
-            return ['status' => 'error', 'details' => 'There is no category that has this id'];
-            
-        $categories = array_map(function ($c) {
-            $c['medicines'] = array_map(function ($m) {
-                $imgs = explode(',', $m['imgs']);
-                $images = [];
-                if ($imgs !== false) {
-                    foreach ($imgs as $i) {
-                        if ($i)
-                            $images[] = Url::to('@web/medicines/images/' . $i, true);
-                    }
-                }
-                $m['imgs'] = $images;
-                return $m;
-            }, $c['medicines']);
-            return $c;
-        }, $categories);
+        try {
+            $categories = Category::find()->where([])->with('medicines')->asArray()->all();
+            if (!$categories)
+                return ['status' => 'error', 'details' => 'There is no category that has this id'];
 
-        return ['status' => 'ok', 'categories' => $categories];
+            $categories = array_map(function ($c) {
+                $c['medicines'] = array_map(function ($m) {
+                    $imgs = explode(',', $m['imgs']);
+                    $images = [];
+                    if ($imgs !== false) {
+                        foreach ($imgs as $i) {
+                            if ($i)
+                                $images[] = Url::to('@web/medicines/images/' . $i, true);
+                        }
+                    }
+                    $m['imgs'] = $images;
+                    return $m;
+                }, $c['medicines']);
+                return $c;
+            }, $categories);
+
+            return ['status' => 'ok', 'categories' => $categories];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
+        }
     }
 
     function actionGet($id)
@@ -277,6 +281,26 @@ class CategoryController extends \yii\web\Controller
 
 
             return ['status' => 'ok', 'medicines' => $category['medicines']];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
+        }
+    }
+
+    public  function actionDelete()
+    {
+        try {
+            $data = (array)json_decode(Yii::$app->request->getRawBody(), true);
+            if (!isset($data['id']))
+                return ["status" => "error", "details" => "There are missing param"];
+
+            $category = Category::findOne(['id' => (int)$data['id']]);
+            if ($category === null)
+                return ["status" => "error", "details" => "There is no category that has this id "];
+
+            if (!$category->delete())
+                return ["status" => "error", "details" => $category->getErrors()];
+
+            return ['status' => 'ok'];
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
         }

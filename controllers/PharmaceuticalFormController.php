@@ -207,21 +207,21 @@ class PharmaceuticalFormController extends \yii\web\Controller
         if (!$pharmaceuticalForms)
             return ["status" => "error", "details" => "There is no Pharmaceutical Form"];
 
-            $pharmaceuticalForms = array_map(function ($p) {
-                $p['medicines'] = array_map(function ($m) {
-                    $imgs = explode(',', $m['imgs']);
-                    $images = [];
-                    if ($imgs !== false) {
-                        foreach ($imgs as $i) {
-                            if ($i)
-                                $images[] = Url::to('@web/medicines/images/' . $i, true);
-                        }
+        $pharmaceuticalForms = array_map(function ($p) {
+            $p['medicines'] = array_map(function ($m) {
+                $imgs = explode(',', $m['imgs']);
+                $images = [];
+                if ($imgs !== false) {
+                    foreach ($imgs as $i) {
+                        if ($i)
+                            $images[] = Url::to('@web/medicines/images/' . $i, true);
                     }
-                    $m['imgs'] = $images;
-                    return $m;
-                }, $p['medicines']);
-                return $p;
-            }, $pharmaceuticalForms);
+                }
+                $m['imgs'] = $images;
+                return $m;
+            }, $p['medicines']);
+            return $p;
+        }, $pharmaceuticalForms);
 
         return ['status' => 'ok', 'pharmaceuticalForm' => $pharmaceuticalForms];
     }
@@ -276,6 +276,26 @@ class PharmaceuticalFormController extends \yii\web\Controller
             }, $pharmaceuticalForm['medicines']);
 
             return ['status' => 'ok', 'medicines' => $pharmaceuticalForm['medicines']];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
+        }
+    }
+
+    public  function actionDelete()
+    {
+        try {
+            $data = (array)json_decode(Yii::$app->request->getRawBody(), true);
+            if (!isset($data['id']))
+                return ["status" => "error", "details" => "There are missing param"];
+
+            $pharmaceuticalForm = PharmaceuticalForm::findOne(['id' => (int)$data['id']]);
+            if ($pharmaceuticalForm === null)
+                return ["status" => "error", "details" => "There is no Pharmaceutical Form that has this id "];
+
+            if (!$pharmaceuticalForm->delete())
+                return ["status" => "error", "details" => $pharmaceuticalForm->getErrors()];
+
+            return ['status' => 'ok'];
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
         }

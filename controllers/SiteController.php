@@ -219,6 +219,63 @@ class SiteController extends Controller
         }
     }
 
+    public function actionUpdateUserInfo()
+    {
+        $errors = [];
+        try {
+            $data = (array)Yii::$app->request->post();
+            if (!isset($data['id']))
+                return ["status" => "error", "details" => "There is missing param"];
+
+            $user = User::findOne(['id' => $data['id']]);
+            if ($user === null) return ["status" => "error", "details" => "There is no user that has this email"];
+
+            $user->load($data, '');
+            $userContacts = isset($data['userContacts']) ? (array)$data['userContacts'] : [];
+            $userImage = UploadedFile::getInstanceByName('userImage');
+            if ($userImage !== null) {
+                HelperFunction::createFolderIfNotExist(Url::to('@app/web/users/images'));
+                HelperFunction::deletePhotos($user->img, 'users/images');
+                $name = Yii::$app->security->generateRandomString(5) . '.' . $userImage->extension;
+                $userImage->saveAs(Url::to('@app/web/users/images') . '/' . $name);
+                $user->img = $name;
+            }
+            if (!in_array((int)$data['role'], User::ROLE)) {
+                return ["status" => "error", "details" => "The role is not valid"];
+            }
+
+            if ($userContacts) {
+                Contact::deleteAll(['userId' => $user->id]);
+                foreach ($userContacts as $c) {
+                    if (
+                        (!isset($c['type']) && !in_array((int)$c['type'], Contact::CONTACT_TYPES)) ||
+                        !isset($c['content'])
+                    ) {
+                        $errors[] = 'The content of contact is invalid';
+                    }
+                    $newContact = new Contact();
+                    $newContact->userId = $user->id;
+                    $newContact->type = (int)$c['type'];
+                    $newContact->content = $c['content'];
+                    if ($newContact->validate()) {
+                        $newContact->save();
+                    } else {
+                        $errors[] = $newContact->getErrors();
+                    }
+                }
+            }
+
+            if ($user->validate()) {
+                $user->save();
+                return ['status' => 'ok', 'errors' => $errors];
+            } else {
+                return ['status' => 'error', 'details' => $user->getErrors()];
+            }
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
+        }
+    }
+
     public function actionGetUserInfo()
     {
         $user = User::find()
@@ -359,6 +416,26 @@ class SiteController extends Controller
             return ['status' => 'ok', 'errorDetails' => $errorArr];
         } else {
             return ['status' => 'error', 'details' => 'There is no file uploaded'];
+        }
+    }
+
+    public  function actionDelete()
+    {
+        try {
+            $data = (array)json_decode(Yii::$app->request->getRawBody(), true);
+            if (!isset($data['id'])) {
+                return ["status" => "error", "details" => "There are missing param"];
+            }
+            $user = User::findOne(['id' => (int)$data['id']]);
+            if ($user === null)
+                return ["status" => "error", "details" => "There is no user that has this id "];
+
+            if (!$user->delete()) {
+                return ["status" => "error", "details" => $user->getErrors()];
+            }
+            return ['status' => 'ok'];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 }

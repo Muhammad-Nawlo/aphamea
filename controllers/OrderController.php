@@ -203,4 +203,26 @@ class OrderController extends Controller
             return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
+
+    function actionDelete()
+    {
+        try {
+            $id = Yii::$app->request->post('id');
+            if ($id === null)
+                return ['status' => 'error', 'details' => 'There is a missing params'];
+
+            $order = Order::findOne(['id' => (int)$id]);
+            if ($order === null)
+                return ['status' => 'error', 'details' => 'There is no order that has this id'];
+
+            OrderDetails::deleteAll(['offerId' => $order->id]);
+            if ($order->delete()) {
+                return ['status' => 'ok'];
+            } else {
+                return ['status' => 'error', 'details' => $order->delete()];
+            }
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
+        }
+    }
 }

@@ -256,4 +256,5 @@ class OfferController extends Controller
             return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
+    
 }
