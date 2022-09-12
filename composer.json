@@ -25,7 +25,8 @@
     "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
     "sizeg/yii2-jwt": "^2.0",
     "ext-json": "*",
-    "phpoffice/phpspreadsheet": "^1.24"
+    "phpoffice/phpspreadsheet": "^1.24",
+    "picqer/php-barcode-generator": "^2.2"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.1.0",

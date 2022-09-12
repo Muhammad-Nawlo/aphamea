@@ -221,6 +221,8 @@ class CategoryController extends \yii\web\Controller
                         }
                     }
                     $m['imgs'] = $images;
+                    $m['barcode'] = Url::to('@web/medicines/barcodes/' . $m['barcode'], true);
+
                     return $m;
                 }, $c['medicines']);
                 return $c;
@@ -248,6 +250,8 @@ class CategoryController extends \yii\web\Controller
                 }
             }
             $m['imgs'] = $images;
+            $m['barcode']= Url::to('@web/medicines/barcodes/' . $m['barcode'], true);
+
             return $m;
         }, $category['medicines']);
 
@@ -276,6 +280,7 @@ class CategoryController extends \yii\web\Controller
                     }
                 }
                 $m['imgs'] = $images;
+                $m['barcode'] = Url::to('@web/medicines/barcodes/' . $m['barcode'], true);
                 return $m;
             }, $category['medicines']);
 

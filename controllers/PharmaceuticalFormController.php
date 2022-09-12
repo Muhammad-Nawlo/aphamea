@@ -218,6 +218,8 @@ class PharmaceuticalFormController extends \yii\web\Controller
                     }
                 }
                 $m['imgs'] = $images;
+                $m['barcode']= Url::to('@web/medicines/barcodes/' . $m['barcode'], true);
+
                 return $m;
             }, $p['medicines']);
             return $p;
@@ -243,6 +245,8 @@ class PharmaceuticalFormController extends \yii\web\Controller
                 }
             }
             $m['imgs'] = $images;
+            $m['barcode']= Url::to('@web/medicines/barcodes/' . $m['barcode'], true);
+
             return $m;
         }, $pharmaceuticalForm['medicines']);
 
@@ -272,6 +276,8 @@ class PharmaceuticalFormController extends \yii\web\Controller
                     }
                 }
                 $m['imgs'] = $images;
+                $m['barcode']= Url::to('@web/medicines/barcodes/' . $m['barcode'], true);
+
                 return $m;
             }, $pharmaceuticalForm['medicines']);
 

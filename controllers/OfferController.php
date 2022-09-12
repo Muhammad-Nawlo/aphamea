@@ -211,7 +211,7 @@ class OfferController extends Controller
     function actionGetAll()
     {
         try {
-            $offers = Offer::find()->with('medicines','extraMedicines')->asArray()->all();
+            $offers = Offer::find()->with('medicines', 'extraMedicines')->asArray()->all();
             if ($offers) {
                 return ['status' => 'ok', 'offers' => $offers];
             } else {
@@ -251,5 +251,4 @@ class OfferController extends Controller
             return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
-    
 }

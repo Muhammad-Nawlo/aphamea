@@ -2481,3 +2481,607 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1663008423.9022
     'REQUEST_TIME' => 1663008423
 ]
+2022-09-12 19:15:48 [::1][-][-][error][TypeError] TypeError: Argument 1 passed to Picqer\Barcode\BarcodeGenerator::getBarcodeData() must be of the type string, null given, called in F:\apps\wamp64\www\aphamea_project\vendor\picqer\php-barcode-generator\src\BarcodeGeneratorPNG.php on line 54 and defined in F:\apps\wamp64\www\aphamea_project\vendor\picqer\php-barcode-generator\src\BarcodeGenerator.php:99
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\picqer\php-barcode-generator\src\BarcodeGeneratorPNG.php(54): Picqer\Barcode\BarcodeGenerator->getBarcodeData(NULL, 'C128')
+#1 F:\apps\wamp64\www\aphamea_project\controllers\MedicineController.php(301): Picqer\Barcode\BarcodeGeneratorPNG->getBarcode(NULL, 'C128')
+#2 [internal function]: app\controllers\MedicineController->actionAdd()
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('add', Array)
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('medicine/add', Array)
+#7 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#9 {main}
+2022-09-12 19:15:48 [::1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'barcode' => 'dcvvccxvcx'
+    'productName' => 'Muhammad'
+    'indications' => 'this is test medice'
+    'packing' => '50'
+    'composition' => 'fsdfdsfdsfdsf'
+    'expiredDate' => '2'
+    'price' => '1500'
+    'netPrice' => '1500'
+    'pharmaceuticalFormId' => '1'
+    'categoryId' => '1'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '1078'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundaryIFKwRMWy5iHdpJfM'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => '3b18f774-5c26-034e-a231-9daa813e657d'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\PuTTY\\;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '10235'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/add'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/add'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\add'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/add'
+    'REQUEST_TIME_FLOAT' => 1663010148.8582
+    'REQUEST_TIME' => 1663010148
+]
+2022-09-12 19:17:45 [::1][-][-][error][TypeError] TypeError: Argument 1 passed to Picqer\Barcode\BarcodeGenerator::getBarcodeData() must be of the type string, null given, called in F:\apps\wamp64\www\aphamea_project\vendor\picqer\php-barcode-generator\src\BarcodeGeneratorPNG.php on line 54 and defined in F:\apps\wamp64\www\aphamea_project\vendor\picqer\php-barcode-generator\src\BarcodeGenerator.php:99
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\picqer\php-barcode-generator\src\BarcodeGeneratorPNG.php(54): Picqer\Barcode\BarcodeGenerator->getBarcodeData(NULL, 'C128')
+#1 F:\apps\wamp64\www\aphamea_project\controllers\MedicineController.php(301): Picqer\Barcode\BarcodeGeneratorPNG->getBarcode(NULL, 'C128')
+#2 [internal function]: app\controllers\MedicineController->actionAdd()
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('add', Array)
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('medicine/add', Array)
+#7 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#9 {main}
+2022-09-12 19:17:45 [::1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'barcode' => 'dcvvccxvcx'
+    'productName' => 'Muhammad'
+    'indications' => 'this is test medice'
+    'packing' => '50'
+    'composition' => 'fsdfdsfdsfdsf'
+    'expiredDate' => '2'
+    'price' => '1500'
+    'netPrice' => '1500'
+    'pharmaceuticalFormId' => '1'
+    'categoryId' => '1'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '1078'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundaryQtEAw1zFMvvmqdHl'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => 'aa283001-bfb3-227d-05ce-dd5d9937f26e'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\PuTTY\\;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '10306'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/add'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/add'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\add'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/add'
+    'REQUEST_TIME_FLOAT' => 1663010265.4852
+    'REQUEST_TIME' => 1663010265
+]
+2022-09-12 19:41:39 [::1][-][-][error][yii\base\InvalidArgumentException] yii\base\InvalidArgumentException: Malformed UTF-8 characters, possibly incorrectly encoded in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\helpers\BaseJson.php:147
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\helpers\BaseJson.php(88): yii\helpers\BaseJson::handleJsonError(5)
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\JsonResponseFormatter.php(133): yii\helpers\BaseJson::encode(Array, 320)
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\JsonResponseFormatter.php(112): yii\web\JsonResponseFormatter->formatJson(Object(yii\web\Response))
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Response.php(1095): yii\web\JsonResponseFormatter->format(Object(yii\web\Response))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Response.php(339): yii\web\Response->prepare()
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(390): yii\web\Response->send()
+#6 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#7 {main}
+2022-09-12 19:41:39 [::1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'productName' => 'Muhammad'
+    'indications' => 'this is test medice'
+    'packing' => '50'
+    'composition' => 'fsdfdsfdsfdsf'
+    'expiredDate' => '2'
+    'price' => '1500'
+    'netPrice' => '1500'
+    'pharmaceuticalFormId' => '1'
+    'categoryId' => '1'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '974'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundaryjZxtZc81mQTz4SkV'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => '533c833a-5a23-446e-c2ea-25f091562059'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\PuTTY\\;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '5139'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/add'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/add'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\add'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/add'
+    'REQUEST_TIME_FLOAT' => 1663011699.7164
+    'REQUEST_TIME' => 1663011699
+]
+2022-09-12 19:46:39 [::1][-][-][error][yii\base\InvalidArgumentException] yii\base\InvalidArgumentException: Malformed UTF-8 characters, possibly incorrectly encoded in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\helpers\BaseJson.php:147
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\helpers\BaseJson.php(88): yii\helpers\BaseJson::handleJsonError(5)
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\JsonResponseFormatter.php(133): yii\helpers\BaseJson::encode(Array, 320)
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\JsonResponseFormatter.php(112): yii\web\JsonResponseFormatter->formatJson(Object(yii\web\Response))
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Response.php(1095): yii\web\JsonResponseFormatter->format(Object(yii\web\Response))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Response.php(339): yii\web\Response->prepare()
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(390): yii\web\Response->send()
+#6 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#7 {main}
+2022-09-12 19:46:39 [::1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'productName' => 'Muhammad'
+    'indications' => 'this is test medice'
+    'packing' => '50'
+    'composition' => 'fsdfdsfdsfdsf'
+    'expiredDate' => '2'
+    'price' => '1500'
+    'netPrice' => '1500'
+    'pharmaceuticalFormId' => '1'
+    'categoryId' => '1'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '974'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundarySSM6mALTTKb4AjwZ'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => '70fe6a45-7b8f-7a28-ba15-e2f34a4fe628'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\PuTTY\\;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '5190'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/add'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/add'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\add'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/add'
+    'REQUEST_TIME_FLOAT' => 1663011999.1772
+    'REQUEST_TIME' => 1663011999
+]
+2022-09-12 19:48:07 [::1][-][-][error][yii\base\InvalidArgumentException] yii\base\InvalidArgumentException: Malformed UTF-8 characters, possibly incorrectly encoded in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\helpers\BaseJson.php:147
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\helpers\BaseJson.php(88): yii\helpers\BaseJson::handleJsonError(5)
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\JsonResponseFormatter.php(133): yii\helpers\BaseJson::encode(Array, 320)
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\JsonResponseFormatter.php(112): yii\web\JsonResponseFormatter->formatJson(Object(yii\web\Response))
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Response.php(1095): yii\web\JsonResponseFormatter->format(Object(yii\web\Response))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Response.php(339): yii\web\Response->prepare()
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(390): yii\web\Response->send()
+#6 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#7 {main}
+2022-09-12 19:48:07 [::1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'productName' => 'Muhammad'
+    'indications' => 'this is test medice'
+    'packing' => '50'
+    'composition' => 'fsdfdsfdsfdsf'
+    'expiredDate' => '2'
+    'price' => '1500'
+    'netPrice' => '1500'
+    'pharmaceuticalFormId' => '1'
+    'categoryId' => '1'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '974'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundaryvceco8vfIdK8sDF9'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => '809484f2-37be-9415-c5c6-b5d60d6b063b'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\PuTTY\\;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '5198'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/add'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/add'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\add'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/add'
+    'REQUEST_TIME_FLOAT' => 1663012087.1879
+    'REQUEST_TIME' => 1663012087
+]
+2022-09-12 19:50:01 [::1][-][-][error][yii\base\InvalidArgumentException] yii\base\InvalidArgumentException: Malformed UTF-8 characters, possibly incorrectly encoded in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\helpers\BaseJson.php:147
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\helpers\BaseJson.php(88): yii\helpers\BaseJson::handleJsonError(5)
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\JsonResponseFormatter.php(133): yii\helpers\BaseJson::encode(Array, 320)
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\JsonResponseFormatter.php(112): yii\web\JsonResponseFormatter->formatJson(Object(yii\web\Response))
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Response.php(1095): yii\web\JsonResponseFormatter->format(Object(yii\web\Response))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Response.php(339): yii\web\Response->prepare()
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(390): yii\web\Response->send()
+#6 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#7 {main}
+2022-09-12 19:50:01 [::1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'productName' => 'Muhammad'
+    'indications' => 'this is test medice'
+    'packing' => '50'
+    'composition' => 'fsdfdsfdsfdsf'
+    'expiredDate' => '2'
+    'price' => '1500'
+    'netPrice' => '1500'
+    'pharmaceuticalFormId' => '1'
+    'categoryId' => '1'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '974'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundary9NmvjX5SVZHQuDXp'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => '6743c2ec-0ae8-263f-6b52-6b12d8feff2d'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\PuTTY\\;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '5244'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/add'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/add'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\add'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/add'
+    'REQUEST_TIME_FLOAT' => 1663012201.1627
+    'REQUEST_TIME' => 1663012201
+]
+2022-09-12 19:50:28 [::1][-][-][error][yii\base\InvalidArgumentException] yii\base\InvalidArgumentException: Malformed UTF-8 characters, possibly incorrectly encoded in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\helpers\BaseJson.php:147
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\helpers\BaseJson.php(88): yii\helpers\BaseJson::handleJsonError(5)
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\JsonResponseFormatter.php(133): yii\helpers\BaseJson::encode('\x89PNG\r\n\x1A\n\x00\x00\x00\rIHD...', 320)
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\JsonResponseFormatter.php(112): yii\web\JsonResponseFormatter->formatJson(Object(yii\web\Response))
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Response.php(1095): yii\web\JsonResponseFormatter->format(Object(yii\web\Response))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Response.php(339): yii\web\Response->prepare()
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(390): yii\web\Response->send()
+#6 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#7 {main}
+2022-09-12 19:50:28 [::1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'productName' => 'Muhammad'
+    'indications' => 'this is test medice'
+    'packing' => '50'
+    'composition' => 'fsdfdsfdsfdsf'
+    'expiredDate' => '2'
+    'price' => '1500'
+    'netPrice' => '1500'
+    'pharmaceuticalFormId' => '1'
+    'categoryId' => '1'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '974'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundarylBVdDOzZsUMLOQxA'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => '03acf041-58e1-9290-6ae8-c344105387d3'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\PuTTY\\;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '5251'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/add'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/add'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\add'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/add'
+    'REQUEST_TIME_FLOAT' => 1663012228.3689
+    'REQUEST_TIME' => 1663012228
+]
+2022-09-12 20:01:31 [::1][-][-][warning][yii\web\Response::sendContent] set_time_limit() is not available
+2022-09-12 20:01:31 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'Phpstorm-1d0147a5' => 'f855a8f8-e238-49ec-aad2-194a10648ef1'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'Phpstorm-1d0147a5=f855a8f8-e238-49ec-aad2-194a10648ef1'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\PuTTY\\;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '5370'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/generate-excel-file-template'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/generate-excel-file-template'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\generate-excel-file-template'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/generate-excel-file-template'
+    'REQUEST_TIME_FLOAT' => 1663012891.7234
+    'REQUEST_TIME' => 1663012891
+]

@@ -18,6 +18,7 @@ use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use app\models\MedicinePharmaceuticalForm;
@@ -87,16 +88,15 @@ class MedicineController extends \yii\web\Controller
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
-        $sheet->setCellValue('A1', 'Barcode');
-        $sheet->setCellValue('B1', 'Product Name');
-        $sheet->setCellValue('C1', 'Indications');
-        $sheet->setCellValue('D1', 'Packing');
-        $sheet->setCellValue('E1', 'Composition');
-        $sheet->setCellValue('F1', 'Expired Date');
-        $sheet->setCellValue('G1', 'Price');
-        $sheet->setCellValue('H1', 'Net Price');
-        $sheet->setCellValue('I1', 'Category');
-        $sheet->setCellValue('J1', 'Pharmaceutical Form');
+        $sheet->setCellValue('A1', 'Product Name');
+        $sheet->setCellValue('B1', 'Indications');
+        $sheet->setCellValue('C1', 'Packing');
+        $sheet->setCellValue('D1', 'Composition');
+        $sheet->setCellValue('E1', 'Expired Date');
+        $sheet->setCellValue('F1', 'Price');
+        $sheet->setCellValue('G1', 'Net Price');
+        $sheet->setCellValue('H1', 'Category');
+        $sheet->setCellValue('I1', 'Pharmaceutical Form');
 
         $fileName = yii::$app->getSecurity()->generateRandomString(10);
         $writer = new Xlsx($spreadsheet);
@@ -120,16 +120,15 @@ class MedicineController extends \yii\web\Controller
                 $tmpExcelFields = array_splice($medicineArray, 0, 1);
                 //This condition to check the template
                 if (
-                    $tmpExcelFields[0][0] != 'Barcode' ||
-                    $tmpExcelFields[0][1] != 'Product Name' ||
-                    $tmpExcelFields[0][2] != 'Indications' ||
-                    $tmpExcelFields[0][3] != 'Packing' ||
-                    $tmpExcelFields[0][4] != 'Composition' ||
-                    $tmpExcelFields[0][5] != 'Expired Date' ||
-                    $tmpExcelFields[0][6] != 'Price' ||
-                    $tmpExcelFields[0][7] != 'Net Price' ||
-                    $tmpExcelFields[0][8] != 'Category' ||
-                    $tmpExcelFields[0][9] != 'Pharmaceutical Form'
+                    $tmpExcelFields[0][0] != 'Product Name' ||
+                    $tmpExcelFields[0][1] != 'Indications' ||
+                    $tmpExcelFields[0][2] != 'Packing' ||
+                    $tmpExcelFields[0][3] != 'Composition' ||
+                    $tmpExcelFields[0][4] != 'Expired Date' ||
+                    $tmpExcelFields[0][5] != 'Price' ||
+                    $tmpExcelFields[0][6] != 'Net Price' ||
+                    $tmpExcelFields[0][7] != 'Category' ||
+                    $tmpExcelFields[0][8] != 'Pharmaceutical Form'
                 ) {
                     return ['status' => 'error', 'details' => 'This excel file is not a validate file'];
                 }
@@ -145,53 +144,51 @@ class MedicineController extends \yii\web\Controller
                         empty($m[5]) ||
                         empty($m[6]) ||
                         empty($m[7]) ||
-                        empty($m[8]) ||
-                        empty($m[9])
+                        empty($m[8])
                     ) {
                         array_push($errorArr, ['error' => "There are missing data in this row ($i)"]);
                     }
                     $i++;
-                    $isExsist = Medicine::findOne(['productName' => trim($m[1])]);
+                    $isExsist = Medicine::findOne(['productName' => trim($m[0])]);
                     if ($isExsist !== null) {
-                        array_push($errorArr, ['error' => "<b>$m[1]</b> Medicine already exist"]);
+                        array_push($errorArr, ['error' => "<b>$m[0]</b> Medicine already exist"]);
                         continue;
                     }
                     $newMedicine = new Medicine();
                     if (trim($m[1]) === '') {
-                        array_push($errorArr, ['error' => "<b>$m[1]</b> Medicine name should not be empty"]);
+                        array_push($errorArr, ['error' => "<b>$m[0]</b> Medicine name should not be empty"]);
                         continue;
                     }
-                    $category = Category::findOne(['name' => trim($m[8])]);
-                    $pharmaceuticalForm = PharmaceuticalForm::findOne(['name' => trim($m[9])]);
+                    $category = Category::findOne(['name' => trim($m[7])]);
+                    $pharmaceuticalForm = PharmaceuticalForm::findOne(['name' => trim($m[8])]);
 
                     if ($category === null) {
                         $category = new Category();
-                        if (trim($m[8]) === '') {
-                            array_push($errorArr, ['error' => "<b>$m[1]</b> does not have a category"]);
+                        if (trim($m[7]) === '') {
+                            array_push($errorArr, ['error' => "<b>$m[0]</b> does not have a category"]);
                             continue;
                         }
-                        $category->name =  trim($m[8]);
+                        $category->name =  trim($m[7]);
                         $category->save();
                     }
 
                     if ($pharmaceuticalForm === null) {
-                        if (trim($m[9]) === '') {
-                            array_push($errorArr, ['error' => "<b>$m[1]</b> does not have a pharmaceutical Form"]);
+                        if (trim($m[8]) === '') {
+                            array_push($errorArr, ['error' => "<b>$m[0]</b> does not have a pharmaceutical Form"]);
                             continue;
                         }
                         $pharmaceuticalForm = new PharmaceuticalForm();
-                        $pharmaceuticalForm->name =  trim($m[9]);
+                        $pharmaceuticalForm->name =  trim($m[8]);
                         $pharmaceuticalForm->save();
                     }
 
-                    $newMedicine->barcode = trim($m[0]);
-                    $newMedicine->productName = trim($m[1]);
-                    $newMedicine->indications = trim($m[2]);
-                    $newMedicine->packing = trim($m[3]);
-                    $newMedicine->composition = trim($m[4]);
-                    $newMedicine->expiredDate = trim($m[5]);
-                    $newMedicine->price = (float)$m[6];
-                    $newMedicine->netPrice = (float) $m[7];
+                    $newMedicine->productName = trim($m[0]);
+                    $newMedicine->indications = trim($m[1]);
+                    $newMedicine->packing = trim($m[2]);
+                    $newMedicine->composition = trim($m[3]);
+                    $newMedicine->expiredDate = trim($m[4]);
+                    $newMedicine->price = (float)$m[5];
+                    $newMedicine->netPrice = (float) $m[6];
                     if ($newMedicine->validate()) {
                         $newMedicine->save();
 
@@ -206,8 +203,16 @@ class MedicineController extends \yii\web\Controller
                         $c->categoryId = $category->id;
                         $c->save();
                     } else {
-                        array_push($errorArr, ['error' => "<b>$m[1]</b> ", 'details' => $newMedicine->getErrors()]);
+                        array_push($errorArr, ['error' => "<b>$m[0]</b> ", 'details' => $newMedicine->getErrors()]);
                     }
+                    // Generate barcode
+                    $newMedicine = Medicine::findOne(['id' => $newMedicine->id]);
+                    HelperFunction::createFolderIfNotExist(Url::to('@app/web/medicines/barcodes'));
+                    $generator = new BarcodeGeneratorPNG();
+                    $generateName = Yii::$app->security->generateRandomString(5) . '.png';
+                    file_put_contents(Url::to('@app/web/medicines/barcodes') . '/' . $generateName, $generator->getBarcode($newMedicine->id, $generator::TYPE_CODE_128));
+                    $newMedicine->barcode = $generateName;
+                    $newMedicine->save();
                 }
                 return ['status' => 'ok', 'errorDetails' => $errorArr];
             } else {
@@ -309,6 +314,17 @@ class MedicineController extends \yii\web\Controller
                 } else {
                     return ['status' => 'error', 'details' => $c->getErrors()];
                 }
+
+                // Generate barcode
+                $newMedicine = Medicine::findOne(['id' => $newMedicine->id]);
+                HelperFunction::createFolderIfNotExist(Url::to('@app/web/medicines/barcodes'));
+                $generator = new BarcodeGeneratorPNG();
+                $generateName = Yii::$app->security->generateRandomString(5) . '.png';
+                file_put_contents(Url::to('@app/web/medicines/barcodes') . '/' . $generateName, $generator->getBarcode($newMedicine->id, $generator::TYPE_CODE_128));
+                $newMedicine->barcode = $generateName;
+                $newMedicine->save();
+
+
                 return ['status' => 'ok'];
             } else {
                 return ['status' => 'error', 'details' => $newMedicine->getErrors()];
@@ -383,6 +399,14 @@ class MedicineController extends \yii\web\Controller
                 } else {
                     return ['status' => 'error', 'details' => $c->getErrors()];
                 }
+                // Generate barcode
+                $newMedicine = Medicine::findOne(['id' => $medicine->id]);
+                HelperFunction::createFolderIfNotExist(Url::to('@app/web/medicines/barcodes'));
+                $generator = new BarcodeGeneratorPNG();
+                $generateName = Yii::$app->security->generateRandomString(5) . '.png';
+                file_put_contents(Url::to('@app/web/medicines/barcodes') . '/' . $generateName, $generator->getBarcode($newMedicine->id, $generator::TYPE_CODE_128));
+                $newMedicine->barcode = $generateName;
+                $newMedicine->save();
                 return ['status' => 'ok'];
             } else {
                 return ['status' => 'error', 'details' => $medicine->getErrors()];
@@ -414,27 +438,20 @@ class MedicineController extends \yii\web\Controller
         }
     }
 
-    public function actionGet($id = null, $barcode = null)
+    public function actionGet($id = null)
     {
         try {
-            if (($id === null && $barcode === null) || ($id !== null && $barcode !== null)) {
-                return ['status' => 'error', 'details' => 'You should send either id or barcode params'];
+            if ($id === null) {
+                return ['status' => 'error', 'details' => 'You should send id'];
             }
-            if ($id != null) {
-                $medicine = Medicine::find()
-                    ->where(['id' => (int)$id])
-                    ->with('categories', 'pharmaceuticalForms')
-                    ->asArray()
-                    ->one();
-            } elseif ($barcode != null) {
-                $medicine = Medicine::find()
-                    ->where(['barcode' => (int)$barcode])
-                    ->with('categories', 'pharmaceuticalForms')
-                    ->asArray()
-                    ->one();
-            }
+            $medicine = Medicine::find()
+                ->where(['id' => (int)$id])
+                ->with('categories', 'pharmaceuticalForms')
+                ->asArray()
+                ->one();
+
             if ($medicine === null)
-                return ['status' => 'error', 'details' => "There is no medicine that has this id ($id) or this barcode ($barcode)"];
+                return ['status' => 'error', 'details' => "There is no medicine that has this id"];
 
 
             $imgs = explode(',', $medicine['imgs']);
@@ -446,6 +463,7 @@ class MedicineController extends \yii\web\Controller
                 }
             }
             $medicine['imgs'] = $images;
+            $medicine['barcode'] = Url::to('@web/medicines/barcodes/' . $medicine['barcode'], true);
 
             return ['status' => 'ok', 'medicine' => $medicine];
         } catch (\Exception $e) {
@@ -491,6 +509,8 @@ class MedicineController extends \yii\web\Controller
                         }
                     }
                     $m['imgs'] = $images;
+                    $m['barcode'] = Url::to('@web/medicines/barcodes/' . $m['barcode'], true);
+
                     return $m;
                 }, $medicines);
                 return ['status' => 'ok', 'medicines' => $medicines];
