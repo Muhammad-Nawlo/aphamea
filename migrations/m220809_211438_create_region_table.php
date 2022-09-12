@@ -21,7 +21,8 @@ class m220809_211438_create_region_table extends Migration
         $this->createTable(self::TABLE_NAME, [
             'id' => $this->primaryKey(),
             'cityId' => $this->integer(),
-            'region' => $this->string(),
+            'regionAr' => $this->string(),
+            'regionEn' => $this->string(),
         ], $options);
         $this->addForeignKey('fk_city_region_cityId', 'region', 'cityId', 'city', 'id');
     }

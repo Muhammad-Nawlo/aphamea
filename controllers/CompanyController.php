@@ -35,6 +35,7 @@ class CompanyController extends \yii\web\Controller
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
+
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::class,
             'authMethods' => [
@@ -88,9 +89,12 @@ class CompanyController extends \yii\web\Controller
             if ($company === null)
                 return ['status' => 'error', 'details' => "There is no company that has this id ($id)"];
 
-            $company['img'] = Url::to('@web/company/images/' . $company['img'], true);
-            $company['logo'] = Url::to('@web/company/images/' . $company['logo'], true);
-            
+            if ($company['img'])
+                $company['img'] = Url::to('@web/company/images/' . $company['img'], true);
+
+            if ($company['logo'])
+                $company['logo'] = Url::to('@web/company/images/' . $company['logo'], true);
+
             return ['status' => 'ok', 'company' => $company];
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
@@ -144,6 +148,7 @@ class CompanyController extends \yii\web\Controller
                             }
                         }
                         $teamMember->load($member, '');
+                        $teamMember->companyId = $company->id;
                         if ($teamMember->validate()) {
                             $teamMember->save();
                         } else {
@@ -165,6 +170,8 @@ class CompanyController extends \yii\web\Controller
                             }
                         }
                         $companyContact->load($contact, '');
+                        $companyContact->companyId = $company->id;
+
                         if ($companyContact->validate()) {
                             $companyContact->save();
                         } else {

@@ -41,14 +41,14 @@ class MedicineController extends \yii\web\Controller
             ]
         ];
 
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::class,
-            'authMethods' => [
-                HttpBearerAuth::class,
-                QueryParamAuth::class,
-                JwtHttpBearerAuth::class
-            ]
-        ];
+        // $behaviors['authenticator'] = [
+        //     'class' => CompositeAuth::class,
+        //     'authMethods' => [
+        //         HttpBearerAuth::class,
+        //         QueryParamAuth::class,
+        //         JwtHttpBearerAuth::class
+        //     ]
+        // ];
         return $behaviors;
     }
 
@@ -399,6 +399,8 @@ class MedicineController extends \yii\web\Controller
             if (!isset($data['id'])) {
                 return ["status" => "error", "details" => "There are missing param"];
             }
+            MedicineCategory::deleteAll(['medicineId' => (int)$data['id']]);
+            MedicinePharmaceuticalForm::deleteAll(['medicineId' => (int)$data['id']]);
             $medicine = Medicine::findOne(['id' => (int)$data['id']]);
             if ($medicine === null)
                 return ["status" => "error", "details" => "There is no medicine that has this id "];

@@ -216,11 +216,10 @@ class OrderController extends Controller
                 return ['status' => 'error', 'details' => 'There is no order that has this id'];
 
             OrderDetails::deleteAll(['offerId' => $order->id]);
-            if ($order->delete()) {
-                return ['status' => 'ok'];
-            } else {
+            if (!$order->delete())
                 return ['status' => 'error', 'details' => $order->delete()];
-            }
+
+            return ['status' => 'ok'];
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
         }

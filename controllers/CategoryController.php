@@ -57,14 +57,14 @@ class CategoryController extends \yii\web\Controller
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::class,
-            'authMethods' => [
-                HttpBearerAuth::class,
-                QueryParamAuth::class,
-                JwtHttpBearerAuth::class
-            ]
-        ];
+        // $behaviors['authenticator'] = [
+        //     'class' => CompositeAuth::class,
+        //     'authMethods' => [
+        //         HttpBearerAuth::class,
+        //         QueryParamAuth::class,
+        //         JwtHttpBearerAuth::class
+        //     ]
+        // ];
         return $behaviors;
     }
 
@@ -296,6 +296,9 @@ class CategoryController extends \yii\web\Controller
             $category = Category::findOne(['id' => (int)$data['id']]);
             if ($category === null)
                 return ["status" => "error", "details" => "There is no category that has this id "];
+
+            if (MedicineCategory::findOne(['categoryId' => (int)$data['id']]) !== null)
+                return ["status" => "error", "details" => "This category has medicines belongs to it"];
 
             if (!$category->delete())
                 return ["status" => "error", "details" => $category->getErrors()];

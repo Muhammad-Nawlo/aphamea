@@ -127,7 +127,7 @@ class AreaController extends Controller
     public function actionGetCountries()
     {
         // Syria only
-        $countries = Country::find()->where(['id' => 1])->one();
+        $countries = Country::find()->where(['id' => 1])->asArray()->one();
         return [
             'status' => 'ok',
             'countries' => $countries

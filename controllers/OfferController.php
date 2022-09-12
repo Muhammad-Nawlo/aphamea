@@ -190,18 +190,13 @@ class OfferController extends Controller
         try {
             $id = Yii::$app->request->post('id');
             if ($id === null)
-                return ['status' => 'error', 'details' => 'There is a missing param (id)'];
+                return ['status' => 'error', 'details' => 'There is a missing param'];
 
             $offer = Offer::findOne(['id' => (int)$id]);
             if ($offer === null)
                 return ['status' => 'error', 'details' => 'There is no offer that has this id'];
 
-            $orderDetails = OrderDetails::findOne(['offerId' => (int)$id]);
-            if ($orderDetails !== null) {
-                $orderNotCompleted = Order::findOne(['id' => $orderDetails->orderId, 'isCompleted' => 0]);
-                if ($orderNotCompleted !== null)
-                    return ['status' => 'error', 'details' => 'There is an order that no completed so you can not delete this offer'];
-            }
+
             OfferDetails::deleteAll(['offerId' => $offer->id]);
             if ($offer->delete()) {
                 return ['status' => 'ok'];

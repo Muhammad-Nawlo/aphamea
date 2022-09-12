@@ -37,14 +37,14 @@ class PharmaceuticalFormController extends \yii\web\Controller
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::class,
-            'authMethods' => [
-                HttpBearerAuth::class,
-                QueryParamAuth::class,
-                JwtHttpBearerAuth::class
-            ]
-        ];
+        // $behaviors['authenticator'] = [
+        //     'class' => CompositeAuth::class,
+        //     'authMethods' => [
+        //         HttpBearerAuth::class,
+        //         QueryParamAuth::class,
+        //         JwtHttpBearerAuth::class
+        //     ]
+        // ];
         return $behaviors;
     }
 
@@ -79,7 +79,7 @@ class PharmaceuticalFormController extends \yii\web\Controller
         return ['status' => 'ok', 'status' => 'working'];
     }
 
-    public function actionGeneratExcelFileTemplate()
+    public function actionGenerateExcelFileTemplate()
     {
         $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -292,7 +292,10 @@ class PharmaceuticalFormController extends \yii\web\Controller
             if ($pharmaceuticalForm === null)
                 return ["status" => "error", "details" => "There is no Pharmaceutical Form that has this id "];
 
-            if (!$pharmaceuticalForm->delete())
+            if (MedicinePharmaceuticalForm::findOne(['pharmaceuticalFormId' => (int)$data['id']]) !== null)
+                return ["status" => "error", "details" => "This Pharmaceutical Form has medicines belongs to it"];
+           
+                if (!$pharmaceuticalForm->delete())
                 return ["status" => "error", "details" => $pharmaceuticalForm->getErrors()];
 
             return ['status' => 'ok'];

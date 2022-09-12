@@ -91,6 +91,7 @@ class ActivityController extends \yii\web\Controller
             $newActivity->title = $data['title'];
             $newActivity->content = $data['content'];
             $newActivity->publishedDate = date('Y-m-d h:i:s');
+            $newActivity->isRead = 0;
             $activityImages = UploadedFile::getInstancesByName('activityImages');
             $imagesName = [];
             if (!empty($activityImages)) {
@@ -159,7 +160,7 @@ class ActivityController extends \yii\web\Controller
                 if ((bool)$s['status'] === true)
                     $activities->andFilterWhere(['like', $s['name'],  '%' . trim($searchText) . '%', false]);
             }
-            
+
             $activities = (array)$activities->all();
             if ($activities) {
                 $activities = array_map(function ($a) {
@@ -167,7 +168,8 @@ class ActivityController extends \yii\web\Controller
                     $images = [];
                     if (!empty($imgs)) {
                         foreach ($imgs as $i) {
-                            $images[] = Url::to('@web/activities/images/' . $i, true);
+                            if ($i)
+                                $images[] = Url::to('@web/activities/images/' . $i, true);
                         }
                     }
                     $a['imgs'] = $images;
@@ -193,7 +195,8 @@ class ActivityController extends \yii\web\Controller
             $images = [];
             if ($imgs) {
                 foreach ($imgs as $i) {
-                    $images[] = Url::to('@web/activities/images/' . $i, true);
+                    if ($i)
+                        $images[] = Url::to('@web/activities/images/' . $i, true);
                 }
             }
             $activity['imgs'] = $images;

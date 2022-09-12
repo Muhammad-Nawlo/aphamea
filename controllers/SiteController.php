@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\helpers\HelperFunction;
+use app\models\CompanyTeam;
 use app\models\Contact;
 use app\models\User;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -428,8 +429,13 @@ class SiteController extends Controller
             }
             $user = User::findOne(['id' => (int)$data['id']]);
             if ($user === null)
-                return ["status" => "error", "details" => "There is no user that has this id "];
+                return ["status" => "error", "details" => "There is no user that has this id"];
 
+            if (CompanyTeam::findOne(['userId' => (int)$data['id']]) !== null)
+                return ["status" => "error", "details" => "This user belongs to a company"];
+
+
+            Contact::deleteAll(['userId' => (int)$data['id']]);
             if (!$user->delete()) {
                 return ["status" => "error", "details" => $user->getErrors()];
             }
