@@ -85,26 +85,31 @@ class MedicineController extends \yii\web\Controller
     }
     public function actionGenerateExcelFileTemplate()
     {
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
+        try {
+            $spreadsheet = new Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
 
-        $sheet->setCellValue('A1', 'Product Name');
-        $sheet->setCellValue('B1', 'Indications');
-        $sheet->setCellValue('C1', 'Packing');
-        $sheet->setCellValue('D1', 'Composition');
-        $sheet->setCellValue('E1', 'Expired Date');
-        $sheet->setCellValue('F1', 'Price');
-        $sheet->setCellValue('G1', 'Net Price');
-        $sheet->setCellValue('H1', 'Category');
-        $sheet->setCellValue('I1', 'Pharmaceutical Form');
+            $sheet->setCellValue('A1', 'Product Name');
+            $sheet->setCellValue('B1', 'Indications');
+            $sheet->setCellValue('C1', 'Packing');
+            $sheet->setCellValue('D1', 'Composition');
+            $sheet->setCellValue('E1', 'Expired Date');
+            $sheet->setCellValue('F1', 'Price');
+            $sheet->setCellValue('G1', 'Net Price');
+            $sheet->setCellValue('H1', 'Category');
+            $sheet->setCellValue('I1', 'Pharmaceutical Form');
 
-        $fileName = yii::$app->getSecurity()->generateRandomString(10);
-        $writer = new Xlsx($spreadsheet);
-        HelperFunction::createFolderIfNotExist(Url::to('@app/web/excelFiles/medicines'));
+            $fileName = yii::$app->getSecurity()->generateRandomString(10);
+            $writer = new Xlsx($spreadsheet);
+            HelperFunction::createFolderIfNotExist(Url::to('@app/web/excelFiles/medicines'));
 
 
-        $writer->save("excelFiles/medicines" . $fileName . ".xlsx");
-        $this->response->sendFile("../web/excelFiles/medicines" . $fileName . ".xlsx", "$fileName.xlsx");
+            $writer->save("excelFiles/medicines" . $fileName . ".xlsx");
+            $this->response->sendFile("../web/excelFiles/medicines" . $fileName . ".xlsx", "$fileName.xlsx");
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
+
+        }
     }
     public function actionImportExcelFile()
     {
