@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\helpers\HelperFunction;
 use app\models\Activity;
+use app\models\Medicine;
 use PhpOffice\PhpSpreadsheet\Calculation\Logical\Boolean;
 use sizeg\jwt\JwtHttpBearerAuth;
 use Yii;
@@ -142,24 +143,32 @@ class ActivityController extends \yii\web\Controller
             if (!isset($data['type']) || !isset($data['searchFilters']))
                 return ['status' => 'error', 'details' => 'There are missing params'];
 
-            $searchFilters = (array)$data['searchFilters']->filters;
             $searchText = trim($data['searchFilters']->searchText);
             $type = (int)$data['type'];
+            $platform = (int)$data['searchFilters']->platform;
+            if (!in_array($platform, Medicine::PLATFORMS))
+                return ['status' => 'error', 'details' => 'Platform is not valid'];
 
             if (!in_array((int)$type, Activity::ACTIVITY_TYPE))
                 return ['status' => 'error', 'details' => 'The type of activity is not valid'];
 
             $activities = Activity::find()->andFilterwhere(['type' => (int)$type]);
 
-            foreach ($searchFilters as $s) {
-                $s = (array)$s;
-                if (!isset($s['name']) || !isset($s['status']))
-                    continue;
-                if (!in_array($s['name'], ['title', 'content']))
-                    continue;
-                if ((bool)$s['status'] === true)
-                    $activities->andFilterWhere(['like', $s['name'],  '%' . trim($searchText) . '%', false]);
+            if ($platform === 0) {
+                $searchFilters = (array)$data['searchFilters']->filters;
+                foreach ($searchFilters as $s) {
+                    $s = (array)$s;
+                    if (!isset($s['name']) || !isset($s['status']))
+                        continue;
+                    if (!in_array($s['name'], ['title', 'content']))
+                        continue;
+                    if ((bool)$s['status'] === true)
+                        $activities->andFilterWhere(['like', $s['name'],  '%' . trim($searchText) . '%', false]);
+                }
+            } else {
+                $activities->where('MATCH(title,content) AGAINST (:searchText)', ['searchText' => $searchText]);
             }
+
 
             $activities = (array)$activities->all();
             if ($activities) {
