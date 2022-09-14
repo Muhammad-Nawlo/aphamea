@@ -3205,3 +3205,577 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1663051364.5942
     'REQUEST_TIME' => 1663051364
 ]
+2022-09-14 21:04:58 [-][-][-][error][yii\db\Exception] PDOException: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+ in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Connection.php:722
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Connection.php(722): PDO->__construct('mysql:host=loca...', 'root', '', Array)
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Connection.php(637): yii\db\Connection->createPdoInstance()
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Connection.php(1067): yii\db\Connection->open()
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Connection.php(1054): yii\db\Connection->getMasterPdo()
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Command.php(261): yii\db\Connection->getSlavePdo()
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Command.php(1163): yii\db\Command->prepare(true)
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Command.php(453): yii\db\Command->queryInternal('fetchAll', 7)
+#7 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\mysql\Schema.php(114): yii\db\Command->queryColumn()
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Schema.php(235): yii\db\mysql\Schema->findTableNames('')
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Schema.php(778): yii\db\Schema->getTableNames('', false)
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Schema.php(205): yii\db\Schema->getSchemaMetadata('', 'schema', false)
+#11 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\controllers\MigrateController.php(300): yii\db\Schema->getTableSchemas()
+#12 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\controllers\BaseMigrateController.php(486): yii\console\controllers\MigrateController->truncateDatabase()
+#13 [internal function]: yii\console\controllers\BaseMigrateController->actionFresh()
+#14 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#15 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#16 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\Controller.php(180): yii\base\Controller->runAction('fresh', Array)
+#17 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\console\Controller->runAction('fresh', Array)
+#18 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\Application.php(180): yii\base\Module->runAction('migrate/fresh', Array)
+#19 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\Application.php(147): yii\console\Application->runAction('migrate/fresh', Array)
+#20 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\console\Application->handleRequest(Object(yii\console\Request))
+#21 F:\apps\wamp64\www\aphamea_project\yii(20): yii\base\Application->run()
+#22 {main}
+
+Next yii\db\Exception: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+ in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Connection.php:648
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Connection.php(1067): yii\db\Connection->open()
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Connection.php(1054): yii\db\Connection->getMasterPdo()
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Command.php(261): yii\db\Connection->getSlavePdo()
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Command.php(1163): yii\db\Command->prepare(true)
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Command.php(453): yii\db\Command->queryInternal('fetchAll', 7)
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\mysql\Schema.php(114): yii\db\Command->queryColumn()
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Schema.php(235): yii\db\mysql\Schema->findTableNames('')
+#7 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Schema.php(778): yii\db\Schema->getTableNames('', false)
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Schema.php(205): yii\db\Schema->getSchemaMetadata('', 'schema', false)
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\controllers\MigrateController.php(300): yii\db\Schema->getTableSchemas()
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\controllers\BaseMigrateController.php(486): yii\console\controllers\MigrateController->truncateDatabase()
+#11 [internal function]: yii\console\controllers\BaseMigrateController->actionFresh()
+#12 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#13 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#14 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\Controller.php(180): yii\base\Controller->runAction('fresh', Array)
+#15 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\console\Controller->runAction('fresh', Array)
+#16 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\Application.php(180): yii\base\Module->runAction('migrate/fresh', Array)
+#17 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\Application.php(147): yii\console\Application->runAction('migrate/fresh', Array)
+#18 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\console\Application->handleRequest(Object(yii\console\Request))
+#19 F:\apps\wamp64\www\aphamea_project\yii(20): yii\base\Application->run()
+#20 {main}
+Additional Information:
+Array
+(
+    [0] => HY000
+    [1] => 2002
+    [2] => No connection could be made because the target machine actively refused it.
+
+)
+
+2022-09-14 21:04:53 [-][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPCODE_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\appcode.vmoptions'
+    'APPDATA' => 'C:\\Users\\USER\\AppData\\Roaming'
+    'CHROME_CRASHPAD_PIPE_NAME' => '\\\\.\\pipe\\crashpad_3268_PADLVCBTDLHGNHYK'
+    'CLion' => 'C:\\Program Files\\JetBrains\\CLion 2021.3.1\\bin;'
+    'CLION_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\clion.vmoptions'
+    'CommonProgramFiles' => 'C:\\Program Files\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'COPRA'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'DATAGRIP_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\datagrip.vmoptions'
+    'DATASPELL_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\dataspell.vmoptions'
+    'DriverData' => 'C:\\Windows\\System32\\Drivers\\DriverData'
+    'GATEWAY_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\gateway.vmoptions'
+    'GOLAND_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\goland.vmoptions'
+    'HOMEDRIVE' => 'C:'
+    'HOMEPATH' => '\\Users\\USER'
+    'IDEA_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\idea.vmoptions'
+    'JETBRAINSCLIENT_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\jetbrainsclient.vmoptions'
+    'JETBRAINS_CLIENT_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\jetbrains_client.vmoptions'
+    'LOCALAPPDATA' => 'C:\\Users\\USER\\AppData\\Local'
+    'LOGONSERVER' => '\\\\COPRA'
+    'NUMBER_OF_PROCESSORS' => '8'
+    'OneDrive' => 'C:\\Users\\USER\\OneDrive'
+    'ORIGINAL_XDG_CURRENT_DESKTOP' => 'undefined'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\USER\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\USER\\AppData\\Roaming\\npm;C:\\Program Files\\JetBrains\\PhpStorm 2021.3\\bin;;C:\\Users\\USER\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Program Files\\JetBrains\\CLion 2021.3.1\\bin;;F:\\apps\\heroku\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL'
+    'PhpStorm' => 'C:\\Program Files\\JetBrains\\PhpStorm 2021.3\\bin;'
+    'PHPSTORM_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\phpstorm.vmoptions'
+    'PROCESSOR_ARCHITECTURE' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 142 Stepping 10, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '8e0a'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Users\\USER\\Documents\\WindowsPowerShell\\Modules;C:\\Program Files\\WindowsPowerShell\\Modules;C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'PYCHARM_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\pycharm.vmoptions'
+    'RIDER_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\rider.vmoptions'
+    'RUBYMINE_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\rubymine.vmoptions'
+    'SESSIONNAME' => 'Console'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\USER\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Users\\USER\\AppData\\Local\\Temp'
+    'USERDOMAIN' => 'COPRA'
+    'USERDOMAIN_ROAMINGPROFILE' => 'COPRA'
+    'USERNAME' => 'USER'
+    'USERPROFILE' => 'C:\\Users\\USER'
+    'WEBIDE_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\webide.vmoptions'
+    'WEBSTORM_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\webstorm.vmoptions'
+    'windir' => 'C:\\Windows'
+    'TERM_PROGRAM' => 'vscode'
+    'TERM_PROGRAM_VERSION' => '1.71.1'
+    'LANG' => 'en_US.UTF-8'
+    'COLORTERM' => 'truecolor'
+    'GIT_ASKPASS' => 'c:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\resources\\app\\extensions\\git\\dist\\askpass.sh'
+    'VSCODE_GIT_ASKPASS_NODE' => 'C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe'
+    'VSCODE_GIT_ASKPASS_EXTRA_ARGS' => '--ms-enable-electron-run-as-node'
+    'VSCODE_GIT_ASKPASS_MAIN' => 'c:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\resources\\app\\extensions\\git\\dist\\askpass-main.js'
+    'VSCODE_GIT_IPC_HANDLE' => '\\\\.\\pipe\\vscode-git-332ef18278-sock'
+    'PHP_SELF' => 'yii'
+    'SCRIPT_NAME' => 'yii'
+    'SCRIPT_FILENAME' => 'yii'
+    'PATH_TRANSLATED' => 'yii'
+    'DOCUMENT_ROOT' => ''
+    'REQUEST_TIME_FLOAT' => 1663182293.0697
+    'REQUEST_TIME' => 1663182293
+    'argv' => [
+        0 => 'yii'
+        1 => 'migrate/fresh'
+    ]
+    'argc' => 2
+]
+2022-09-14 21:05:16 [-][-][-][error][yii\db\Exception] PDOException: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+ in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Connection.php:722
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Connection.php(722): PDO->__construct('mysql:host=loca...', 'root', '', Array)
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Connection.php(637): yii\db\Connection->createPdoInstance()
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Connection.php(1067): yii\db\Connection->open()
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Connection.php(1054): yii\db\Connection->getMasterPdo()
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Command.php(261): yii\db\Connection->getSlavePdo()
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Command.php(1163): yii\db\Command->prepare(true)
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Command.php(453): yii\db\Command->queryInternal('fetchAll', 7)
+#7 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\mysql\Schema.php(114): yii\db\Command->queryColumn()
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Schema.php(235): yii\db\mysql\Schema->findTableNames('')
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Schema.php(778): yii\db\Schema->getTableNames('', false)
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Schema.php(205): yii\db\Schema->getSchemaMetadata('', 'schema', false)
+#11 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\controllers\MigrateController.php(300): yii\db\Schema->getTableSchemas()
+#12 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\controllers\BaseMigrateController.php(486): yii\console\controllers\MigrateController->truncateDatabase()
+#13 [internal function]: yii\console\controllers\BaseMigrateController->actionFresh()
+#14 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#15 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#16 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\Controller.php(180): yii\base\Controller->runAction('fresh', Array)
+#17 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\console\Controller->runAction('fresh', Array)
+#18 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\Application.php(180): yii\base\Module->runAction('migrate/fresh', Array)
+#19 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\Application.php(147): yii\console\Application->runAction('migrate/fresh', Array)
+#20 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\console\Application->handleRequest(Object(yii\console\Request))
+#21 F:\apps\wamp64\www\aphamea_project\yii(20): yii\base\Application->run()
+#22 {main}
+
+Next yii\db\Exception: SQLSTATE[HY000] [2002] No connection could be made because the target machine actively refused it.
+ in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Connection.php:648
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Connection.php(1067): yii\db\Connection->open()
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Connection.php(1054): yii\db\Connection->getMasterPdo()
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Command.php(261): yii\db\Connection->getSlavePdo()
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Command.php(1163): yii\db\Command->prepare(true)
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Command.php(453): yii\db\Command->queryInternal('fetchAll', 7)
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\mysql\Schema.php(114): yii\db\Command->queryColumn()
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Schema.php(235): yii\db\mysql\Schema->findTableNames('')
+#7 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Schema.php(778): yii\db\Schema->getTableNames('', false)
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\Schema.php(205): yii\db\Schema->getSchemaMetadata('', 'schema', false)
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\controllers\MigrateController.php(300): yii\db\Schema->getTableSchemas()
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\controllers\BaseMigrateController.php(486): yii\console\controllers\MigrateController->truncateDatabase()
+#11 [internal function]: yii\console\controllers\BaseMigrateController->actionFresh()
+#12 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#13 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#14 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\Controller.php(180): yii\base\Controller->runAction('fresh', Array)
+#15 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\console\Controller->runAction('fresh', Array)
+#16 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\Application.php(180): yii\base\Module->runAction('migrate/fresh', Array)
+#17 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\console\Application.php(147): yii\console\Application->runAction('migrate/fresh', Array)
+#18 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\console\Application->handleRequest(Object(yii\console\Request))
+#19 F:\apps\wamp64\www\aphamea_project\yii(20): yii\base\Application->run()
+#20 {main}
+Additional Information:
+Array
+(
+    [0] => HY000
+    [1] => 2002
+    [2] => No connection could be made because the target machine actively refused it.
+
+)
+
+2022-09-14 21:05:11 [-][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'ALLUSERSPROFILE' => 'C:\\ProgramData'
+    'APPCODE_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\appcode.vmoptions'
+    'APPDATA' => 'C:\\Users\\USER\\AppData\\Roaming'
+    'CHROME_CRASHPAD_PIPE_NAME' => '\\\\.\\pipe\\crashpad_3268_PADLVCBTDLHGNHYK'
+    'CLion' => 'C:\\Program Files\\JetBrains\\CLion 2021.3.1\\bin;'
+    'CLION_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\clion.vmoptions'
+    'CommonProgramFiles' => 'C:\\Program Files\\Common Files'
+    'CommonProgramFiles(x86)' => 'C:\\Program Files (x86)\\Common Files'
+    'CommonProgramW6432' => 'C:\\Program Files\\Common Files'
+    'COMPUTERNAME' => 'COPRA'
+    'ComSpec' => 'C:\\Windows\\system32\\cmd.exe'
+    'DATAGRIP_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\datagrip.vmoptions'
+    'DATASPELL_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\dataspell.vmoptions'
+    'DriverData' => 'C:\\Windows\\System32\\Drivers\\DriverData'
+    'GATEWAY_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\gateway.vmoptions'
+    'GOLAND_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\goland.vmoptions'
+    'HOMEDRIVE' => 'C:'
+    'HOMEPATH' => '\\Users\\USER'
+    'IDEA_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\idea.vmoptions'
+    'JETBRAINSCLIENT_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\jetbrainsclient.vmoptions'
+    'JETBRAINS_CLIENT_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\jetbrains_client.vmoptions'
+    'LOCALAPPDATA' => 'C:\\Users\\USER\\AppData\\Local'
+    'LOGONSERVER' => '\\\\COPRA'
+    'NUMBER_OF_PROCESSORS' => '8'
+    'OneDrive' => 'C:\\Users\\USER\\OneDrive'
+    'ORIGINAL_XDG_CURRENT_DESKTOP' => 'undefined'
+    'OS' => 'Windows_NT'
+    'Path' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Users\\USER\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\USER\\AppData\\Roaming\\npm;C:\\Program Files\\JetBrains\\PhpStorm 2021.3\\bin;;C:\\Users\\USER\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Program Files\\JetBrains\\CLion 2021.3.1\\bin;;F:\\apps\\heroku\\bin'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL'
+    'PhpStorm' => 'C:\\Program Files\\JetBrains\\PhpStorm 2021.3\\bin;'
+    'PHPSTORM_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\phpstorm.vmoptions'
+    'PROCESSOR_ARCHITECTURE' => 'AMD64'
+    'PROCESSOR_IDENTIFIER' => 'Intel64 Family 6 Model 142 Stepping 10, GenuineIntel'
+    'PROCESSOR_LEVEL' => '6'
+    'PROCESSOR_REVISION' => '8e0a'
+    'ProgramData' => 'C:\\ProgramData'
+    'ProgramFiles' => 'C:\\Program Files'
+    'ProgramFiles(x86)' => 'C:\\Program Files (x86)'
+    'ProgramW6432' => 'C:\\Program Files'
+    'PSModulePath' => 'C:\\Users\\USER\\Documents\\WindowsPowerShell\\Modules;C:\\Program Files\\WindowsPowerShell\\Modules;C:\\Windows\\system32\\WindowsPowerShell\\v1.0\\Modules'
+    'PUBLIC' => 'C:\\Users\\Public'
+    'PYCHARM_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\pycharm.vmoptions'
+    'RIDER_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\rider.vmoptions'
+    'RUBYMINE_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\rubymine.vmoptions'
+    'SESSIONNAME' => 'Console'
+    'SystemDrive' => 'C:'
+    'SystemRoot' => 'C:\\Windows'
+    'TEMP' => 'C:\\Users\\USER\\AppData\\Local\\Temp'
+    'TMP' => 'C:\\Users\\USER\\AppData\\Local\\Temp'
+    'USERDOMAIN' => 'COPRA'
+    'USERDOMAIN_ROAMINGPROFILE' => 'COPRA'
+    'USERNAME' => 'USER'
+    'USERPROFILE' => 'C:\\Users\\USER'
+    'WEBIDE_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\webide.vmoptions'
+    'WEBSTORM_VM_OPTIONS' => 'C:\\ja-netfilter\\vmoptions\\webstorm.vmoptions'
+    'windir' => 'C:\\Windows'
+    'TERM_PROGRAM' => 'vscode'
+    'TERM_PROGRAM_VERSION' => '1.71.1'
+    'LANG' => 'en_US.UTF-8'
+    'COLORTERM' => 'truecolor'
+    'GIT_ASKPASS' => 'c:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\resources\\app\\extensions\\git\\dist\\askpass.sh'
+    'VSCODE_GIT_ASKPASS_NODE' => 'C:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe'
+    'VSCODE_GIT_ASKPASS_EXTRA_ARGS' => '--ms-enable-electron-run-as-node'
+    'VSCODE_GIT_ASKPASS_MAIN' => 'c:\\Users\\USER\\AppData\\Local\\Programs\\Microsoft VS Code\\resources\\app\\extensions\\git\\dist\\askpass-main.js'
+    'VSCODE_GIT_IPC_HANDLE' => '\\\\.\\pipe\\vscode-git-332ef18278-sock'
+    'PHP_SELF' => 'yii'
+    'SCRIPT_NAME' => 'yii'
+    'SCRIPT_FILENAME' => 'yii'
+    'PATH_TRANSLATED' => 'yii'
+    'DOCUMENT_ROOT' => ''
+    'REQUEST_TIME_FLOAT' => 1663182311.1245
+    'REQUEST_TIME' => 1663182311
+    'argv' => [
+        0 => 'yii'
+        1 => 'migrate/fresh'
+    ]
+    'argc' => 2
+]
+2022-09-14 19:18:38 [::1][-][-][error][Error] Error: Call to a member function delete() on null in F:\apps\wamp64\www\aphamea_project\controllers\MedicineController.php:444
+Stack trace:
+#0 [internal function]: app\controllers\MedicineController->actionDelete()
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('delete', Array)
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('medicine/delete', Array)
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#7 {main}
+2022-09-14 19:18:37 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '16'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => 'dee18c85-baa9-90d4-1287-fa3e574d5b6a'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\PuTTY\\;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\xampp\\php;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '4640'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/delete'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/delete'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\delete'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/delete'
+    'REQUEST_TIME_FLOAT' => 1663183117.9941
+    'REQUEST_TIME' => 1663183117
+]
+2022-09-14 19:21:26 [::1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php:93
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\CompositeAuth.php(57): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\ActionFilter.php(77): yii\filters\auth\CompositeAuth->beforeAction(Object(yii\base\InlineAction))
+#3 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Component.php(633): call_user_func(Array, Object(yii\base\ActionEvent))
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Controller.php(218): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 F:\apps\wamp64\www\aphamea_project\controllers\SiteController.php(76): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(176): app\controllers\SiteController->beforeAction(Object(yii\base\InlineAction))
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('delete', Array)
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('site/delete', Array)
+#11 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#13 {main}
+2022-09-14 19:21:26 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '19'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => '1d88bc94-19f4-3570-688a-dac2b9c34170'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\PuTTY\\;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\xampp\\php;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '4660'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/site/delete'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/site/delete'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\site\\delete'
+    'PHP_SELF' => '/aphamea_project/web/index.php/site/delete'
+    'REQUEST_TIME_FLOAT' => 1663183286.8666
+    'REQUEST_TIME' => 1663183286
+]
+2022-09-14 19:21:40 [::1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php:93
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\CompositeAuth.php(57): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\ActionFilter.php(77): yii\filters\auth\CompositeAuth->beforeAction(Object(yii\base\InlineAction))
+#3 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Component.php(633): call_user_func(Array, Object(yii\base\ActionEvent))
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Controller.php(218): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 F:\apps\wamp64\www\aphamea_project\controllers\SiteController.php(76): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(176): app\controllers\SiteController->beforeAction(Object(yii\base\InlineAction))
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('delete', Array)
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('site/delete', Array)
+#11 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#13 {main}
+2022-09-14 19:21:40 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '19'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => '9f79d882-01fd-0d27-8c3b-64b03aff097a'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\PuTTY\\;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\xampp\\php;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '4663'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/site/delete'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/site/delete'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\site\\delete'
+    'PHP_SELF' => '/aphamea_project/web/index.php/site/delete'
+    'REQUEST_TIME_FLOAT' => 1663183300.7915
+    'REQUEST_TIME' => 1663183300
+]
+2022-09-14 19:25:27 [::1][-][-][error][Error] Error: Undefined class constant 'PLATFORMS' in F:\apps\wamp64\www\aphamea_project\controllers\MedicineController.php:501
+Stack trace:
+#0 [internal function]: app\controllers\MedicineController->actionGetAll()
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('get-all', Array)
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('medicine/get-al...', Array)
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#6 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#7 {main}
+2022-09-14 19:25:27 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '181'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => '4acfc008-cc69-8028-fe03-87b3ba2bf31c'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\PuTTY\\;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\xampp\\php;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '4728'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/get-all'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/get-all'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\get-all'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/get-all'
+    'REQUEST_TIME_FLOAT' => 1663183527.7048
+    'REQUEST_TIME' => 1663183527
+]

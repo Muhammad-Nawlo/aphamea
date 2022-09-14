@@ -25,6 +25,7 @@ use Yii;
  */
 class Medicine extends \yii\db\ActiveRecord
 {
+    const PLATFORMS = [0, 1];
     /**
      * {@inheritdoc}
      */

@@ -232,9 +232,11 @@ class OfferController extends Controller
             $offerDetails = (new Query())
                 ->select([
                     'medicine.productName as medicineName',
+                    'medicine.id as medicineId',
                     'medicine.price as medicinePrice',
                     'medicine.netPrice as medicineNetPrice',
                     'offer_details.quantity',
+                    'extraMedicine.id as extraMedicineId',
                     'extraMedicine.productName as extraMedicineName',
                     'extraMedicine.price as extraMedicinePrice',
                     'extraMedicine.netPrice as extraMedicineNetPrice',

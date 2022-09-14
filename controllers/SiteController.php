@@ -394,6 +394,7 @@ class SiteController extends Controller
                         $newUser->email = filter_var($user[2], FILTER_VALIDATE_EMAIL);
                         if (strlen(trim($user[3]) < 8 || strlen(trim($user[3])) > 20)) {
                             array_push($errorArr, ['error' => "<b>$user[0]</b>, Password should be between 8 and 20 charachter"]);
+                            continue;
                         }
                         $newUser->password = Yii::$app->security->generatePasswordHash($user[3]);
 
@@ -423,23 +424,34 @@ class SiteController extends Controller
     public  function actionDelete()
     {
         try {
+            $errors = [];
             $data = (array)json_decode(Yii::$app->request->getRawBody(), true);
-            if (!isset($data['id'])) {
+            if (!isset($data['ids'])) {
                 return ["status" => "error", "details" => "There are missing param"];
             }
-            $user = User::findOne(['id' => (int)$data['id']]);
-            if ($user === null)
-                return ["status" => "error", "details" => "There is no user that has this id"];
+            $ids = (array)$data['ids'];
+            if (empty($ids))
+                return ["status" => "error", "details" => "The array of ids is empty"];
 
-            if (CompanyTeam::findOne(['userId' => (int)$data['id']]) !== null)
-                return ["status" => "error", "details" => "This user belongs to a company"];
+            foreach ($ids as $id) {
+                $id = (int)$id;
+                $user = User::findOne(['id' => $id]);
+                if ($user === null) {
+                    $errors[] = "There is no user that has this id " . $id;
+                    continue;
+                }
+                if (CompanyTeam::findOne(['userId' => $id]) !== null) {
+                    $errors[] = "This user that has this {$user->email} belongs to a company";
+                    continue;
+                }
 
-
-            Contact::deleteAll(['userId' => (int)$data['id']]);
-            if (!$user->delete()) {
-                return ["status" => "error", "details" => $user->getErrors()];
+                Contact::deleteAll(['userId' => $id]);
+                if (!$user->delete()) {
+                    return ["status" => "error", "details" => $user->getErrors()];
+                }
             }
-            return ['status' => 'ok'];
+
+            return ['status' => 'ok', 'errors' => $errors];
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
         }

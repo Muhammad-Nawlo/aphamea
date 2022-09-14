@@ -30,6 +30,9 @@ class m220809_211343_create_medicine_table extends Migration
             'price' => $this->float(),
             'netPrice' => $this->float()
         ], $options);
+        
+        $com = Yii::$app->db->createCommand("Alter table medicine ADD FULLTEXT (productName,indications,composition)");
+        $com->execute();
     }
 
     /**

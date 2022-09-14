@@ -108,7 +108,6 @@ class MedicineController extends \yii\web\Controller
             $this->response->sendFile("../web/excelFiles/medicines" . $fileName . ".xlsx", "$fileName.xlsx");
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
-
         }
     }
     public function actionImportExcelFile()
@@ -424,20 +423,32 @@ class MedicineController extends \yii\web\Controller
     public  function actionDelete()
     {
         try {
+            $errors = [];
             $data = (array)json_decode(Yii::$app->request->getRawBody(), true);
-            if (!isset($data['id'])) {
+            if (!isset($data['ids'])) {
                 return ["status" => "error", "details" => "There are missing param"];
             }
-            MedicineCategory::deleteAll(['medicineId' => (int)$data['id']]);
-            MedicinePharmaceuticalForm::deleteAll(['medicineId' => (int)$data['id']]);
-            $medicine = Medicine::findOne(['id' => (int)$data['id']]);
-            if ($medicine === null)
-                return ["status" => "error", "details" => "There is no medicine that has this id "];
+            $ids = (array)$data['ids'];
+            if (empty($ids))
+                return ["status" => "error", "details" => "The array of ids is empty"];
 
-            if (!$medicine->delete()) {
-                return ["status" => "error", "details" => $medicine->getErrors()];
+            foreach ($ids as $id) {
+                $id = (int)$id;
+                $medicine = Medicine::findOne(['id' => $id]);
+                if ($medicine === null) {
+                    $errors[] = "There is no medicine that has this id " . $id;
+                    continue;
+                }
+
+                MedicineCategory::deleteAll(['medicineId' => $id]);
+                MedicinePharmaceuticalForm::deleteAll(['medicineId' => $id]);
+
+                if (!$medicine->delete()) {
+                    $errors[] = $medicine->getErrors();
+                }
             }
-            return ['status' => 'ok'];
+
+            return ['status' => 'ok', 'errors' => $errors];
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
         }
@@ -485,24 +496,34 @@ class MedicineController extends \yii\web\Controller
             if (!isset($data['searchFilters']))
                 return ['status' => 'error', 'details' => 'There are missing params'];
 
-            $searchFilters = (array)$data['searchFilters']->filters;
             $searchText = trim($data['searchFilters']->searchText);
+            $platform = (int)$data['searchFilters']->platform;
+            if (!in_array($platform, Medicine::PLATFORMS))
+                return ['status' => 'error', 'details' => 'Platform is not valid'];
 
-            foreach ($searchFilters as $s) {
-                $s = (array)$s;
-                if (!isset($s['name']) || !isset($s['status']))
-                    continue;
-                if (!in_array($s['name'], ['productName', 'indications', 'composition']))
-                    continue;
+            if ($platform === 0) {
+                $searchFilters = (array)$data['searchFilters']->filters;
+                foreach ($searchFilters as $s) {
+                    $s = (array)$s;
+                    if (!isset($s['name']) || !isset($s['status']))
+                        continue;
+                    if (!in_array($s['name'], ['productName', 'indications', 'composition']))
+                        continue;
 
-                if ((bool)$s['status'] === true)
-                    $medicines->andFilterWhere(['like', $s['name'],  '%' . trim($searchText) . '%', false]);
+                    if ((bool)$s['status'] === true)
+                        $medicines->andFilterWhere(['like', $s['name'],  '%' . trim($searchText) . '%', false]);
+                }
+                $medicines = $medicines
+                    ->with('categories', 'pharmaceuticalForms')
+                    ->asArray()
+                    ->all();
+            } else {
+                $medicines = $medicines
+                    ->andWhere('MATCH(productName,indications,composition) AGAINST (:searchText)', ['searchText' => $searchText])
+                    ->with('categories', 'pharmaceuticalForms')
+                    ->asArray()
+                    ->all();
             }
-
-            $medicines = $medicines
-                ->with('categories', 'pharmaceuticalForms')
-                ->asArray()
-                ->all();
             if ($medicines) {
                 $medicines = array_map(function ($m) {
                     $imgs = explode(',', $m['imgs']);
