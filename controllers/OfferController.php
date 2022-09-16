@@ -208,15 +208,26 @@ class OfferController extends Controller
         }
     }
 
-    function actionGetAll()
+    function actionGetAll($searchText = null)
     {
         try {
-            $offers = Offer::find()->with('medicines', 'extraMedicines')->asArray()->all();
-            if ($offers) {
+            if ($searchText === null)
+                $offers = Offer::find()
+                    ->with('medicines', 'extraMedicines')
+                    ->asArray()
+                    ->all();
+            else
+                $offers = Offer::find()
+                    ->where(['like', 'name',  '%' . trim($searchText) . '%', false])
+                    ->with('medicines', 'extraMedicines')
+                    ->asArray()
+                    ->all();
+
+
+            if ($offers)
                 return ['status' => 'ok', 'offers' => $offers];
-            } else {
+            else
                 return ['status' => 'error', 'details' => 'There is no offer'];
-            }
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
         }

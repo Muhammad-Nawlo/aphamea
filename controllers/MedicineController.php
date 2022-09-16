@@ -22,6 +22,7 @@ use Picqer\Barcode\BarcodeGeneratorPNG;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use app\models\MedicinePharmaceuticalForm;
+use app\models\OfferDetails;
 
 class MedicineController extends \yii\web\Controller
 {
@@ -439,7 +440,10 @@ class MedicineController extends \yii\web\Controller
                     $errors[] = "There is no medicine that has this id " . $id;
                     continue;
                 }
-
+                if (OfferDetails::findOne(['medicineId' => $id]) !== null) {
+                    $errors[] = "You can not delete this medicine that has this id (" . $id . ") because it belongs to an offer";
+                    continue;
+                }
                 MedicineCategory::deleteAll(['medicineId' => $id]);
                 MedicinePharmaceuticalForm::deleteAll(['medicineId' => $id]);
 

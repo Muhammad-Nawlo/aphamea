@@ -2,23 +2,29 @@
 
 namespace app\controllers;
 
-use app\helpers\HelperFunction;
-use app\models\CompanyTeam;
-use app\models\Contact;
-use app\models\User;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use sizeg\jwt\JwtHttpBearerAuth;
 use Yii;
+use app\models\User;
+use yii\helpers\Url;
+use app\models\Order;
+use yii\filters\Cors;
+use yii\web\Response;
+use app\models\Contact;
+use yii\web\Controller;
+use yii\web\UploadedFile;
+use app\models\CompanyTeam;
+use yii\helpers\ArrayHelper;
+use app\helpers\HelperFunction;
+use sizeg\jwt\JwtHttpBearerAuth;
 use yii\filters\auth\CompositeAuth;
 use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
-use yii\filters\Cors;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
-use yii\web\Controller;
-use yii\web\Response;
-use yii\web\UploadedFile;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\Color;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class SiteController extends Controller
 {
@@ -58,15 +64,15 @@ class SiteController extends Controller
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
-        $behaviors['authenticator'] = [
-            'class' => CompositeAuth::class,
-            'except' => ['login', 'signup', 'index', 'save-user-info'],
-            'authMethods' => [
-                HttpBearerAuth::class,
-                QueryParamAuth::class,
-                JwtHttpBearerAuth::class
-            ]
-        ];
+        // $behaviors['authenticator'] = [
+        //     'class' => CompositeAuth::class,
+        //     'except' => ['login', 'signup', 'index', 'save-user-info'],
+        //     'authMethods' => [
+        //         HttpBearerAuth::class,
+        //         QueryParamAuth::class,
+        //         JwtHttpBearerAuth::class
+        //     ]
+        // ];
         return $behaviors;
     }
 
@@ -107,7 +113,7 @@ class SiteController extends Controller
             ->setId((string)$user['id'], true)
             ->setIssuedAt(time()) // Configures the time that the token was issue (iat claim)
             ->setNotBefore(time() + 60)
-            ->setExpiration(time() + 99900999) // Configures the expiration time of the token (exp claim)
+            ->setExpiration(time() + 99999999) // Configures the expiration time of the token (exp claim)
             ->set('uid', (string)$user['id']) // Configures a new claim, called "uid"
             ->getToken(); // Retrieves the generated token
         User::updateAll(['accessToken' => (string)$accessToken], ['id' => $user['id']]);
@@ -315,15 +321,40 @@ class SiteController extends Controller
 
     public function actionExportToExcelFile()
     {
+        $headStyle = [
+            'font' => [
+                'color' => [
+                    'rgb' => 'ffffff'
+                ],
+            ],
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'startColor' => ['rgb' => '538ED5']
+            ]
+        ];
         $data = User::find()->where([])->all();
 
         $spreadsheet = new Spreadsheet();
+        $spreadsheet->getDefaultStyle()->getFont()->setName('Berlin Sans FB')->setSize(18);
         $sheet = $spreadsheet->getActiveSheet();
 
         $sheet->setCellValue('A1', 'First Name');
         $sheet->setCellValue('B1', 'Last name');
         $sheet->setCellValue('C1', 'Email');
         $sheet->setCellValue('D1', 'Role');
+
+        $sheet->getStyle('A1:D1')->applyFromArray($headStyle);
+
+        $sheet
+            ->getStyle('A1:D1')
+            ->getAlignment()
+            ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getColumnDimension('A')->setWidth(16);
+        $sheet->getColumnDimension('B')->setWidth(16);
+        $sheet->getColumnDimension('C')->setWidth(16);
+        $sheet->getColumnDimension('D')->setWidth(16);
+
         $i = 2;
         foreach ($data as $userInfo) {
             $sheet->setCellValue("A$i", $userInfo->firstName);
@@ -342,16 +373,40 @@ class SiteController extends Controller
 
     public function actionGenerateExcelFileTemplate()
     {
+        $headStyle = [
+            'font' => [
+                'color' => [
+                    'rgb' => 'ffffff'
+                ],
+            ],
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'startColor' => ['rgb' => '538ED5']
+            ]
+        ];
         $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
+        $spreadsheet->getDefaultStyle()->getFont()->setName('Berlin Sans FB')->setSize(18);
 
+        $sheet = $spreadsheet->getActiveSheet();
         $sheet->setCellValue('A1', 'First Name');
         $sheet->setCellValue('B1', 'Last name');
         $sheet->setCellValue('C1', 'Email');
         $sheet->setCellValue('D1', 'Password');
         $sheet->setCellValue('E1', 'Role');
+        $sheet->getStyle('A1:E1')->applyFromArray($headStyle);
 
-        $fileName = yii::$app->getSecurity()->generateRandomString(10);
+        $sheet
+            ->getStyle('A1:E1')
+            ->getAlignment()
+            ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+        $sheet->getColumnDimension('A')->setWidth(16);
+        $sheet->getColumnDimension('B')->setWidth(16);
+        $sheet->getColumnDimension('C')->setWidth(16);
+        $sheet->getColumnDimension('D')->setWidth(16);
+        $sheet->getColumnDimension('E')->setWidth(16);
+
+        $fileName =         $fileName = date('Y-m-d');
         $writer = new Xlsx($spreadsheet);
         HelperFunction::createFolderIfNotExist(Url::to('@app/web/excelFiles/users'));
 
@@ -386,7 +441,7 @@ class SiteController extends Controller
             foreach ($usersArray as $user) {
                 $i++;
                 if (filter_var($user[2], FILTER_VALIDATE_EMAIL)) {
-                    $isExist = User::findOne(['email' => $user[4]]);
+                    $isExist = User::findOne(['email' => $user[2]]);
                     if ($isExist === null) {
                         $newUser = new User();
                         $newUser->firstName = htmlspecialchars(stripslashes(trim($user[0])));
@@ -409,10 +464,10 @@ class SiteController extends Controller
                             array_push($errorArr, ['error' => "<b>$user[2]</b> ", 'details' => $newUser->getErrors()]);
                         }
                     } else {
-                        array_push($errorArr, ['error' => "<b>$user[4]</b> User already exist"]);
+                        array_push($errorArr, ['error' => "<b>$user[2]</b> User already exist"]);
                     }
                 } else {
-                    array_push($errorArr, ['error' => "<b>$user[4]</b> Please enter valid email address"]);
+                    array_push($errorArr, ['error' => "<b>$user[2]</b> Please enter valid email address"]);
                 }
             }
             return ['status' => 'ok', 'errorDetails' => $errorArr];
@@ -444,6 +499,15 @@ class SiteController extends Controller
                     $errors[] = "This user that has this {$user->email} belongs to a company";
                     continue;
                 }
+
+                if (Order::findOne(['userId' => $id]) !== null) {
+                    $errors[] = "This user that has this {$user->email} has an offer";
+                }
+
+                if (Order::findOne(['representativeId' => $id]) !== null) {
+                    $errors[] = "This user that has this {$user->email} has an offer that is assigned to him";
+                }
+
 
                 Contact::deleteAll(['userId' => $id]);
                 if (!$user->delete()) {

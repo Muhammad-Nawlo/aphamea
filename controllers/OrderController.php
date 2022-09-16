@@ -176,6 +176,34 @@ class OrderController extends Controller
             return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
+    function actionGetAllCanceled($isCanceled = 0)
+    {
+        try {
+            $orders = Order::find()->where(['isCanceled' => (int)$isCanceled])->with('representative', 'user')->asArray()->all();
+            if ($orders) {
+                return ['status' => 'ok', 'orders' => $orders];
+            } else {
+                return ['status' => 'error', 'details' => 'There is no order'];
+            }
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
+        }
+    }
+
+    function actionGetAllCompleted($isCompleted = 0)
+    {
+        try {
+            $orders = Order::find()->where(['isCompleted' => (int)$isCompleted])->with('representative', 'user')->asArray()->all();
+            if ($orders) {
+                return ['status' => 'ok', 'orders' => $orders];
+            } else {
+                return ['status' => 'error', 'details' => 'There is no order'];
+            }
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
+        }
+    }
+
 
     function actionGet($id)
     {
@@ -199,27 +227,6 @@ class OrderController extends Controller
             unset($order['orderDetails']);
 
             return ['status' => 'ok', 'order' => $order];
-        } catch (\Exception $e) {
-            return ['status' => 'error', 'details' => $e->getMessage()];
-        }
-    }
-
-    function actionDelete()
-    {
-        try {
-            $id = Yii::$app->request->post('id');
-            if ($id === null)
-                return ['status' => 'error', 'details' => 'There is a missing params'];
-
-            $order = Order::findOne(['id' => (int)$id]);
-            if ($order === null)
-                return ['status' => 'error', 'details' => 'There is no order that has this id'];
-
-            OrderDetails::deleteAll(['offerId' => $order->id]);
-            if (!$order->delete())
-                return ['status' => 'error', 'details' => $order->delete()];
-
-            return ['status' => 'ok'];
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
         }
