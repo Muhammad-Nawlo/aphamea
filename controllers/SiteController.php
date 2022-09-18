@@ -162,7 +162,7 @@ class SiteController extends Controller
 
             if ($newUser->validate()) {
                 $newUser->save();
-                return ['status' => 'ok'];
+                return ['status' => 'ok','user'=>$newUser];
             } else {
                 return ['status' => 'error', 'details' => $newUser->getErrors()];
             }

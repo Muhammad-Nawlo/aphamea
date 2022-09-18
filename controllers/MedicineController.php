@@ -253,7 +253,7 @@ class MedicineController extends \yii\web\Controller
                     $newMedicine->barcode = $generateName;
                     $newMedicine->save();
                 }
-                $newAddedMedicine = Medicine::find()->where(['in', 'id', $ids])->all();
+                $newAddedMedicine = Medicine::find()->where(['in', 'id', $ids])->with('categories', 'pharmaceuticalForms')->asArray()->all();
                 return ['status' => 'ok', 'newAddedMedicines' => $newAddedMedicine, 'errorDetails' => $errorArr];
             } else {
                 return ['status' => 'error', 'details' => 'There is no file uploaded'];
