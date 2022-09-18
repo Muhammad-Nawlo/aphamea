@@ -9,7 +9,8 @@ use Yii;
  *
  * @property int $id
  * @property int|null $cityId
- * @property string|null $region
+ * @property string|null $regionAr
+ * @property string|null $regionEn
  *
  * @property City $city
  * @property User[] $users
@@ -31,7 +32,7 @@ class Region extends \yii\db\ActiveRecord
     {
         return [
             [['cityId'], 'integer'],
-            [['region'], 'string', 'max' => 255],
+            [['regionEn','regionAr'], 'string', 'max' => 255],
             [['cityId'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['cityId' => 'id']],
         ];
     }
@@ -44,7 +45,8 @@ class Region extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'cityId' => 'City ID',
-            'region' => 'Region',
+            'regionAr' => 'Region Ar',
+            'regionEn' => 'Region En',
         ];
     }
 

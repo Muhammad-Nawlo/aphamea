@@ -39,7 +39,7 @@ class AreaController extends Controller
         ];
         $behaviors['authenticator'] = [
             'class' => CompositeAuth::class,
-            'except' => ['get-countries', 'get-cities', 'get-regions'],
+            'except' => ['get-countries', 'get-cities', 'get-regions','read-countries','read-cities','read-regions'],
             'authMethods' => [
                 HttpBearerAuth::class,
                 QueryParamAuth::class,
@@ -80,48 +80,51 @@ class AreaController extends Controller
         return ['status' => 'ok', 'status' => 'working'];
     }
 
-    //    public function actionReadCountries()
-    //    {
-    //        $jsonFile = file_get_contents(Url::to('@app/web/countries.json'));
-    //        $jsonFile = json_decode($jsonFile, true);
-    //        foreach ($jsonFile as $c) {
-    //            $newCountry = new Country();
-    //            $newCountry->name = $c['country'];
-    //            $newCountry->save();
-    //        }
-    //        return ['status' => 'ok'];
-    //    }
+       public function actionReadCountries()
+       {
+           $jsonFile = file_get_contents(Url::to('@app/web/countries.json'));
+           $jsonFile = json_decode($jsonFile, true);
+           foreach ($jsonFile as $c) {
+               $newCountry = new Country();
+               $newCountry->nameAr = $c['nameAr'];
+               $newCountry->nameEn = $c['nameEn'];
+               $newCountry->save();
+           }
+           return ['status' => 'ok'];
+       }
 
-    // public function actionReadCities()
-    // {
-    //     try {
-    //         $spreadSheet = IOFactory::load(Url::to('@app/web/cities.xlsx'));
-    //         $spreadSheetArray = $spreadSheet->getActiveSheet()->toArray();
-    //         array_splice($spreadSheetArray, 0, 1);
-    //         foreach ($spreadSheetArray as $city) {
-    //             $newCity = new City();
-    //             $newCity->nameEn = $city[0];
-    //             $newCity->nameAr = $city[1];
-    //             $newCity->countryId = 1;
-    //             $newCity->save();
-    //         }
-    //         return ['status' => 'ok'];
-    //     } catch (\Exception $e) {
-    //         return ['status' => 'error', $e->getMessage()];
-    //     }
-    // }
+    public function actionReadCities()
+    {
+        try {
+            $spreadSheet = IOFactory::load(Url::to('@app/web/cities.xlsx'));
+            $spreadSheetArray = $spreadSheet->getActiveSheet()->toArray();
+            array_splice($spreadSheetArray, 0, 1);
+            foreach ($spreadSheetArray as $city) {
+                $newCity = new City();
+                $newCity->nameEn = $city[0];
+                $newCity->nameAr = $city[1];
+                $newCity->countryId = 1;
+                $newCity->save();
+            }
+            return ['status' => 'ok'];
+        } catch (\Exception $e) {
+            return ['status' => 'error', $e->getMessage()];
+        }
+    }
 
-    //    public function actionReadRegions()
-    //    {
-    //        $spreadSheet = IOFactory::load(Url::to('@app/web/regions.xlsx'));
-    //        $spreadSheetArray = $spreadSheet->getActiveSheet()->toArray();
-    //        array_splice($spreadSheetArray,0,1);
-    //        foreach ($spreadSheetArray as $region) {
-    //            $newRegions = new Region();
-    //            $newRegions->save();
-    //        }
-    //        return ['status' => 'ok'];
-    //    }
+       public function actionReadRegions()
+       {
+           $spreadSheet = IOFactory::load(Url::to('@app/web/regions.xlsx'));
+           $spreadSheetArray = $spreadSheet->getActiveSheet()->toArray();
+           foreach ($spreadSheetArray as $region) {
+               $newRegions = new Region();
+               $newRegions->regionEn = $region[0];
+               $newRegions->regionAr = $region[1];
+               $newRegions->cityId = 2;
+               $newRegions->save();
+           }
+           return ['status' => 'ok'];
+       }
 
 
     public function actionGetCountries()

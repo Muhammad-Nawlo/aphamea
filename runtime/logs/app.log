@@ -5677,3 +5677,288 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1663517538.4512
     'REQUEST_TIME' => 1663517538
 ]
+2022-09-18 17:55:05 [::1][-][-][error][yii\base\ErrorException:8] yii\base\ErrorException: Undefined index: country in F:\apps\wamp64\www\aphamea_project\controllers\AreaController.php:89
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\controllers\AreaController.php(89): yii\web\ErrorHandler->handleError('8', ''Undefined inde...', ''F:\\\\apps\\\\wamp...', '89', '['jsonFile' => ...')
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\InlineAction.php(57): app\controllers\AreaController->actionReadCountries()
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\InlineAction.php(57): ::call_user_func_array:{F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\InlineAction.php:57}('[0 => class app...', '[]')
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(178): yii\base\InlineAction->runWithParams('[]')
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): app\controllers\AreaController->runAction(''read-countries...', '[]')
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\web\Application->runAction(''area/read-coun...', '[]')
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest('class yii\\web\\R...')
+#7 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\web\Application->run()
+#8 {main}
+2022-09-18 17:55:05 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'Phpstorm-1d0147a5' => 'f855a8f8-e238-49ec-aad2-194a10648ef1'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'Phpstorm-1d0147a5=f855a8f8-e238-49ec-aad2-194a10648ef1'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '2322'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/area/read-countries'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/area/read-countries'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\area\\read-countries'
+    'PHP_SELF' => '/aphamea_project/web/index.php/area/read-countries'
+    'REQUEST_TIME_FLOAT' => 1663523705.8942
+    'REQUEST_TIME' => 1663523705
+]
+2022-09-18 17:55:37 [::1][-][-][error][yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Getting unknown property: app\models\Country::name in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Component.php:154
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\BaseActiveRecord.php(296): yii\base\Component->__get('name')
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\validators\Validator.php(257): yii\db\BaseActiveRecord->__get('name')
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Model.php(360): yii\validators\Validator->validateAttributes(Object(app\models\Country), Array)
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\ActiveRecord.php(564): yii\base\Model->validate(Array)
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\BaseActiveRecord.php(676): yii\db\ActiveRecord->insert(true, NULL)
+#5 F:\apps\wamp64\www\aphamea_project\controllers\AreaController.php(91): yii\db\BaseActiveRecord->save()
+#6 [internal function]: app\controllers\AreaController->actionReadCountries()
+#7 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('read-countries', Array)
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('area/read-count...', Array)
+#11 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#13 {main}
+2022-09-18 17:55:37 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'Phpstorm-1d0147a5' => 'f855a8f8-e238-49ec-aad2-194a10648ef1'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_CACHE_CONTROL' => 'max-age=0'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'Phpstorm-1d0147a5=f855a8f8-e238-49ec-aad2-194a10648ef1'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '2323'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/area/read-countries'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/area/read-countries'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\area\\read-countries'
+    'PHP_SELF' => '/aphamea_project/web/index.php/area/read-countries'
+    'REQUEST_TIME_FLOAT' => 1663523737.8563
+    'REQUEST_TIME' => 1663523737
+]
+2022-09-18 18:03:30 [::1][-][-][error][yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: app\models\Region::nameEn in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Component.php:209
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\BaseActiveRecord.php(322): yii\base\Component->__set('nameEn', 'Haidariya')
+#1 F:\apps\wamp64\www\aphamea_project\controllers\AreaController.php(121): yii\db\BaseActiveRecord->__set('nameEn', 'Haidariya')
+#2 [internal function]: app\controllers\AreaController->actionReadRegions()
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('read-regions', Array)
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('area/read-regio...', Array)
+#7 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#9 {main}
+2022-09-18 18:03:30 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'Phpstorm-1d0147a5' => 'f855a8f8-e238-49ec-aad2-194a10648ef1'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'Phpstorm-1d0147a5=f855a8f8-e238-49ec-aad2-194a10648ef1'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '2491'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/area/read-regions'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/area/read-regions'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\area\\read-regions'
+    'PHP_SELF' => '/aphamea_project/web/index.php/area/read-regions'
+    'REQUEST_TIME_FLOAT' => 1663524210.5275
+    'REQUEST_TIME' => 1663524210
+]
+2022-09-18 18:04:47 [::1][-][-][error][yii\base\UnknownPropertyException] yii\base\UnknownPropertyException: Setting unknown property: app\models\Region::nameEn in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Component.php:209
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\db\BaseActiveRecord.php(322): yii\base\Component->__set('nameEn', 'Haidariya')
+#1 F:\apps\wamp64\www\aphamea_project\controllers\AreaController.php(121): yii\db\BaseActiveRecord->__set('nameEn', 'Haidariya')
+#2 [internal function]: app\controllers\AreaController->actionReadRegions()
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('read-regions', Array)
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('area/read-regio...', Array)
+#7 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#9 {main}
+2022-09-18 18:04:47 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'Phpstorm-1d0147a5' => 'f855a8f8-e238-49ec-aad2-194a10648ef1'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'Phpstorm-1d0147a5=f855a8f8-e238-49ec-aad2-194a10648ef1'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '2501'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/area/read-regions'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/area/read-regions'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\area\\read-regions'
+    'PHP_SELF' => '/aphamea_project/web/index.php/area/read-regions'
+    'REQUEST_TIME_FLOAT' => 1663524287.9081
+    'REQUEST_TIME' => 1663524287
+]

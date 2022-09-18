@@ -20,7 +20,8 @@ class m220809_211424_create_country_table extends Migration
         }
         $this->createTable(self::TABLE_NAME, [
             'id' => $this->primaryKey(),
-            'name' => $this->string()
+            'nameAr' => $this->string(),
+            'nameEn' => $this->string()
         ], $options);
     }
 
