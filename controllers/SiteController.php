@@ -64,15 +64,15 @@ class SiteController extends Controller
                 'Access-Control-Allow-Credentials' => true,
             ]
         ];
-        // $behaviors['authenticator'] = [
-        //     'class' => CompositeAuth::class,
-        //     'except' => ['login', 'signup', 'index', 'save-user-info'],
-        //     'authMethods' => [
-        //         HttpBearerAuth::class,
-        //         QueryParamAuth::class,
-        //         JwtHttpBearerAuth::class
-        //     ]
-        // ];
+        $behaviors['authenticator'] = [
+            'class' => CompositeAuth::class,
+            'except' => ['login', 'signup', 'index', 'save-user-info'],
+            'authMethods' => [
+                HttpBearerAuth::class,
+                QueryParamAuth::class,
+                JwtHttpBearerAuth::class
+            ]
+        ];
         return $behaviors;
     }
 
@@ -157,6 +157,8 @@ class SiteController extends Controller
             $newUser->firstName = trim($firstName);
             $newUser->lastName = trim($lastName);
             $newUser->password = Yii::$app->security->generatePasswordHash(trim($password));
+            $newUser->createdAt = date('Y-m-d');
+
 
             if ($newUser->validate()) {
                 $newUser->save();
@@ -217,7 +219,11 @@ class SiteController extends Controller
 
             if ($user->validate()) {
                 $user->save();
-                return ['status' => 'ok', 'errors' => $errors];
+                $user->toArray();
+                if ($user['img'])
+                    $user['img'] = Url::to('@web/users/images/' . $user['img'], true);
+
+                return ['status' => 'ok', 'user' => $user, 'errors' => $errors];
             } else {
                 return ['status' => 'error', 'details' => $user->getErrors()];
             }
@@ -274,7 +280,10 @@ class SiteController extends Controller
 
             if ($user->validate()) {
                 $user->save();
-                return ['status' => 'ok', 'errors' => $errors];
+                $user->toArray();
+                if ($user['img'])
+                    $user['img'] = Url::to('@web/users/images/' . $user['img'], true);
+                return ['status' => 'ok', 'user' => $user, 'errors' => $errors];
             } else {
                 return ['status' => 'error', 'details' => $user->getErrors()];
             }
@@ -302,11 +311,18 @@ class SiteController extends Controller
         ];
     }
 
-    public function actionGetAllUsers()
+    public function actionGetAllUsers($year = null, $month = null)
     {
-        $users = User::find()->where([])
+        $users = User::find();
+        if ($year != null && $month != null) {
+            $month = str_pad($month, 2, '0', STR_PAD_LEFT);
+            $endDayMonth = date('t', strtotime("$year-$month-01"));
+            $users->andFilterWhere(['between', 'createdAt', date('Y-m-d', strtotime("$year-$month-01")), date('Y-m-d', strtotime("$year-$month-$endDayMonth"))]);
+        }
+        $users = $users
             ->with('contacts', 'region', 'city', 'country')
             ->asArray()->all();
+
         if ($users) {
             $users = array_map(function ($u) {
                 if ($u['img'])
@@ -417,62 +433,71 @@ class SiteController extends Controller
 
     public function actionImportExcelFile()
     {
-        if (isset($_FILES['sheet'])) {
-            $file = $_FILES['sheet'];
-            $tmpName = yii::$app->security->generateRandomString();
-            $inputFile = 'excelFiles/users/' . $tmpName . '.xlsx';
-            move_uploaded_file($file['tmp_name'], $inputFile);
-            $spreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFile);
-            $usersArray = $spreadSheet->getActiveSheet()->toArray();
-            //To remove the first row in file
-            $tmpExcelFields = array_splice($usersArray, 0, 1);
-            //This condition to check the template
-            if (
-                $tmpExcelFields[0][0] != 'First Name' ||
-                $tmpExcelFields[0][1] != 'Last name' ||
-                $tmpExcelFields[0][2] != 'Email' ||
-                $tmpExcelFields[0][3] != 'Password' ||
-                $tmpExcelFields[0][4] != 'Role'
-            ) {
-                return ['status' => 'error', 'details' => 'This excel file is not a validate file'];
-            }
-            $i = 0;
-            $errorArr = [];
-            foreach ($usersArray as $user) {
-                $i++;
-                if (filter_var($user[2], FILTER_VALIDATE_EMAIL)) {
-                    $isExist = User::findOne(['email' => $user[2]]);
-                    if ($isExist === null) {
-                        $newUser = new User();
-                        $newUser->firstName = htmlspecialchars(stripslashes(trim($user[0])));
-                        $newUser->lastName = htmlspecialchars(stripslashes(trim($user[1])));
-                        $newUser->email = filter_var($user[2], FILTER_VALIDATE_EMAIL);
-                        if (strlen(trim($user[3]) < 8 || strlen(trim($user[3])) > 20)) {
-                            array_push($errorArr, ['error' => "<b>$user[0]</b>, Password should be between 8 and 20 charachter"]);
-                            continue;
-                        }
-                        $newUser->password = Yii::$app->security->generatePasswordHash($user[3]);
+        try {
+            $ids = [];
+            if (isset($_FILES['sheet'])) {
+                $file = $_FILES['sheet'];
+                $tmpName = yii::$app->security->generateRandomString();
+                $inputFile = 'excelFiles/users/' . $tmpName . '.xlsx';
+                move_uploaded_file($file['tmp_name'], $inputFile);
+                $spreadSheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFile);
+                $usersArray = $spreadSheet->getActiveSheet()->toArray();
+                //To remove the first row in file
+                $tmpExcelFields = array_splice($usersArray, 0, 1);
+                //This condition to check the template
+                if (
+                    $tmpExcelFields[0][0] != 'First Name' ||
+                    $tmpExcelFields[0][1] != 'Last name' ||
+                    $tmpExcelFields[0][2] != 'Email' ||
+                    $tmpExcelFields[0][3] != 'Password' ||
+                    $tmpExcelFields[0][4] != 'Role'
+                ) {
+                    return ['status' => 'error', 'details' => 'This excel file is not a validate file'];
+                }
+                $i = 0;
+                $errorArr = [];
+                foreach ($usersArray as $user) {
+                    $i++;
+                    if (filter_var($user[2], FILTER_VALIDATE_EMAIL)) {
+                        $isExist = User::findOne(['email' => $user[2]]);
+                        if ($isExist === null) {
+                            $newUser = new User();
+                            $newUser->firstName = htmlspecialchars(stripslashes(trim($user[0])));
+                            $newUser->lastName = htmlspecialchars(stripslashes(trim($user[1])));
+                            $newUser->email = filter_var($user[2], FILTER_VALIDATE_EMAIL);
+                            if (strlen(trim($user[3]) < 8 || strlen(trim($user[3])) > 20)) {
+                                array_push($errorArr, ['error' => "<b>$user[0]</b>, Password should be between 8 and 20 charachter"]);
+                                continue;
+                            }
+                            $newUser->password = Yii::$app->security->generatePasswordHash($user[3]);
 
-                        if (!in_array((int)$user[4], User::ROLE)) {
-                            array_push($errorArr, ['error' => "<b>$user[2]</b> has invalid role"]);
-                            continue;
-                        }
-                        $newUser->role = $user[4];
-                        if ($newUser->validate()) {
-                            $newUser->save();
+                            if (!in_array((int)$user[4], User::ROLE)) {
+                                array_push($errorArr, ['error' => "<b>$user[2]</b> has invalid role"]);
+                                continue;
+                            }
+                            $newUser->role = $user[4];
+                            $newUser->createdAt = date('Y-m-d');
+                            if ($newUser->validate()) {
+                                $newUser->save();
+                                $ids[] = $newUser->id;
+                            } else {
+                                array_push($errorArr, ['error' => "<b>$user[2]</b> ", 'details' => $newUser->getErrors()]);
+                            }
                         } else {
-                            array_push($errorArr, ['error' => "<b>$user[2]</b> ", 'details' => $newUser->getErrors()]);
+                            array_push($errorArr, ['error' => "<b>$user[2]</b> User already exist"]);
                         }
                     } else {
-                        array_push($errorArr, ['error' => "<b>$user[2]</b> User already exist"]);
+                        array_push($errorArr, ['error' => "<b>$user[2]</b> Please enter valid email address"]);
                     }
-                } else {
-                    array_push($errorArr, ['error' => "<b>$user[2]</b> Please enter valid email address"]);
                 }
+
+                $newAddedUser =  User::find()->where(['in', 'id', $ids])->all();
+                return ['status' => 'ok', 'newAddedUser' => $newAddedUser, 'errorDetails' => $errorArr];
+            } else {
+                return ['status' => 'error', 'details' => 'There is no file uploaded'];
             }
-            return ['status' => 'ok', 'errorDetails' => $errorArr];
-        } else {
-            return ['status' => 'error', 'details' => 'There is no file uploaded'];
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
 

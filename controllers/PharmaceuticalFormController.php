@@ -218,7 +218,7 @@ class PharmaceuticalFormController extends \yii\web\Controller
                     }
                 }
                 $m['imgs'] = $images;
-                $m['barcode']= Url::to('@web/medicines/barcodes/' . $m['barcode'], true);
+                $m['barcode'] = Url::to('@web/medicines/barcodes/' . $m['barcode'], true);
 
                 return $m;
             }, $p['medicines']);
@@ -245,7 +245,7 @@ class PharmaceuticalFormController extends \yii\web\Controller
                 }
             }
             $m['imgs'] = $images;
-            $m['barcode']= Url::to('@web/medicines/barcodes/' . $m['barcode'], true);
+            $m['barcode'] = Url::to('@web/medicines/barcodes/' . $m['barcode'], true);
 
             return $m;
         }, $pharmaceuticalForm['medicines']);
@@ -267,6 +267,10 @@ class PharmaceuticalFormController extends \yii\web\Controller
                 return ['status' => 'error', 'details' => "There are no medicine that has this Pharmaceutical Form id ($id)"];
 
             $pharmaceuticalForm['medicines'] = array_map(function ($m) {
+                $m = Medicine::find()->where(['id' => $m])->with('categories', 'pharmaceuticalForms')
+                    ->asArray()
+                    ->one();
+
                 $imgs = explode(',', $m['imgs']);
                 $images = [];
                 if ($imgs !== false) {
@@ -276,7 +280,7 @@ class PharmaceuticalFormController extends \yii\web\Controller
                     }
                 }
                 $m['imgs'] = $images;
-                $m['barcode']= Url::to('@web/medicines/barcodes/' . $m['barcode'], true);
+                $m['barcode'] = Url::to('@web/medicines/barcodes/' . $m['barcode'], true);
 
                 return $m;
             }, $pharmaceuticalForm['medicines']);
@@ -300,8 +304,8 @@ class PharmaceuticalFormController extends \yii\web\Controller
 
             if (MedicinePharmaceuticalForm::findOne(['pharmaceuticalFormId' => (int)$data['id']]) !== null)
                 return ["status" => "error", "details" => "This Pharmaceutical Form has medicines belongs to it"];
-           
-                if (!$pharmaceuticalForm->delete())
+
+            if (!$pharmaceuticalForm->delete())
                 return ["status" => "error", "details" => $pharmaceuticalForm->getErrors()];
 
             return ['status' => 'ok'];

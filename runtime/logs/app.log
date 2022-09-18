@@ -5022,3 +5022,658 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1663343761.8713
     'REQUEST_TIME' => 1663343761
 ]
+2022-09-18 15:06:31 [::1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php:93
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\CompositeAuth.php(57): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\ActionFilter.php(77): yii\filters\auth\CompositeAuth->beforeAction(Object(yii\base\InlineAction))
+#3 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Component.php(633): call_user_func(Array, Object(yii\base\ActionEvent))
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Controller.php(218): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 F:\apps\wamp64\www\aphamea_project\controllers\ActivityController.php(70): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(176): app\controllers\ActivityController->beforeAction(Object(yii\base\InlineAction))
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('add', Array)
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('activity/add', Array)
+#11 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#13 {main}
+2022-09-18 15:06:30 [::1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'content' => 'Hi this is activity of type 0'
+    'type' => '0'
+]
+
+$_FILES = [
+    'activityImages' => [
+        'name' => 'TranscodedWallpaper - Copy.jpg'
+        'type' => 'image/jpeg'
+        'tmp_name' => 'F:\\apps\\wamp64\\tmp\\phpCF9C.tmp'
+        'error' => 0
+        'size' => 188066
+    ]
+]
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '273954'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundaryawE1jcQ478ZsCliW'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => '366c1359-bc4b-32a7-fb38-6596f128422b'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '10956'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/activity/add'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/activity/add'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\activity\\add'
+    'PHP_SELF' => '/aphamea_project/web/index.php/activity/add'
+    'REQUEST_TIME_FLOAT' => 1663513590.7852
+    'REQUEST_TIME' => 1663513590
+]
+2022-09-18 15:51:09 [::1][-][-][warning][yii\web\Response::sendContent] set_time_limit() is not available
+2022-09-18 15:51:07 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'Phpstorm-1d0147a5' => 'f855a8f8-e238-49ec-aad2-194a10648ef1'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'Phpstorm-1d0147a5=f855a8f8-e238-49ec-aad2-194a10648ef1'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '9703'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/generate-excel-file-template'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/generate-excel-file-template'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\generate-excel-file-template'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/generate-excel-file-template'
+    'REQUEST_TIME_FLOAT' => 1663516267.6689
+    'REQUEST_TIME' => 1663516267
+]
+2022-09-18 15:51:55 [::1][-][-][warning][yii\web\Response::sendContent] set_time_limit() is not available
+2022-09-18 15:51:55 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'Phpstorm-1d0147a5' => 'f855a8f8-e238-49ec-aad2-194a10648ef1'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'Phpstorm-1d0147a5=f855a8f8-e238-49ec-aad2-194a10648ef1'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '9704'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/generate-excel-file-template'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/generate-excel-file-template'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\generate-excel-file-template'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/generate-excel-file-template'
+    'REQUEST_TIME_FLOAT' => 1663516315.5616
+    'REQUEST_TIME' => 1663516315
+]
+2022-09-18 15:52:58 [::1][-][-][warning][yii\web\Response::sendContent] set_time_limit() is not available
+2022-09-18 15:52:58 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'Phpstorm-1d0147a5' => 'f855a8f8-e238-49ec-aad2-194a10648ef1'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'Phpstorm-1d0147a5=f855a8f8-e238-49ec-aad2-194a10648ef1'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '1769'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/generate-excel-file-template'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/generate-excel-file-template'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\generate-excel-file-template'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/generate-excel-file-template'
+    'REQUEST_TIME_FLOAT' => 1663516378.6903
+    'REQUEST_TIME' => 1663516378
+]
+2022-09-18 15:54:54 [::1][-][-][warning][yii\web\Response::sendContent] set_time_limit() is not available
+2022-09-18 15:54:54 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'Phpstorm-1d0147a5' => 'f855a8f8-e238-49ec-aad2-194a10648ef1'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'Phpstorm-1d0147a5=f855a8f8-e238-49ec-aad2-194a10648ef1'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '1800'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/generate-excel-file-template'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/generate-excel-file-template'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\generate-excel-file-template'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/generate-excel-file-template'
+    'REQUEST_TIME_FLOAT' => 1663516494.2206
+    'REQUEST_TIME' => 1663516494
+]
+2022-09-18 15:55:16 [::1][-][-][warning][yii\web\Response::sendContent] set_time_limit() is not available
+2022-09-18 15:55:15 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'Phpstorm-1d0147a5' => 'f855a8f8-e238-49ec-aad2-194a10648ef1'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'Phpstorm-1d0147a5=f855a8f8-e238-49ec-aad2-194a10648ef1'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '1801'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/generate-excel-file-template'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/generate-excel-file-template'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\generate-excel-file-template'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/generate-excel-file-template'
+    'REQUEST_TIME_FLOAT' => 1663516515.9211
+    'REQUEST_TIME' => 1663516515
+]
+2022-09-18 15:56:09 [::1][-][-][warning][yii\web\Response::sendContent] set_time_limit() is not available
+2022-09-18 15:56:09 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = [
+    'Phpstorm-1d0147a5' => 'f855a8f8-e238-49ec-aad2-194a10648ef1'
+]
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_DNT' => '1'
+    'HTTP_UPGRADE_INSECURE_REQUESTS' => '1'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_ACCEPT' => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'navigate'
+    'HTTP_SEC_FETCH_USER' => '?1'
+    'HTTP_SEC_FETCH_DEST' => 'document'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'HTTP_COOKIE' => 'Phpstorm-1d0147a5=f855a8f8-e238-49ec-aad2-194a10648ef1'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '1812'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/generate-excel-file-template'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/generate-excel-file-template'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\generate-excel-file-template'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/generate-excel-file-template'
+    'REQUEST_TIME_FLOAT' => 1663516569.578
+    'REQUEST_TIME' => 1663516569
+]
+2022-09-18 16:09:06 [::1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php:93
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\CompositeAuth.php(57): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\ActionFilter.php(77): yii\filters\auth\CompositeAuth->beforeAction(Object(yii\base\InlineAction))
+#3 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Component.php(633): call_user_func(Array, Object(yii\base\ActionEvent))
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Controller.php(218): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 F:\apps\wamp64\www\aphamea_project\controllers\CategoryController.php(74): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(176): app\controllers\CategoryController->beforeAction(Object(yii\base\InlineAction))
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('get', Array)
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('category/get', Array)
+#11 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#13 {main}
+2022-09-18 16:09:06 [::1][-][-][info][application] $_GET = [
+    'id' => '1'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '11'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'text/plain;charset=UTF-8'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => '43434032-3870-f15e-8d20-ad0e9300f73b'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '1924'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'id=1'
+    'REQUEST_URI' => '/aphamea_project/web/index.php/category/get?id=1'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/category/get'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\category\\get'
+    'PHP_SELF' => '/aphamea_project/web/index.php/category/get'
+    'REQUEST_TIME_FLOAT' => 1663517346.8825
+    'REQUEST_TIME' => 1663517346
+]
+2022-09-18 16:11:26 [::1][-][-][error][Error] Error: Call to a member function with() on array in F:\apps\wamp64\www\aphamea_project\controllers\CategoryController.php:274
+Stack trace:
+#0 [internal function]: app\controllers\CategoryController->app\controllers\{closure}(Array)
+#1 F:\apps\wamp64\www\aphamea_project\controllers\CategoryController.php(286): array_map(Object(Closure), Array)
+#2 [internal function]: app\controllers\CategoryController->actionGetMedicines('2')
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('get-medicines', Array)
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('category/get-me...', Array)
+#7 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#9 {main}
+2022-09-18 16:11:26 [::1][-][-][info][application] $_GET = [
+    'categoryId' => '2'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '11'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'text/plain;charset=UTF-8'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => 'f5d32669-8114-f1b6-2cd8-8235e1d2dfb2'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '1954'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'categoryId=2'
+    'REQUEST_URI' => '/aphamea_project/web/index.php/category/get-medicines?categoryId=2'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/category/get-medicines'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\category\\get-medicines'
+    'PHP_SELF' => '/aphamea_project/web/index.php/category/get-medicines'
+    'REQUEST_TIME_FLOAT' => 1663517486.2159
+    'REQUEST_TIME' => 1663517486
+]
+2022-09-18 16:12:18 [::1][-][-][error][Error] Error: Call to undefined method stdClass::with() in F:\apps\wamp64\www\aphamea_project\controllers\CategoryController.php:275
+Stack trace:
+#0 [internal function]: app\controllers\CategoryController->app\controllers\{closure}(Object(stdClass))
+#1 F:\apps\wamp64\www\aphamea_project\controllers\CategoryController.php(288): array_map(Object(Closure), Array)
+#2 [internal function]: app\controllers\CategoryController->actionGetMedicines('2')
+#3 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\InlineAction.php(57): call_user_func_array(Array, Array)
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(178): yii\base\InlineAction->runWithParams(Array)
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('get-medicines', Array)
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('category/get-me...', Array)
+#7 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#8 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#9 {main}
+2022-09-18 16:12:18 [::1][-][-][info][application] $_GET = [
+    'categoryId' => '2'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '11'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'text/plain;charset=UTF-8'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => 'f8a9c018-2f7d-fb31-392f-eca5e103583d'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '1963'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => 'categoryId=2'
+    'REQUEST_URI' => '/aphamea_project/web/index.php/category/get-medicines?categoryId=2'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/category/get-medicines'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\category\\get-medicines'
+    'PHP_SELF' => '/aphamea_project/web/index.php/category/get-medicines'
+    'REQUEST_TIME_FLOAT' => 1663517538.4512
+    'REQUEST_TIME' => 1663517538
+]

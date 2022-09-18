@@ -6,6 +6,7 @@ use app\models\Offer;
 use app\models\OfferDetails;
 use app\models\Order;
 use app\models\OrderDetails;
+use app\models\User;
 use sizeg\jwt\JwtHttpBearerAuth;
 use Yii;
 use yii\db\Query;
@@ -163,9 +164,77 @@ class OrderController extends Controller
         }
     }
 
-    function actionGetAll()
+    function actionGetAll($year = null, $month = null)
     {
         try {
+            if (Yii::$app->user->identity->role === 5) {
+                $orders = Order::find()->where([]);
+            } else {
+                $orders = Order::find()->where(['userId' => Yii::$app->user->identity->id]);
+            }
+
+            if ($year != null && $month != null) {
+                $month = str_pad($month, 2, '0', STR_PAD_LEFT);
+                $endDayMonth = date('t', strtotime("$year-$month-01"));
+                $orders->andFilterWhere(['between', 'orderDate', date('Y-m-d H:i:s', strtotime("$year-$month-01")), date('Y-m-d H:i:s', strtotime("$year-$month-$endDayMonth"))]);
+            }
+
+            $orders = $orders->with('representative', 'user')->asArray()->all();
+            if ($orders) {
+                return ['status' => 'ok', 'orders' => $orders];
+            } else {
+                return ['status' => 'error', 'details' => 'There is no order'];
+            }
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
+        }
+    }
+    function actionGetAllCanceled($isCanceled = 0, $year = null, $month = null)
+    {
+        try {
+            $orders = Order::find();
+            if (Yii::$app->user->identity->role === 5) {
+                $orders = Order::find()->where(['isCanceled' => (int)$isCanceled]);
+            } else {
+                $orders = Order::find()->where(['isCanceled' => (int)$isCanceled, 'userId' => Yii::$app->user->identity->id]);
+            }
+
+            if ($year != null && $month != null) {
+                $month = str_pad($month, 2, '0', STR_PAD_LEFT);
+                $endDayMonth = date('t', strtotime("$year-$month-01"));
+                $orders->andFilterWhere(['between', 'orderDate', date('Y-m-d H:i:s', strtotime("$year-$month-01")), date('Y-m-d H:i:s', strtotime("$year-$month-$endDayMonth"))]);
+            }
+
+            $orders = Order::find()
+                ->with('representative', 'user')
+                ->asArray()
+                ->all();
+
+            if ($orders) {
+                return ['status' => 'ok', 'orders' => $orders];
+            } else {
+                return ['status' => 'error', 'details' => 'There is no order'];
+            }
+        } catch (\Exception $e) {
+            return ['status' => 'error', 'details' => $e->getMessage()];
+        }
+    }
+
+    function actionGetAllCompleted($isCompleted = 0, $year = null, $month = null)
+    {
+        try {
+            if (Yii::$app->user->identity->role === 5) {
+                $orders = Order::find()->where(['isCompleted' => (int)$isCompleted]);
+            } else {
+                $orders = Order::find()->where(['isCompleted' => (int)$isCompleted, 'userId' => Yii::$app->user->identity->id]);
+            }
+
+            if ($year != null && $month != null) {
+                $month = str_pad($month, 2, '0', STR_PAD_LEFT);
+                $endDayMonth = date('t', strtotime("$year-$month-01"));
+                $orders->andFilterWhere(['between', 'orderDate', date('Y-m-d H:i:s', strtotime("$year-$month-01")), date('Y-m-d H:i:s', strtotime("$year-$month-$endDayMonth"))]);
+            }
+
             $orders = Order::find()->with('representative', 'user')->asArray()->all();
             if ($orders) {
                 return ['status' => 'ok', 'orders' => $orders];
@@ -176,28 +245,26 @@ class OrderController extends Controller
             return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
-    function actionGetAllCanceled($isCanceled = 0)
-    {
-        try {
-            $orders = Order::find()->where(['isCanceled' => (int)$isCanceled])->with('representative', 'user')->asArray()->all();
-            if ($orders) {
-                return ['status' => 'ok', 'orders' => $orders];
-            } else {
-                return ['status' => 'error', 'details' => 'There is no order'];
-            }
-        } catch (\Exception $e) {
-            return ['status' => 'error', 'details' => $e->getMessage()];
-        }
-    }
 
-    function actionGetAllCompleted($isCompleted = 0)
+    public function actionDeleteOffer()
     {
         try {
-            $orders = Order::find()->where(['isCompleted' => (int)$isCompleted])->with('representative', 'user')->asArray()->all();
-            if ($orders) {
-                return ['status' => 'ok', 'orders' => $orders];
+            $data = (array)json_decode(Yii::$app->request->getRawBody());
+            if (!isset($data['id']))
+                return ['status' => 'error', 'details' => 'There are missing param'];
+
+            $id = (int)$data['id'];
+            $orderDetails = OrderDetails::findOne(['offerId' => $id]);
+            if ($orderDetails === null)
+                return ['status' => 'error', 'details' => 'There is no offer in this order'];
+
+            if (Order::findOne(['id' => $orderDetails->orderId, 'isCompleted' => 1]) !== null)
+                return ['status' => 'error', 'details' => 'You can not delete an offer from this order'];
+
+            if ($orderDetails->delete()) {
+                return ['status' => 'ok'];
             } else {
-                return ['status' => 'error', 'details' => 'There is no order'];
+                return ['status' => 'error', 'details' => $orderDetails->getErrors()];
             }
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
@@ -208,7 +275,7 @@ class OrderController extends Controller
     function actionGet($id)
     {
         try {
-            $order = Order::find()->where(['id' => (int)$id])->with('offers', 'orderDetails')->asArray()->one();
+            $order = Order::find()->where(['id' => (int)$id])->with('representative', 'user', 'offers', 'orderDetails')->asArray()->one();
 
             if ($order === null)
                 return ['status' => 'error', 'details' => 'There is no order that has this id'];

@@ -265,12 +265,13 @@ class CategoryController extends \yii\web\Controller
             if ($category === null)
                 return ["status" => "error", "details" => 'There is category that has this id'];
 
-
             if (empty($category['medicines']))
                 return ["status" => "error", "details" => 'There is no medicine that has this category id'];
 
-
             $category['medicines'] = array_map(function ($m) {
+                $m =Medicine::find()->where(['id'=>$m])->with('categories', 'pharmaceuticalForms')
+                ->asArray()
+                ->one();
                 $imgs = explode(',', $m['imgs']);
                 $images = [];
                 if ($imgs !== false) {

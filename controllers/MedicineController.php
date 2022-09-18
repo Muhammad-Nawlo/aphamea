@@ -10,6 +10,7 @@ use yii\db\Expression;
 use app\models\Category;
 use app\models\Medicine;
 use yii\web\UploadedFile;
+use app\models\OfferDetails;
 use app\helpers\HelperFunction;
 use app\models\MedicineCategory;
 use sizeg\jwt\JwtHttpBearerAuth;
@@ -19,10 +20,11 @@ use yii\filters\auth\HttpBearerAuth;
 use yii\filters\auth\QueryParamAuth;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Picqer\Barcode\BarcodeGeneratorPNG;
+use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use app\models\MedicinePharmaceuticalForm;
-use app\models\OfferDetails;
+use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class MedicineController extends \yii\web\Controller
 {
@@ -87,7 +89,20 @@ class MedicineController extends \yii\web\Controller
     public function actionGenerateExcelFileTemplate()
     {
         try {
+            $headStyle = [
+                'font' => [
+                    'color' => [
+                        'rgb' => 'ffffff'
+                    ],
+                ],
+                'fill' => [
+                    'fillType' => Fill::FILL_SOLID,
+                    'startColor' => ['rgb' => '538ED5']
+                ]
+            ];
             $spreadsheet = new Spreadsheet();
+            $spreadsheet->getDefaultStyle()->getFont()->setName('Berlin Sans FB')->setSize(16);
+
             $sheet = $spreadsheet->getActiveSheet();
 
             $sheet->setCellValue('A1', 'Product Name');
@@ -99,6 +114,23 @@ class MedicineController extends \yii\web\Controller
             $sheet->setCellValue('G1', 'Net Price');
             $sheet->setCellValue('H1', 'Category');
             $sheet->setCellValue('I1', 'Pharmaceutical Form');
+            $sheet->getStyle('A1:I1')->applyFromArray($headStyle);
+
+            $sheet
+                ->getStyle('A1:I1')
+                ->getAlignment()
+                ->setHorizontal(Alignment::HORIZONTAL_CENTER);
+
+            $sheet->getColumnDimension('A')->setWidth(12);
+            $sheet->getColumnDimension('B')->setWidth(10);
+            $sheet->getColumnDimension('C')->setWidth(10);
+            $sheet->getColumnDimension('D')->setWidth(10);
+            $sheet->getColumnDimension('E')->setWidth(14);
+            $sheet->getColumnDimension('F')->setWidth(8);
+            $sheet->getColumnDimension('G')->setWidth(8);
+            $sheet->getColumnDimension('H')->setWidth(10);
+            $sheet->getColumnDimension('I')->setWidth(16);
+
 
             $fileName = yii::$app->getSecurity()->generateRandomString(10);
             $writer = new Xlsx($spreadsheet);
@@ -114,6 +146,7 @@ class MedicineController extends \yii\web\Controller
     public function actionImportExcelFile()
     {
         try {
+            $ids = [];
             if (isset($_FILES['sheet'])) {
                 $file = $_FILES['sheet'];
                 $tmpName = yii::$app->security->generateRandomString();
@@ -196,6 +229,7 @@ class MedicineController extends \yii\web\Controller
                     $newMedicine->netPrice = (float) $m[6];
                     if ($newMedicine->validate()) {
                         $newMedicine->save();
+                        $ids[] = $newMedicine->id;
 
                         $pm = new MedicinePharmaceuticalForm();
                         $pm->medicineId = $newMedicine->id;
@@ -219,7 +253,8 @@ class MedicineController extends \yii\web\Controller
                     $newMedicine->barcode = $generateName;
                     $newMedicine->save();
                 }
-                return ['status' => 'ok', 'errorDetails' => $errorArr];
+                $newAddedMedicine = Medicine::find()->where(['in', 'id', $ids])->all();
+                return ['status' => 'ok', 'newAddedMedicines' => $newAddedMedicine, 'errorDetails' => $errorArr];
             } else {
                 return ['status' => 'error', 'details' => 'There is no file uploaded'];
             }
@@ -329,8 +364,21 @@ class MedicineController extends \yii\web\Controller
                 $newMedicine->barcode = $generateName;
                 $newMedicine->save();
 
+                $newMedicine->toArray();
+                $imgs = explode(',', $newMedicine['imgs']);
+                $images = [];
+                if ($imgs !== false) {
+                    foreach ($imgs as $i) {
+                        if ($i)
+                            $images[] = Url::to('@web/medicines/images/' . $i, true);
+                    }
+                }
+                $newMedicine['imgs'] = $images;
+                $newMedicine['barcode'] = Url::to('@web/medicines/barcodes/' . $newMedicine['barcode'], true);
 
-                return ['status' => 'ok'];
+
+
+                return ['status' => 'ok', 'newMedicine' => $newMedicine];
             } else {
                 return ['status' => 'error', 'details' => $newMedicine->getErrors()];
             }
@@ -412,7 +460,20 @@ class MedicineController extends \yii\web\Controller
                 file_put_contents(Url::to('@app/web/medicines/barcodes') . '/' . $generateName, $generator->getBarcode($newMedicine->id, $generator::TYPE_CODE_128));
                 $newMedicine->barcode = $generateName;
                 $newMedicine->save();
-                return ['status' => 'ok'];
+
+                $newMedicine->toArray();
+                $imgs = explode(',', $newMedicine['imgs']);
+                $images = [];
+                if ($imgs !== false) {
+                    foreach ($imgs as $i) {
+                        if ($i)
+                            $images[] = Url::to('@web/medicines/images/' . $i, true);
+                    }
+                }
+                $newMedicine['imgs'] = $images;
+                $newMedicine['barcode'] = Url::to('@web/medicines/barcodes/' . $newMedicine['barcode'], true);
+
+                return ['status' => 'ok', 'medicine' => $newMedicine];
             } else {
                 return ['status' => 'error', 'details' => $medicine->getErrors()];
             }
@@ -441,7 +502,7 @@ class MedicineController extends \yii\web\Controller
                     continue;
                 }
                 if (OfferDetails::findOne(['medicineId' => $id]) !== null) {
-                    $errors[] = "You can not delete this medicine that has this id (" . $id . ") because it belongs to an offer";
+                    $errors[] = "You can not delete this medicine because it belongs to an offer";
                     continue;
                 }
                 MedicineCategory::deleteAll(['medicineId' => $id]);

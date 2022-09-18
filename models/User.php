@@ -20,6 +20,7 @@ use yii\web\IdentityInterface;
  * @property string|null $email
  * @property string|null $password
  * @property string|null $specialMark
+ * @property string|null $createdAt
  *
  * @property City $city
  * @property CompanyTeam[] $companyTeams
@@ -52,7 +53,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['regionId', 'cityId', 'countryId', 'role'], 'integer'],
-            [['firstName', 'lastName', 'img', 'accessToken', 'email', 'password', 'specialMark'], 'string', 'max' => 255],
+            [['firstName', 'lastName', 'img', 'accessToken', 'email', 'password', 'specialMark','createdAt'], 'string', 'max' => 255],
             [['email'], 'unique'],
             [['cityId'], 'exist', 'skipOnError' => true, 'targetClass' => City::className(), 'targetAttribute' => ['cityId' => 'id']],
             [['countryId'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['countryId' => 'id']],
@@ -78,6 +79,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'email' => 'Email',
             'password' => 'Password',
             'specialMark' => 'Special Marks',
+            'createdAt' => 'Created At',
         ];
     }
 

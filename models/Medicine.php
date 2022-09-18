@@ -82,6 +82,7 @@ class Medicine extends \yii\db\ActiveRecord
         return $this->hasMany(Category::class, ['id' => 'categoryId'])
             ->viaTable('medicine_category', ['medicineId' => 'id']);
     }
+    
     public function getPharmaceuticalForms()
     {
         return $this->hasMany(PharmaceuticalForm::class, ['id' => 'pharmaceuticalFormId'])

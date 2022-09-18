@@ -30,7 +30,8 @@ class m220809_211653_create_user_table extends Migration
             'accessToken' => $this->string(),
             'email' => $this->string()->unique(),
             'password' => $this->string(),
-            'specialMark' => $this->string()
+            'specialMark' => $this->string(),
+            'createdAt' => $this->date()
         ], $options);
         $this->addForeignKey('fk_user_region_regionId', self::TABLE_NAME, 'regionId', 'region', 'id');
         $this->addForeignKey('fk_user_region_cityId', self::TABLE_NAME, 'cityId', 'city', 'id');

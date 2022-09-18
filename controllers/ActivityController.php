@@ -80,6 +80,7 @@ class ActivityController extends \yii\web\Controller
     {
         try {
             $data = (array)(Yii::$app->request->post());
+
             if (!isset($data['type']) || !isset($data['content']) || !isset($data['title']))
                 return ["status" => "error", "details" => "There are missing params"];
 
@@ -88,11 +89,13 @@ class ActivityController extends \yii\web\Controller
             }
 
             $newActivity = new Activity();
+
             $newActivity->type = $data['type'];
             $newActivity->title = $data['title'];
             $newActivity->content = $data['content'];
             $newActivity->publishedDate = date('Y-m-d h:i:s');
             $newActivity->isRead = 0;
+
             $activityImages = UploadedFile::getInstancesByName('activityImages');
             $imagesName = [];
             if (!empty($activityImages)) {
@@ -105,6 +108,7 @@ class ActivityController extends \yii\web\Controller
                 }
             }
             $newActivity->imgs = implode(',', $imagesName);
+
             if ($newActivity->validate()) {
                 $newActivity->save();
                 return ['status' => 'ok'];
@@ -115,7 +119,6 @@ class ActivityController extends \yii\web\Controller
             return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
-
     public function actionDelete()
     {
         try {
@@ -135,7 +138,6 @@ class ActivityController extends \yii\web\Controller
             return ['status' => 'error', 'details' => $e->getMessage()];
         }
     }
-
     public function actionGetAll()
     {
         try {

@@ -18,7 +18,6 @@ use Yii;
 class Activity extends \yii\db\ActiveRecord
 {
     const ACTIVITY_TYPE = [0, 1, 2, 3];
-
     /**
      * {@inheritdoc}
      */
