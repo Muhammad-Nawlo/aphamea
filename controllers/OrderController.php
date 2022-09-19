@@ -205,7 +205,7 @@ class OrderController extends Controller
                 $orders->andFilterWhere(['between', 'orderDate', date('Y-m-d H:i:s', strtotime("$year-$month-01")), date('Y-m-d H:i:s', strtotime("$year-$month-$endDayMonth"))]);
             }
 
-            $orders = Order::find()
+            $orders =$orders
                 ->with('representative', 'user')
                 ->asArray()
                 ->all();
@@ -235,7 +235,7 @@ class OrderController extends Controller
                 $orders->andFilterWhere(['between', 'orderDate', date('Y-m-d H:i:s', strtotime("$year-$month-01")), date('Y-m-d H:i:s', strtotime("$year-$month-$endDayMonth"))]);
             }
 
-            $orders = Order::find()->with('representative', 'user')->asArray()->all();
+            $orders = $orders->with('representative', 'user')->asArray()->all();
             if ($orders) {
                 return ['status' => 'ok', 'orders' => $orders];
             } else {
