@@ -162,7 +162,7 @@ class SiteController extends Controller
 
             if ($newUser->validate()) {
                 $newUser->save();
-                return ['status' => 'ok','user'=>$newUser];
+                return ['status' => 'ok', 'user' => $newUser];
             } else {
                 return ['status' => 'error', 'details' => $newUser->getErrors()];
             }
@@ -543,6 +543,25 @@ class SiteController extends Controller
             return ['status' => 'ok', 'errors' => $errors];
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
+        }
+    }
+
+    public function actionGetAllRepresentative()
+    {
+
+        $users = User::find()->where(['role'=>2])
+            ->with('contacts', 'region', 'city', 'country')
+            ->asArray()->all();
+
+        if ($users) {
+            $users = array_map(function ($u) {
+                if ($u['img'])
+                    $u['img'] = Url::to('@web/users/images/' . $u['img'], true);
+                return $u;
+            }, $users);
+            return ['status' => 'ok', 'users' => $users];
+        } else {
+            return ['status' => 'error', 'details' => 'There is no user'];
         }
     }
 }

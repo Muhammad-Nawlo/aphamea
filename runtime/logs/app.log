@@ -6039,3 +6039,741 @@ $_SERVER = [
     'REQUEST_TIME_FLOAT' => 1663531744.0621
     'REQUEST_TIME' => 1663531744
 ]
+2022-09-19 13:39:30 [::1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php:93
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\CompositeAuth.php(57): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\ActionFilter.php(77): yii\filters\auth\CompositeAuth->beforeAction(Object(yii\base\InlineAction))
+#3 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Component.php(633): call_user_func(Array, Object(yii\base\ActionEvent))
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Controller.php(218): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 F:\apps\wamp64\www\aphamea_project\controllers\CategoryController.php(74): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(176): app\controllers\CategoryController->beforeAction(Object(yii\base\InlineAction))
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('add', Array)
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('category/add', Array)
+#11 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#13 {main}
+2022-09-19 13:39:28 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '156'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'text/plain;charset=UTF-8'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => '9926a8ed-bc9d-49e2-2e8d-2ef0e796a818'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '9770'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/category/add'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/category/add'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\category\\add'
+    'PHP_SELF' => '/aphamea_project/web/index.php/category/add'
+    'REQUEST_TIME_FLOAT' => 1663594767.204
+    'REQUEST_TIME' => 1663594767
+]
+2022-09-19 13:40:13 [::1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php:93
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\CompositeAuth.php(57): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\ActionFilter.php(77): yii\filters\auth\CompositeAuth->beforeAction(Object(yii\base\InlineAction))
+#3 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Component.php(633): call_user_func(Array, Object(yii\base\ActionEvent))
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Controller.php(218): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 F:\apps\wamp64\www\aphamea_project\controllers\PharmaceuticalFormController.php(74): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(176): app\controllers\PharmaceuticalFormController->beforeAction(Object(yii\base\InlineAction))
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('add', Array)
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('pharmaceutical-...', Array)
+#11 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#13 {main}
+2022-09-19 13:40:13 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '174'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'text/plain;charset=UTF-8'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => '8fa1281f-8606-28de-2005-78f79e994eb4'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '9795'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/pharmaceutical-form/add'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/pharmaceutical-form/add'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\pharmaceutical-form\\add'
+    'PHP_SELF' => '/aphamea_project/web/index.php/pharmaceutical-form/add'
+    'REQUEST_TIME_FLOAT' => 1663594813.9349
+    'REQUEST_TIME' => 1663594813
+]
+2022-09-19 13:40:36 [::1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php:93
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\CompositeAuth.php(57): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\ActionFilter.php(77): yii\filters\auth\CompositeAuth->beforeAction(Object(yii\base\InlineAction))
+#3 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Component.php(633): call_user_func(Array, Object(yii\base\ActionEvent))
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Controller.php(218): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 F:\apps\wamp64\www\aphamea_project\controllers\MedicineController.php(82): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(176): app\controllers\MedicineController->beforeAction(Object(yii\base\InlineAction))
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('add', Array)
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('medicine/add', Array)
+#11 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#13 {main}
+2022-09-19 13:40:36 [::1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'productName' => 'Muhammad'
+    'indications' => 'this is test medice'
+    'packing' => '50'
+    'composition' => 'fsdfdsfdsfdsf'
+    'expiredDate' => '2'
+    'price' => '1500'
+    'netPrice' => '1500'
+    'pharmaceuticalFormId' => '1'
+    'categoryId' => '1'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '974'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundaryg1Bx2qxpnuEfzWah'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => 'bc63ae46-c569-1a3e-44ce-c0d97e3af644'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '9810'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/add'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/add'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\add'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/add'
+    'REQUEST_TIME_FLOAT' => 1663594836.0479
+    'REQUEST_TIME' => 1663594836
+]
+2022-09-19 13:40:36 [::1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php:93
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\CompositeAuth.php(57): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\ActionFilter.php(77): yii\filters\auth\CompositeAuth->beforeAction(Object(yii\base\InlineAction))
+#3 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Component.php(633): call_user_func(Array, Object(yii\base\ActionEvent))
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Controller.php(218): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 F:\apps\wamp64\www\aphamea_project\controllers\MedicineController.php(82): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(176): app\controllers\MedicineController->beforeAction(Object(yii\base\InlineAction))
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('add', Array)
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('medicine/add', Array)
+#11 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#13 {main}
+2022-09-19 13:40:36 [::1][-][-][info][application] $_GET = []
+
+$_POST = [
+    'productName' => 'Muhammad'
+    'indications' => 'this is test medice'
+    'packing' => '50'
+    'composition' => 'fsdfdsfdsfdsf'
+    'expiredDate' => '2'
+    'price' => '1500'
+    'netPrice' => '1500'
+    'pharmaceuticalFormId' => '1'
+    'categoryId' => '1'
+]
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '974'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'multipart/form-data; boundary=----WebKitFormBoundaryNNnNdG7ZsybaOfmv'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => 'c8ae370b-c956-3a6f-143f-c0ba5f784f1c'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '9810'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/medicine/add'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/medicine/add'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\medicine\\add'
+    'PHP_SELF' => '/aphamea_project/web/index.php/medicine/add'
+    'REQUEST_TIME_FLOAT' => 1663594836.6252
+    'REQUEST_TIME' => 1663594836
+]
+2022-09-19 13:42:58 [::1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php:93
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\CompositeAuth.php(57): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\ActionFilter.php(77): yii\filters\auth\CompositeAuth->beforeAction(Object(yii\base\InlineAction))
+#3 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Component.php(633): call_user_func(Array, Object(yii\base\ActionEvent))
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Controller.php(218): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 F:\apps\wamp64\www\aphamea_project\controllers\OrderController.php(73): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(176): app\controllers\OrderController->beforeAction(Object(yii\base\InlineAction))
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('add', Array)
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('order/add', Array)
+#11 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#13 {main}
+2022-09-19 13:42:58 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '127'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => 'b49d6e9e-424f-bc21-5e6f-0c46d0657d21'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '9879'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/order/add'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/order/add'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\order\\add'
+    'PHP_SELF' => '/aphamea_project/web/index.php/order/add'
+    'REQUEST_TIME_FLOAT' => 1663594978.7109
+    'REQUEST_TIME' => 1663594978
+]
+2022-09-19 13:45:37 [::1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php:93
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\CompositeAuth.php(57): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\ActionFilter.php(77): yii\filters\auth\CompositeAuth->beforeAction(Object(yii\base\InlineAction))
+#3 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Component.php(633): call_user_func(Array, Object(yii\base\ActionEvent))
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Controller.php(218): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 F:\apps\wamp64\www\aphamea_project\controllers\OrderController.php(73): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(176): app\controllers\OrderController->beforeAction(Object(yii\base\InlineAction))
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('add', Array)
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('order/add', Array)
+#11 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#13 {main}
+2022-09-19 13:45:37 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'CONTENT_LENGTH' => '127'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => '42c7aaa3-cfc7-8aaa-c2d9-89b0d0870bac'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_ORIGIN' => 'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '4493'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'POST'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/order/add'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/order/add'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\order\\add'
+    'PHP_SELF' => '/aphamea_project/web/index.php/order/add'
+    'REQUEST_TIME_FLOAT' => 1663595137.91
+    'REQUEST_TIME' => 1663595137
+]
+2022-09-19 13:49:27 [::1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: offer/get-all-canceled in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php:149
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('get-all-cancele...', Array)
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('offer/get-all-c...', Array)
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php:115
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#2 {main}
+2022-09-19 13:49:27 [::1][-][-][info][application] $_GET = [
+    'isCanceled' => '1'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => 'b6cd4257-5821-eaed-4193-399c9589bd58'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '4583'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'isCanceled=1'
+    'REQUEST_URI' => '/aphamea_project/web/index.php/offer/get-all-canceled?isCanceled=1'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/offer/get-all-canceled'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\offer\\get-all-canceled'
+    'PHP_SELF' => '/aphamea_project/web/index.php/offer/get-all-canceled'
+    'REQUEST_TIME_FLOAT' => 1663595367.1194
+    'REQUEST_TIME' => 1663595367
+]
+2022-09-19 13:49:46 [::1][-][-][error][yii\web\HttpException:404] yii\base\InvalidRouteException: Unable to resolve the request: offer/get-all-canceled in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php:149
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('get-all-cancele...', Array)
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('offer/get-all-c...', Array)
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#3 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#4 {main}
+
+Next yii\web\NotFoundHttpException: Page not found. in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php:115
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#1 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#2 {main}
+2022-09-19 13:49:46 [::1][-][-][info][application] $_GET = [
+    'isCanceled' => '1'
+]
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'CONTENT_TYPE' => 'application/json'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => 'ca7a6dbf-0575-23ec-8472-ce2899634421'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '4588'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => 'isCanceled=1'
+    'REQUEST_URI' => '/aphamea_project/web/index.php/offer/get-all-canceled?isCanceled=1'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/offer/get-all-canceled'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\offer\\get-all-canceled'
+    'PHP_SELF' => '/aphamea_project/web/index.php/offer/get-all-canceled'
+    'REQUEST_TIME_FLOAT' => 1663595386.0295
+    'REQUEST_TIME' => 1663595386
+]
+2022-09-19 13:52:28 [::1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php:93
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\CompositeAuth.php(57): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\ActionFilter.php(77): yii\filters\auth\CompositeAuth->beforeAction(Object(yii\base\InlineAction))
+#3 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Component.php(633): call_user_func(Array, Object(yii\base\ActionEvent))
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Controller.php(218): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 F:\apps\wamp64\www\aphamea_project\controllers\SiteController.php(82): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(176): app\controllers\SiteController->beforeAction(Object(yii\base\InlineAction))
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('get-all-represe...', Array)
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('site/get-all-re...', Array)
+#11 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#13 {main}
+2022-09-19 13:52:28 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => '0de9a9c7-1d54-96df-a68a-4c4f87a6b78d'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '4623'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/site/get-all-representative'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/site/get-all-representative'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\site\\get-all-representative'
+    'PHP_SELF' => '/aphamea_project/web/index.php/site/get-all-representative'
+    'REQUEST_TIME_FLOAT' => 1663595548.0699
+    'REQUEST_TIME' => 1663595548
+]
+2022-09-19 13:52:55 [::1][-][-][error][yii\web\HttpException:401] yii\web\UnauthorizedHttpException: Your request was made with invalid credentials. in F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php:93
+Stack trace:
+#0 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\AuthMethod.php(76): yii\filters\auth\AuthMethod->handleFailure(Object(yii\web\Response))
+#1 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\filters\auth\CompositeAuth.php(57): yii\filters\auth\AuthMethod->beforeAction(Object(yii\base\InlineAction))
+#2 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\ActionFilter.php(77): yii\filters\auth\CompositeAuth->beforeAction(Object(yii\base\InlineAction))
+#3 [internal function]: yii\base\ActionFilter->beforeFilter(Object(yii\base\ActionEvent))
+#4 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Component.php(633): call_user_func(Array, Object(yii\base\ActionEvent))
+#5 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(297): yii\base\Component->trigger('beforeAction', Object(yii\base\ActionEvent))
+#6 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Controller.php(218): yii\base\Controller->beforeAction(Object(yii\base\InlineAction))
+#7 F:\apps\wamp64\www\aphamea_project\controllers\SiteController.php(82): yii\web\Controller->beforeAction(Object(yii\base\InlineAction))
+#8 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Controller.php(176): app\controllers\SiteController->beforeAction(Object(yii\base\InlineAction))
+#9 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Module.php(552): yii\base\Controller->runAction('get-all-represe...', Array)
+#10 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\web\Application.php(103): yii\base\Module->runAction('site/get-all-re...', Array)
+#11 F:\apps\wamp64\www\aphamea_project\vendor\yiisoft\yii2\base\Application.php(384): yii\web\Application->handleRequest(Object(yii\web\Request))
+#12 F:\apps\wamp64\www\aphamea_project\web\index.php(12): yii\base\Application->run()
+#13 {main}
+2022-09-19 13:52:55 [::1][-][-][info][application] $_GET = []
+
+$_POST = []
+
+$_FILES = []
+
+$_COOKIE = []
+
+$_SERVER = [
+    'HTTP_HOST' => 'localhost'
+    'HTTP_CONNECTION' => 'keep-alive'
+    'HTTP_SEC_CH_UA' => '\"Google Chrome\";v=\"105\", \"Not)A;Brand\";v=\"8\", \"Chromium\";v=\"105\"'
+    'HTTP_CACHE_CONTROL' => 'no-cache'
+    'HTTP_SEC_CH_UA_MOBILE' => '?0'
+    'HTTP_USER_AGENT' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36'
+    'HTTP_SEC_CH_UA_PLATFORM' => '\"Windows\"'
+    'HTTP_POSTMAN_TOKEN' => 'ca5206bc-fa82-6789-dd05-628f9d0996c6'
+    'HTTP_ACCEPT' => '*/*'
+    'HTTP_SEC_FETCH_SITE' => 'none'
+    'HTTP_SEC_FETCH_MODE' => 'cors'
+    'HTTP_SEC_FETCH_DEST' => 'empty'
+    'HTTP_ACCEPT_ENCODING' => 'gzip, deflate, br'
+    'HTTP_ACCEPT_LANGUAGE' => 'en-US,en;q=0.9'
+    'PATH' => 'C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Windows\\System32\\OpenSSH\\;C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;C:\\Program Files\\NVIDIA Corporation\\NVIDIA NvDLISR;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\;C:\\Users\\USER\\AppData\\Local\\Programs\\Python\\Python310\\Scripts\\;C:\\Program Files\\nodejs\\;C:\\Program Files\\MongoDB\\Server\\5.0\\bin;C:\\Program Files\\MongoDB\\Tools\\100\\bin;F:\\apps\\Git\\cmd;F:\\apps\\xampp\\php;F:\\apps\\xamppp\\php;C:\\Program Files\\PuTTY\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Windows\\system32\\config\\systemprofile\\AppData\\Local\\Microsoft\\WindowsApps'
+    'SystemRoot' => 'C:\\Windows'
+    'COMSPEC' => 'C:\\Windows\\system32\\cmd.exe'
+    'PATHEXT' => '.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC'
+    'WINDIR' => 'C:\\Windows'
+    'SERVER_SIGNATURE' => '<address>Apache/2.4.51 (Win64) PHP/7.4.26 Server at localhost Port 80</address>
+'
+    'SERVER_SOFTWARE' => 'Apache/2.4.51 (Win64) PHP/7.4.26'
+    'SERVER_NAME' => 'localhost'
+    'SERVER_ADDR' => '::1'
+    'SERVER_PORT' => '80'
+    'REMOTE_ADDR' => '::1'
+    'DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'REQUEST_SCHEME' => 'http'
+    'CONTEXT_PREFIX' => ''
+    'CONTEXT_DOCUMENT_ROOT' => 'F:/apps/wamp64/www'
+    'SERVER_ADMIN' => 'wampserver@wampserver.invalid'
+    'SCRIPT_FILENAME' => 'F:/apps/wamp64/www/aphamea_project/web/index.php'
+    'REMOTE_PORT' => '4650'
+    'GATEWAY_INTERFACE' => 'CGI/1.1'
+    'SERVER_PROTOCOL' => 'HTTP/1.1'
+    'REQUEST_METHOD' => 'GET'
+    'QUERY_STRING' => ''
+    'REQUEST_URI' => '/aphamea_project/web/index.php/site/get-all-representative'
+    'SCRIPT_NAME' => '/aphamea_project/web/index.php'
+    'PATH_INFO' => '/site/get-all-representative'
+    'PATH_TRANSLATED' => 'F:\\apps\\wamp64\\www\\site\\get-all-representative'
+    'PHP_SELF' => '/aphamea_project/web/index.php/site/get-all-representative'
+    'REQUEST_TIME_FLOAT' => 1663595575.378
+    'REQUEST_TIME' => 1663595575
+]
