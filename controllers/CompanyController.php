@@ -179,7 +179,7 @@ class CompanyController extends \yii\web\Controller
                         }
                     }
                 }
-                $company->toArray();
+                $company = Company::find()->with("companyTeams", "contacts")->asArray()->one();
                 if ($company['img'])
                     $company['img'] = Url::to('@web/company/images/' . $company['img'], true);
 
@@ -187,7 +187,7 @@ class CompanyController extends \yii\web\Controller
                     $company['logo'] = Url::to('@web/company/images/' . $company['logo'], true);
                 return ['status' => 'ok', 'company' => $company, 'errors' => $errors];
             } else {
-                return ['status' => 'error', 'details' => $company->getErrors()];
+                return ['status' => 'error','company'=>$company, 'details' => $company->getErrors()];
             }
         } catch (\Exception $e) {
             return ['status' => 'error', 'details' => $e->getMessage()];
